@@ -115,13 +115,19 @@ i18n.use(initReactI18next).init({
         back: "Back",
         update: "Update",
         companySetup: "Company Setup",
-        companyNameRequired: "Company name is required",
-        companyNameMinLength: "Company name must be at least 2 characters long",
-        companyNameMaxLength: "Company name must not exceed 100 characters",
-        companyRegisteredSuccess: "Company registered successfully",
-        failedToRegisterCompany: "Failed to register company",
-        passwordError: "Password must be between 8 and 30 characters long",
-        confirmPasswordError: "Passwords do not match",
+        companyNameRequired: "Please specify the company name.",
+        agentNameRequired: "Please specify the agent name.",
+        agentNameMinLength: "Agent name must be at least 3 characters long",
+        agentNameMaxLength: "Agent name must not exceed 100 characters",
+        agentNameOnlyThaiEnglish: "Agent name can only contain Thai or English letters",
+        emailRequired: "Please specify the email.",
+        invalidEmailFormat: "Invalid email format",
+        descriptionRequired: "Please specify the Description.",
+        descriptionMinLength: "Description must be at least 10 characters long",
+        descriptionMaxLength: "Description must not exceed 400 characters",
+        locationRequired: "Please specify the Location.",
+        phoneNumberRequired: "Please specify the Phone number.",
+        phoneNumberLength: "Phone number must be between 8 and 13 digits",
         // Placeholders
         enterCompanyDescription: "Enter company description",
         enterEmail: "Enter email address",
@@ -153,19 +159,19 @@ i18n.use(initReactI18next).init({
         // Add new translations for UpdateJobs
         updateJob: "Update Job",
         enterFullname: "Enter your full name",
-        
+
         fullnameMinLength: "Full name must be at least 5 characters long",
         fullnameMaxLength: "Full name must not exceed 30 characters",
         fullnameOnlyThaiEnglish: "Please enter only Thai or English characters",
         phoneNumberOnlyDigits: "Please enter only digits",
-        phoneNumberLength: "Phone number must be 10 digits long",
+        
         phoneNumberStartWithZero: "Phone number must start with 0",
-        emailRequired: "Please enter your email",
+        
         invalidEmail: "Invalid email format",
         passwordRequired: "Please enter your password",
         passwordTooLong: "Password must not exceed 30 characters",
         welcomeSubtitle: "Welcome to our Website.",
-        
+
         enterPassword: "Enter password",
         student: "Student",
         agent: "Agent",
@@ -178,7 +184,8 @@ i18n.use(initReactI18next).init({
         createNewAccount: "Create your",
         newAccount: "new account",
         profilePicture: "Profile Picture",
-        fullnameError: "Please enter your full name between 5 and 50 characters. Do not use numbers or special characters.",
+        fullnameError:
+          "Please enter your full name between 5 and 50 characters. Do not use numbers or special characters.",
         phoneNumberError: "Please enter 10 digits for the phone number.",
         roleError: "Please select your role.",
         alreadyHaveAccount: "Already have an account?",
@@ -193,23 +200,30 @@ i18n.use(initReactI18next).init({
         timeRemaining: "Time remaining:",
         verifyOTP: "Verify OTP",
         resendOTP: "Resend OTP",
-        didntReceiveOTP: "Didn't receive the OTP? Check your spam email or click \"Resend OTP\".",
+        didntReceiveOTP:
+          'Didn\'t receive the OTP? Check your spam email or click "Resend OTP".',
         invalidOTP: "Invalid OTP. Please try again.",
         newOTPSent: "New OTP sent successfully!",
         failedToResendOTP: "Failed to resend OTP",
-        pleaseWaitForOTP: "Please wait for the current OTP to expire before requesting a new one.",
+        pleaseWaitForOTP:
+          "Please wait for the current OTP to expire before requesting a new one.",
         passwordResetSuccessful: "Password Reset Successful!",
-        passwordResetSuccessMessage: "Your password has been successfully reset.",
+        passwordResetSuccessMessage:
+          "Your password has been successfully reset.",
         redirectingToLoginPage: "Redirecting to login page in",
         resetPassword: "Reset Password",
-        enterNewPasswordBelow: "Enter your new password below to regain access to your account.",
+        enterNewPasswordBelow:
+          "Enter your new password below to regain access to your account.",
         newPassword: "New Password",
         confirmNewPassword: "Confirm New Password",
         passwordLengthCriterion: "Password must be at least 8 characters long.",
-        passwordLowercaseCriterion: "Password must contain at least one lowercase letter.",
-        passwordUppercaseCriterion: "Password must contain at least one uppercase letter.",
+        passwordLowercaseCriterion:
+          "Password must contain at least one lowercase letter.",
+        passwordUppercaseCriterion:
+          "Password must contain at least one uppercase letter.",
         passwordNumberCriterion: "Password must contain at least one number.",
-        passwordSpecialCharCriterion: "Password must contain at least one special character (!@#$%^&*).",
+        passwordSpecialCharCriterion:
+          "Password must contain at least one special character (!@#$%^&*).",
         passwordsDoNotMatch: "Passwords do not match.",
         verifyYourEmail: "Verify Your Email",
         verificationCodeSentTo: "We've sent a verification code to",
@@ -217,7 +231,8 @@ i18n.use(initReactI18next).init({
         verifyingEmail: "Verifying email...",
         verifyEmail: "Verify Email",
         resendCode: "Resend Code",
-        didntReceiveCode: "Didn't receive the code? Check your spam email or click \"Resend Code\".",
+        didntReceiveCode:
+          'Didn\'t receive the code? Check your spam email or click "Resend Code".',
         youHaveNotAppliedForAnyJobs: "You have not applied for any jobs",
         noLogo: "No logo",
         currency: "THB",
@@ -232,9 +247,10 @@ i18n.use(initReactI18next).init({
         selectRole: "Select your role",
         uploadProfilePicture: "Upload Profile Picture",
         signupButton: "Sign Up",
-        
+
         loginHere: "Login here",
-        fullnameValidation: "Please enter your full name (5-50 characters, no numbers or special characters)",
+        fullnameValidation:
+          "Please enter your full name (5-50 characters, no numbers or special characters)",
         phoneNumberValidation: "Please enter a valid 8-13 digit phone number",
         emailValidation: "Please enter a valid email address",
         passwordValidation: "Password must be at least 8 characters long",
@@ -243,15 +259,19 @@ i18n.use(initReactI18next).init({
         fileValidation: "Please select a valid image file (PNG, JPG, JPEG)",
         // Add new translations for email validation
         emailEnterEnglish: "Please enter English.",
-        emailMaxCharacters: "Please enter no more than 20 characters before '@'.",
-        emailValidDomains: "Please enter a valid email address (use only @gmail.com, @outlook.com, @yahoo.com, or @hotmail.com).",
+        emailMaxCharacters:
+          "Please enter no more than 20 characters before '@'.",
+        emailValidDomains:
+          "Please enter a valid email address (use only @gmail.com, @outlook.com, @yahoo.com, or @hotmail.com).",
         // Add new translation for file validation
         fileValidationMessage: "Please select files .png .jpeg .jpg only.",
         fillAllFieldsCorrectly: "Please fill in all required fields correctly.",
+        expiringsSoon: "About to expire",
       },
     },
     th: {
       translation: {
+        expiringsSoon: "ใกล้หมดอายุ",
         pleaseWaitLogin: "กรุณารอสักครู่",
         jobTypeNotSpecified: "ประเภทงานไม่ระบุ",
         currency: "บาท",
@@ -263,7 +283,7 @@ i18n.use(initReactI18next).init({
         chooseJobInterest: "เลือกงานที่คุณสนใจ",
         latestAndTop: "ล่าสุดและยอดนิยม",
         jobOpenings: "ตำแหน่งงานที่เปิดรับ",
-        noJobAvailable: "ไม่มีงานที่เปิดรับในขณะนี้",
+        noJobAvailable: "ไ��่มีงานที่เปิดรับในขณะนี้",
         search: "ค้นหา",
         apply: "สมัคร",
         get: "รับ",
@@ -363,7 +383,19 @@ i18n.use(initReactI18next).init({
         back: "กลับ",
         update: "อัปเดต",
         companySetup: "กรอกข้อมูลบริษัท",
-        companyNameRequired: "ชื่อบริษัทจำเป็น",
+        companyNameRequired: "กรุณาระบุชื่อบริษัท",
+        agentNameRequired: "กรุณาระบุชื่อตัวแทน",
+        agentNameMinLength: "ชื่อตัวแทนต้องมีความยาวอย่างน้อย 3 ตัวอักษร",
+        agentNameMaxLength: "ชื่อตัวแทนต้องไม่เกิน 100 ตัวอักษร",
+        agentNameOnlyThaiEnglish: "ชื่อตัวแทนต้องเป็นภาษาไทยหรืออังกฤษเท่านั้น",
+        emailRequired: "กรุณาระบุอีเมล",
+        invalidEmailFormat: "รูปแบบอีเมลไม่ถูกต้อง",
+        descriptionRequired: "กรุณาระบุคำอธิบาย",
+        descriptionMinLength: "คำอธิบายต้องมีความยาวอย่างน้อย 10 ตัวอักษร",
+        descriptionMaxLength: "คำอธิบายต้องไม่เกิน 400 ตัวอักษร",
+        locationRequired: "กรุณาระบุสถานที่",
+        phoneNumberRequired: "กรุณาระบุหมายเลขโทรศัพท์",
+        phoneNumberLength: "หมายเลขโทรศัพท์ต้องมีความยาวระหว่าง 8 ถึง 13 หลัก",
         companyNameMinLength: "ชื่อบริษัทต้องมีอย่างน้อย 2 ตัวอักษร",
         companyNameMaxLength: "ชื่อบริษัทต้องไม่มีความยาวมากกว่า 100 ตัวอักษร",
         companyRegisteredSuccess: "บริษัทลงทะเบียนสำเร็จ",
@@ -399,19 +431,20 @@ i18n.use(initReactI18next).init({
         enterFullname: "กรอกชื่อเต็มของคุณ",
         passwordError: "รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร",
         confirmPasswordError: "รหัสผ่านไม่ตรงกัน",
-        
+
         fullnameMinLength: "ชื่อเต็มต้องมีความยาวอย่างน้อย 5 ตัวอักษร",
         fullnameMaxLength: "ชื่อเต็มต้องไม่เกิน 30 ตัวอักษร",
-        fullnameOnlyThaiEnglish: "กรุณากรอกเฉพาะตัวอักษรภาษาไทยหรืออังกฤษเท่านั้น",
+        fullnameOnlyThaiEnglish:
+          "กรุณากรอกเฉพาะตัวอักษรภาษาไทยหรืออังกฤษเท่านั้น",
         phoneNumberOnlyDigits: "กรุณากรอกเฉพาะตัวเลขเท่านั้น",
-        phoneNumberLength: "หมายเลขโทรศัพท์ต้องมี 10 หลัก",
+        
         phoneNumberStartWithZero: "หมายเลขโทรศัพท์ต้องขึ้นต้นด้วยเลข 0",
-        emailRequired: "กรุณากรอกอีเมลของคุณ",
+       
         invalidEmail: "รูปแบบอีเมลไม่ถูกต้อง",
         passwordRequired: "กรุณากรอกรหัสผ่านของคุณ",
         passwordTooLong: "รหัสผ่านต้องไม่เกิน 30 ตัวอักษร",
         welcomeSubtitle: "ยินดีต้อนรับสู่เว็บไซต์ของเรา",
-        password:"รหัสผ่าน",
+        password: "รหัสผ่าน",
         enterPassword: "กรอกรหัสผ่าน",
         student: "นักเรียน",
         agent: "ตัวแทน",
@@ -421,13 +454,15 @@ i18n.use(initReactI18next).init({
         createNewAccount: "สร้าง",
         newAccount: "บัญชีใหม่ของคุณ",
         profilePicture: "รูปโปรไฟล์",
-        fullnameError: "กรุณากรอกชื่อเต็มระหว่าง 5 ถึง 50 ตัวอักษร ห้ามใ���้ตัวเลขหรืออักขระพิเศษ",
+        fullnameError:
+          "กรุณากรอกชื่อเต็มระหว่าง 5 ถึง 50 ตัวอักษร ห้ามใ้ตัวเลขหรืออักขระพิเศษ",
         phoneNumberError: "กรุณากรอกหมายเลขโทรศัพท์ 8-13 หลัก",
         roleError: "กรุณาเลือกบทบาทของคุณ",
         alreadyHaveAccount: "มีบัญชีอยู่แล้ว?",
         confirmPassword: "ยืนยันรหัสผ่าน",
-        
-        enterEmailForReset: "กรอกที่อยู่อีเมลของคุณ และเราจะส่งลิงก์สำหรับรีเซ็ตรหัสผ่านให้คุณ",
+
+        enterEmailForReset:
+          "กรอกที่อยู่อีเมลของคุณ และเราจะส่งลิงก์สำหรับรีเซ็ตรหัสผ่านให้คุณ",
         sendResetLink: "ส่งลิงก์รีเซ็ต",
         failedToSendResetEmail: "ไม่สามารถส่งอีเมลรีเซ็ตหัสผ่านไม้",
         emailSentSuccessfully: "ส่งอีเมลสำเร็จแล้ว!",
@@ -440,23 +475,27 @@ i18n.use(initReactI18next).init({
         timeRemaining: "เวลาที่เหลือ",
         verifyOTP: "ยืนยันรหัส OTP",
         resendOTP: "ส่งรหัส OTP อีกครั้ง",
-        didntReceiveOTP: "ไม่ได้รับรหัส OTP? ตรวจสอบอีเมลขยะหรือคลิก \"ส่งรหัส OTP อีกครั้ง\"",
+        didntReceiveOTP:
+          'ไม่ได้รับรหัส OTP? ตรวจสอบอีเมลขยะหรือคลิก "ส่งรหัส OTP อีกครั้ง"',
         invalidOTP: "รหัส OTP ไม่ถูกต้อง กรุณาลองอีกครั้ง",
         newOTPSent: "ส่งรหัส OTP ใหม่สำเร็จ!",
         failedToResendOTP: "ไม่สามารถส่งรหัส OTP ใหม่ได้",
         pleaseWaitForOTP: "กรุณารอให้รหัส OTP ปัจจุบันหมดอายุก่อนขอรหัสใหม่",
         passwordResetSuccessful: "รีเซ็ตรหัสผ่านสำเร็จ!",
-        passwordResetSuccessMessage: "รหัสผ่านของคุณได้รับการรีเซ็ตเรียบร้อยแล้ว",
+        passwordResetSuccessMessage:
+          "รหัสผ่านของคุณได้รับการรีเซ็ตเรียบร้อยแล้ว",
         redirectingToLoginPage: "กำลังนำทางไปยังหน้าเข้าสู่ระบบใน",
         resetPassword: "รีเซ็ตรหัสผ่าน",
-        enterNewPasswordBelow: "กรอกรหัสผ่านใหม่ของคุณด้านล่างเพื่อเข้าถึงบัญชีของคุณอีกครั้ง",
+        enterNewPasswordBelow:
+          "กรอกรหัสผ่านใหม่ของคุณด้านล่างเพื่อเข้าถึงบัญชีของคุณอีกครั้ง",
         newPassword: "รหัสผ่านใหม่",
         confirmNewPassword: "ยืนยันรหัสผ่านใหม่",
         passwordLengthCriterion: "รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร",
         passwordLowercaseCriterion: "รหัสผ่านต้องมีตัวพิมพ์เล็กอย่างน้อย 1 ตัว",
         passwordUppercaseCriterion: "รหัสผ่านต้องมีตัวพิมพ์ใหญ่อย่างน้อย 1 ตัว",
         passwordNumberCriterion: "รหัสผ่านต้องมีตัวเลขอย่างน้อย 1 ตัว",
-        passwordSpecialCharCriterion: "รหัสผ่านต้���งมีอักขระพิเศษอย่างน้อย 1 ตัว (!@#$%^&*)",
+        passwordSpecialCharCriterion:
+          "รหัสผ่านต้งมีอักขระพิเศษอย่างน้อย 1 ตัว (!@#$%^&*)",
         passwordsDoNotMatch: "รหัสผ่านไม่ตรงกัน",
         verifyYourEmail: "Verify Your Email",
         verificationCodeSentTo: "We've sent a verification code to",
@@ -464,7 +503,8 @@ i18n.use(initReactI18next).init({
         verifyingEmail: "Verifying email...",
         verifyEmail: "Verify Email",
         resendCode: "Resend Code",
-        didntReceiveCode: "Didn't receive the code? Check your spam email or click \"Resend Code\".",
+        didntReceiveCode:
+          'Didn\'t receive the code? Check your spam email or click "Resend Code".',
         youHaveNotAppliedForAnyJobs: "คุณยังไม่ได้สมัครงานใดๆ",
         noLogo: "ไม่มีโลโก้",
         pending: "รอดำเนินการ",
@@ -479,7 +519,8 @@ i18n.use(initReactI18next).init({
         signupButton: "สมัครสมาชิก",
         fillAllFieldsCorrectly: "กรุณากรอกข้อมูลให้ถูกต้อง",
         loginHere: "เข้าสู่ระบบที่นี่",
-        fullnameValidation: "กรุณากรอกชื่อเต็มของคุณ (5-50 ตัวอักษร ไม่ใช้ตัวเลขหรืออักขระพิเศษ)",
+        fullnameValidation:
+          "กรุณากรอกชื่อเต็มของคุณ (5-50 ตัวอักษร ไม่ใช้ตัวเลขหรืออักขระพิเศษ)",
         phoneNumberValidation: "กรุณากรอกหมายเลขโทรศัพท์ที่ถูกต้อง 8-13 หลัก",
         emailValidation: "กรุณากรอกอีเมลที่ถูกต้อง",
         passwordValidation: "รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร",
@@ -489,7 +530,8 @@ i18n.use(initReactI18next).init({
         // Add new translations for email validation
         emailEnterEnglish: "กรุณากรอกเป็นภาษาอังกฤษ",
         emailMaxCharacters: "กรุณากรอกไม่เกิน 20 ตัวอักษรก่อน '@'",
-        emailValidDomains: "กรุณากรอกอีเมลที่ถูกต้อง (ใช้เฉพาะ @gmail.com, @outlook.com, @yahoo.com, หรือ @hotmail.com)",
+        emailValidDomains:
+          "กรุณากรอกอีเมลที่ถูกต้อง (ใช้เฉพาะ @gmail.com, @outlook.com, @yahoo.com, หรือ @hotmail.com)",
         // Add new translation for file validation
         fileValidationMessage: "กรุณาเลือกไฟล์ .png .jpeg .jpg เท่านั้น",
       },

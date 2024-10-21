@@ -47,43 +47,41 @@ const CompanySetup = () => {
     const newErrors = {};
 
     if (!input.name.trim()) {
-      newErrors.name = "Please specify the company name.";
+      newErrors.name = t("companyNameRequired");
     }
 
     if (!input.agent_fullname.trim()) {
-      newErrors.agent_fullname = "Please specify the agent name.";
+      newErrors.agent_fullname = t("agentNameRequired");
     } else if (input.agent_fullname.trim().length < 3) {
-      newErrors.agent_fullname =
-        "Agent name must be at least 3 characters long";
+      newErrors.agent_fullname = t("agentNameMinLength");
     } else if (input.agent_fullname.trim().length > 100) {
-      newErrors.agent_fullname = "Agent name must not exceed 100 characters";
+      newErrors.agent_fullname = t("agentNameMaxLength");
     } else if (!/^[a-zA-Zก-๙\s]+$/.test(input.agent_fullname)) {
-      newErrors.agent_fullname =
-        "Agent name can only contain Thai or English letters";
+      newErrors.agent_fullname = t("agentNameOnlyThaiEnglish");
     }
 
     if (!input.email.trim()) {
-      newErrors.email = "Please specify the email.";
+      newErrors.email = t("emailRequired");
     } else if (!/\S+@\S+\.\S+/.test(input.email)) {
-      newErrors.email = "Invalid email format";
+      newErrors.email = t("invalidEmailFormat");
     }
 
     if (!input.description.trim()) {
-      newErrors.description = "Please specify the Description.";
+      newErrors.description = t("descriptionRequired");
     } else if (input.description.length < 10) {
-      newErrors.description = "Description must be at least 10 characters long";
+      newErrors.description = t("descriptionMinLength");
     } else if (input.description.length > 400) {
-      newErrors.description = "Description must not exceed 400 characters";
+      newErrors.description = t("descriptionMaxLength");
     }
 
     if (!input.location.trim()) {
-      newErrors.location = "Please specify the Location.";
+      newErrors.location = t("locationRequired");
     }
 
     if (!input.phoneNumber.trim()) {
-      newErrors.phoneNumber = "Please specify the Phone number.";
-    } else if (!/^\d{10}$/.test(input.phoneNumber)) {
-      newErrors.phoneNumber = "Phone number must be exactly 10 digits";
+      newErrors.phoneNumber = t("phoneNumberRequired");
+    } else if (!/^\d{8,13}$/.test(input.phoneNumber)) {
+      newErrors.phoneNumber = t("phoneNumberLength");
     }
 
     setErrors(newErrors);
