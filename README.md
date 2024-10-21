@@ -58,7 +58,7 @@ This is the backend server for THE TRAINEE, handling API requests, database oper
 ## Available Scripts
 
 - `npm run dev`: Starts the development server with nodemon
-- `npm start`: Starts the server in production mode
+
 
 ## Environment Variables
 
