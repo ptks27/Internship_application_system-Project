@@ -36,7 +36,7 @@ Create a `.env` file in the root directory and add the following:
   - `redux/`: Redux store and slices
   - `utils/`: Utility functions and constants
  
-  # THE TRAINEE - Backend
+# THE TRAINEE - Backend
 
 This is the backend server for THE TRAINEE, handling API requests, database operations, and email services.
 
