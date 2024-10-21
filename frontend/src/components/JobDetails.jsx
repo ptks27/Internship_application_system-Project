@@ -15,6 +15,7 @@ import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { CircleUserRound, Mail, MapPinned, Phone, ArrowLeft } from "lucide-react";
 import { useTranslation } from 'react-i18next';
+import Swal from 'sweetalert2';
 
 const JobDetails = () => {
   const { t, i18n } = useTranslation(); // Get the i18n instance
@@ -30,23 +31,35 @@ const JobDetails = () => {
   const [isApplied, setIsApplied] = useState(false); // สถานะการสมัคร
 
   const applyJobHandler = async () => {
-    try {
-      const res = await axios.get(`${Application_API}/apply/${jobId}`, {
-        withCredentials: true,
-      });
+    const result = await Swal.fire({
+      title: t('applyConfirmation'),
+      text: t('applyWarning'),
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#7209b7',
+      cancelButtonColor: '#d33',
+      confirmButtonText: t('yesApply'),
+      cancelButtonText: t('cancel')
+    });
 
-      if (res.data.success) {
-        // อัพเดทสถานะการสมัคร
-        setIsApplied(true);
-        toast.success(res.data.message);
-      } else {
-        toast.error(res.data.message);
+    if (result.isConfirmed) {
+      try {
+        const res = await axios.get(`${Application_API}/apply/${jobId}`, {
+          withCredentials: true,
+        });
+
+        if (res.data.success) {
+          setIsApplied(true);
+          toast.success(res.data.message);
+        } else {
+          toast.error(res.data.message);
+        }
+      } catch (error) {
+        const errorMessage =
+          error.response?.data?.message ||
+          t('applyError');
+        toast.error(errorMessage);
       }
-    } catch (error) {
-      const errorMessage =
-        error.response?.data?.message ||
-        "An error occurred while applying for the job.";
-      toast.error(errorMessage);
     }
   };
 

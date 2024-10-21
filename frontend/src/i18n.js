@@ -267,6 +267,11 @@ i18n.use(initReactI18next).init({
         fileValidationMessage: "Please select files .png .jpeg .jpg only.",
         fillAllFieldsCorrectly: "Please fill in all required fields correctly.",
         expiringsSoon: "About to expire",
+        applyConfirmation: "Are you sure?",
+        applyWarning: "You won't be able to cancel this application once submitted!",
+        yesApply: "Yes, apply!",
+        
+        applyError: "An error occurred while applying for the job.",
       },
     },
     th: {
@@ -283,7 +288,7 @@ i18n.use(initReactI18next).init({
         chooseJobInterest: "เลือกงานที่คุณสนใจ",
         latestAndTop: "ล่าสุดและยอดนิยม",
         jobOpenings: "ตำแหน่งงานที่เปิดรับ",
-        noJobAvailable: "ไ��่มีงานที่เปิดรับในขณะนี้",
+        noJobAvailable: "ไ่มีงานที่เปิดรับในขณะนี้",
         search: "ค้นหา",
         apply: "สมัคร",
         get: "รับ",
@@ -534,6 +539,11 @@ i18n.use(initReactI18next).init({
           "กรุณากรอกอีเมลที่ถูกต้อง (ใช้เฉพาะ @gmail.com, @outlook.com, @yahoo.com, หรือ @hotmail.com)",
         // Add new translation for file validation
         fileValidationMessage: "กรุณาเลือกไฟล์ .png .jpeg .jpg เท่านั้น",
+        applyConfirmation: "คุณแน่ใจหรือไม่?",
+        applyWarning: "คุณจะไม่สามารถยกเลิกการสมัครนี้ได้หลังจากส่งแล้ว!",
+        yesApply: "ใช่, สมัคร!",
+        
+        applyError: "เกิดข้อผิดพลาดขณะสมัครงาน",
       },
     },
   },
