@@ -119,7 +119,8 @@ i18n.use(initReactI18next).init({
         agentNameRequired: "Please specify the agent name.",
         agentNameMinLength: "Agent name must be at least 3 characters long",
         agentNameMaxLength: "Agent name must not exceed 100 characters",
-        agentNameOnlyThaiEnglish: "Agent name can only contain Thai or English letters",
+        agentNameOnlyThaiEnglish:
+          "Agent name can only contain Thai or English letters",
         emailRequired: "Please specify the email.",
         invalidEmailFormat: "Invalid email format",
         descriptionRequired: "Please specify the Description.",
@@ -164,9 +165,9 @@ i18n.use(initReactI18next).init({
         fullnameMaxLength: "Full name must not exceed 30 characters",
         fullnameOnlyThaiEnglish: "Please enter only Thai or English characters",
         phoneNumberOnlyDigits: "Please enter only digits",
-        
+
         phoneNumberStartWithZero: "Phone number must start with 0",
-        
+
         invalidEmail: "Invalid email format",
         passwordRequired: "Please enter your password",
         passwordTooLong: "Password must not exceed 30 characters",
@@ -268,9 +269,10 @@ i18n.use(initReactI18next).init({
         fillAllFieldsCorrectly: "Please fill in all required fields correctly.",
         expiringsSoon: "About to expire",
         applyConfirmation: "Are you sure?",
-        applyWarning: "You won't be able to cancel this application once submitted!",
+        applyWarning:
+          "You won't be able to cancel this application once submitted!",
         yesApply: "Yes, apply!",
-        
+
         applyError: "An error occurred while applying for the job.",
       },
     },
@@ -442,9 +444,9 @@ i18n.use(initReactI18next).init({
         fullnameOnlyThaiEnglish:
           "กรุณากรอกเฉพาะตัวอักษรภาษาไทยหรืออังกฤษเท่านั้น",
         phoneNumberOnlyDigits: "กรุณากรอกเฉพาะตัวเลขเท่านั้น",
-        
+
         phoneNumberStartWithZero: "หมายเลขโทรศัพท์ต้องขึ้นต้นด้วยเลข 0",
-       
+
         invalidEmail: "รูปแบบอีเมลไม่ถูกต้อง",
         passwordRequired: "กรุณากรอกรหัสผ่านของคุณ",
         passwordTooLong: "รหัสผ่านต้องไม่เกิน 30 ตัวอักษร",
@@ -542,7 +544,7 @@ i18n.use(initReactI18next).init({
         applyConfirmation: "คุณแน่ใจหรือไม่?",
         applyWarning: "คุณจะไม่สามารถยกเลิกการสมัครนี้ได้หลังจากส่งแล้ว!",
         yesApply: "ใช่, สมัคร!",
-        
+
         applyError: "เกิดข้อผิดพลาดขณะสมัครงาน",
       },
     },

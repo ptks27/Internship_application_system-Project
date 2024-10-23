@@ -45,7 +45,8 @@ const Jobs = () => {
       filteredJobs = filteredJobs.filter((job) => {
         const jobSalary = parseFloat(job.salary);
         return salaryRange.some(
-          (range) => jobSalary >= range.min && jobSalary <= range.max
+          (range) => range && range.min !== null && range.max !== null && 
+                     jobSalary >= range.min && jobSalary <= range.max
         );
       });
     }
