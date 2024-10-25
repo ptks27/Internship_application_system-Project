@@ -16,6 +16,7 @@ import { Button } from "./ui/button";
 import { CircleUserRound, Mail, MapPinned, Phone, ArrowLeft } from "lucide-react";
 import { useTranslation } from 'react-i18next';
 import Swal from 'sweetalert2';
+import { addNotification, updateNotification } from '../redux/notificationSlice';
 
 const JobDetails = () => {
   const { t, i18n } = useTranslation(); // Get the i18n instance
@@ -51,6 +52,23 @@ const JobDetails = () => {
         if (res.data.success) {
           setIsApplied(true);
           toast.success(res.data.message);
+          
+          // Add the new notification to the Redux store for the applicant
+          if (res.data.notification) {
+            const newNotification = {
+              ...res.data.notification,
+              companyName: singleCompany?.name || t('unknownCompany'),
+              jobTitle: singleJob?.title || t('unknownJob')
+            };
+            dispatch(addNotification(newNotification));
+            
+            // Update the notification immediately with company name and job title
+            dispatch(updateNotification({
+              notification_id: newNotification.notification_id,
+              companyName: singleCompany?.name,
+              jobTitle: singleJob?.title
+            }));
+          }
         } else {
           toast.error(res.data.message);
         }

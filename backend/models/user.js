@@ -52,6 +52,10 @@ const userSchema = new mongoose.Schema(
     verificationExpiresAt: Date,
     resetPasswordToken: String,
     resetPasswordExpiresAt: Date,
+    notifications: [{
+      type: Number,
+      ref: 'Notification'
+    }],
   },
   { timestamps: true }
 );

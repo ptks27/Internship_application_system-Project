@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 import { MoreHorizontal, CheckCircle, XCircle } from "lucide-react"; // Import icons
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import {
@@ -79,18 +79,45 @@ const ApplicantsTable = () => {
     if (!dateString) return "N/A";
     const date = new Date(dateString);
     const day = date.getDate();
-    
+
     // Define month names for both English and Thai
     const monthNames = {
-      en: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-      th: ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."]
+      en: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
+      th: [
+        "ม.ค.",
+        "ก.พ.",
+        "มี.ค.",
+        "เม.ย.",
+        "พ.ค.",
+        "มิ.ย.",
+        "ก.ค.",
+        "ส.ค.",
+        "ก.ย.",
+        "ต.ค.",
+        "พ.ย.",
+        "ธ.ค.",
+      ],
     };
 
     // Select the appropriate month name based on the provided language
     const month = monthNames[language][date.getMonth()];
 
     // Adjust the year based on the language
-    const year = language === 'th' ? date.getFullYear() + 543 : date.getFullYear();
+    const year =
+      language === "th" ? date.getFullYear() + 543 : date.getFullYear();
 
     return `${day} ${month} ${year}`;
   };
@@ -98,16 +125,30 @@ const ApplicantsTable = () => {
   return (
     <div className="overflow-x-auto rounded-lg shadow">
       <Table>
-        <TableCaption>{t('recentAppliedUsers')}</TableCaption>
+        <TableCaption>{t("recentAppliedUsers")}</TableCaption>
         <TableHeader>
           <TableRow className="bg-[#723bcf] hover:bg-[#5f31ad]">
-            <TableHead className="bg-purple-700 text-white">{t('name')}</TableHead>
-            <TableHead className="bg-purple-700 text-white hidden sm:table-cell">{t('email')}</TableHead>
-            <TableHead className="bg-purple-700 text-white hidden md:table-cell">{t('phoneNumber')}</TableHead>
-            <TableHead className="bg-purple-700 text-white hidden lg:table-cell">{t('resume')}</TableHead>
-            <TableHead className="bg-purple-700 text-white hidden xl:table-cell">{t('date')}</TableHead>
-            <TableHead className="bg-purple-700 text-white">{t('status')}</TableHead>
-            <TableHead className="bg-purple-700 text-white text-right">{t('action')}</TableHead>
+            <TableHead className="bg-purple-700 text-white">
+              {t("name")}
+            </TableHead>
+            <TableHead className="bg-purple-700 text-white hidden sm:table-cell">
+              {t("email")}
+            </TableHead>
+            <TableHead className="bg-purple-700 text-white hidden md:table-cell">
+              {t("phoneNumber")}
+            </TableHead>
+            <TableHead className="bg-purple-700 text-white hidden lg:table-cell">
+              {t("resume")}
+            </TableHead>
+            <TableHead className="bg-purple-700 text-white hidden xl:table-cell">
+              {t("date")}
+            </TableHead>
+            <TableHead className="bg-purple-700 text-white">
+              {t("status")}
+            </TableHead>
+            <TableHead className="bg-purple-700 text-white text-right">
+              {t("action")}
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -134,7 +175,8 @@ const ApplicantsTable = () => {
                       rel="noopener noreferrer"
                       className="text-[#ff914d] font-bold cursor-pointer"
                     >
-                      {item?.applicant?.profile?.resumeOriginalName || t('viewResume')}
+                      {item?.applicant?.profile?.resumeOriginalName ||
+                        t("viewResume")}
                     </a>
                   ) : (
                     <span>N/A</span>
@@ -187,10 +229,10 @@ const ApplicantsTable = () => {
           disabled={currentPage === 1}
           className="px-3 py-1 bg-purple-600 text-white rounded-md disabled:bg-gray-300 disabled:cursor-not-allowed"
         >
-          {t('previous')}
+          {t("previous")}
         </button>
         <span className="text-sm">
-          {t('page')} {currentPage} {t('of')} {totalPages}
+          {t("page")} {currentPage} {t("of")} {totalPages}
         </span>
         <button
           onClick={() =>
@@ -199,7 +241,7 @@ const ApplicantsTable = () => {
           disabled={currentPage === totalPages}
           className="px-3 py-1 bg-purple-600 text-white rounded-md disabled:bg-gray-300 disabled:cursor-not-allowed"
         >
-          {t('next')}
+          {t("next")}
         </button>
       </div>
     </div>

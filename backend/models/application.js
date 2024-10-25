@@ -16,6 +16,7 @@ const applicationSchema = new mongoose.Schema({
     jobTitle: {  // Add this field
         type: String
     },
+    
     applicant: {
         type: Number,
         ref: 'User', // Referencing the user_id field in User schema

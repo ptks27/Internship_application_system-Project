@@ -8,4 +8,4 @@ export const Application_API = "http://localhost:9000/api/v1/application"
 
 export { USER_API_END_POINT };
 
-export const NOTIFICATION_API = "http://localhost:9000/api/v1/notification";
+export const NOTIFICATION_API = "http://localhost:9000/api/v1/notifications";  // Note the plural 'notifications';

@@ -7,6 +7,7 @@ import userRoute from "./routes/userRoute.js"
 import companyRoute from "./routes/companyRoute.js"
 import jobRoute from "./routes/jobRoute.js"
 import applicationRoute from "./routes/applicationRoute.js"
+import notificationRoute from './routes/notificationRoute.js'
 
 dotenv.config({});
 
@@ -32,7 +33,7 @@ app.use("/api/v1/user",userRoute);
 app.use("/api/v1/company",companyRoute);
 app.use("/api/v1/job",jobRoute);
 app.use("/api/v1/application",applicationRoute);
-
+app.use("/api/v1/notifications", notificationRoute);  // Note the plural 'notifications'
 
 
 app.listen(PORT, () => {

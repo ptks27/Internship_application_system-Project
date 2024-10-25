@@ -5,11 +5,11 @@ import logo from "../../assets/logo.png";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
-import { LogOut, User2 } from "lucide-react";
+import { LogOut, User2, Bell, Trash2, MoreVertical } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 import axios from "axios";
-import { USER_API_END_POINT } from "../utils/constant";
+import { USER_API_END_POINT, NOTIFICATION_API } from "../utils/constant";
 import { setUser } from "@/redux/authSlice";
 import { resetJobs } from "@/redux/jobSlice";
 import { changeLanguage } from "@/i18n";
@@ -20,9 +20,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import useNotifications from "../../hooks/useNotifications";
+import { markAsRead, removeNotification, markAllAsRead } from "../../redux/notificationSlice";
+import { format } from "date-fns";
+import { th, enUS } from "date-fns/locale";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import i18n from "../../i18n"; // ปรับเส้นทางตามโครงสร้างโปรเจ็คของคุณ
 
 function Navbar() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { user } = useSelector((store) => store.auth);
 
   const dispatch = useDispatch();
@@ -79,11 +90,144 @@ function Navbar() {
     changeLanguage(value);
   };
 
+  useNotifications(); // Use the hook to fetch notifications
+  const { notifications, unreadCount } = useSelector(
+    (state) => state.notification
+  );
+
+  const handleMarkAsRead = async (notificationId) => {
+    try {
+      await axios.put(
+        `${NOTIFICATION_API}/${notificationId}/read`,
+        {},
+        { withCredentials: true }
+      );
+      dispatch(markAsRead(notificationId));
+    } catch (error) {
+      console.error("Error marking notification as read:", error);
+    }
+  };
+
+  const handleNotificationClick = (notification) => {
+    if (notification.type === "new_application") {
+      navigate(`/admin/jobs`);
+    } else if (notification.type === "job_application") {
+      navigate(`/history`);
+    }
+    handleMarkAsRead(notification.notification_id);
+  };
+
+  const formatNotificationTime = (createdAt) => {
+    const date = new Date(createdAt);
+    const now = new Date();
+    const locale = i18n.language === "th" ? th : enUS;
+    
+    if (i18n.language === "th") {
+      // Thai format
+      if (date.getDate() === now.getDate() && date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()) {
+        return format(date, "'วันนี้' p", { locale });
+      } else if (date.getFullYear() === now.getFullYear()) {
+        return format(date, "d MMM p", { locale });
+      } else {
+        return format(date, "d MMM yyyy p", { locale });
+      }
+    } else {
+      // English format
+      if (date.getDate() === now.getDate() && date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()) {
+        return format(date, "'Today at' p", { locale });
+      } else if (date.getFullYear() === now.getFullYear()) {
+        return format(date, "MMM d 'at' p", { locale });
+      } else {
+        return format(date, "MMM d, yyyy 'at' p", { locale });
+      }
+    }
+  };
+
+  const handleDeleteNotification = async (notificationId, event) => {
+    event.stopPropagation();
+    try {
+      await axios.delete(`${NOTIFICATION_API}/${notificationId}`, {
+        withCredentials: true,
+      });
+      dispatch(removeNotification(notificationId));
+      toast.success(t("notificationDeleted"));
+    } catch (error) {
+      console.error("Error deleting notification:", error);
+      toast.error(t("errorDeletingNotification"));
+    }
+  };
+
+  const renderNotificationMessage = (notification) => {
+    const companyName = notification.companyName || t("unknownCompany");
+
+    if (notification.type === "job_application") {
+      return (
+        <>
+          <span className="text-black">{t("youHaveAppliedForTheJob")}</span>
+          <span className="text-[#7038ff] font-semibold">
+            {notification.jobTitle || notification.message.split(": ")[1]}
+          </span>
+          <span className="text-black"> {t("atCompany")} </span>
+          <span className="text-[#ff914d] font-semibold">{companyName}</span>
+        </>
+      );
+    } else if (notification.type === "new_application") {
+      return (
+        <>
+          <span className="text-black">{t("newApplicationReceived")}</span>
+          <span className="text-[#7038ff] font-semibold">
+            {notification.jobTitle || notification.message.split(": ")[1]}
+          </span>
+        </>
+      );
+    } else if (notification.type === "application_status_update") {
+      const [fullJobTitle, status] = notification.message.split(" has been ");
+      const jobTitle = fullJobTitle
+        .replace("Your application for ", "")
+        .replace(" position", "")
+        .replace(" at Unknown Company", "");
+      return (
+        <>
+          <span className="text-black">{t("yourApplicationFor")} </span>
+          <span className="text-[#7038ff] font-semibold">{jobTitle}</span>
+          <span className="text-black"> {t("positionHasBeen")} </span>
+          <span
+            className={`font-semibold ${
+              status.toLowerCase() === "accepted"
+                ? "text-green-500"
+                : "text-red-500"
+            }`}
+          >
+            {t(status.toLowerCase())}
+          </span>
+        </>
+      );
+    } else {
+      return <span>{notification.message}</span>;
+    }
+  };
+
+  const handleMarkAllAsRead = async () => {
+    try {
+      // Call API to mark all notifications as read
+      await axios.put(`${NOTIFICATION_API}/mark-all-read`, {}, {
+        withCredentials: true,
+      });
+      
+      // Update local state
+      dispatch(markAllAsRead());
+      toast.success(t("allNotificationsMarkedAsRead"));
+    } catch (error) {
+      console.error("Error marking all notifications as read:", error);
+      toast.error(t("errorMarkingNotificationsAsRead"));
+    }
+  };
+
   return (
     <div className="bg-[#f4f4f4] my-3">
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16 px-4 md:px-8">
-        {/* Logo */}
-        <div className="-ml-4">
+        {/* Logo - Updated classes */}
+        <div className="ml-3 md:-ml-4">
           <Link to="/home">
             <img
               src={logo}
@@ -310,13 +454,116 @@ function Navbar() {
                 </li>
               )}
 
+              {/* Add Notifications to mobile menu */}
+              {user && (
+                <li className="w-full max-w-[250px]">
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <div className="relative cursor-pointer flex items-center justify-center w-full py-2 px-4 bg-gray-200 rounded-md">
+                        <Bell size={20} className="mr-2" />
+                        <span>{t("notifications")}</span>
+                        {unreadCount > 0 && (
+                          <span className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                            {unreadCount}
+                          </span>
+                        )}
+                      </div>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-full max-w-sm p-0">
+                      <div className="max-h-[50vh] overflow-y-auto">
+                        <div className="flex justify-between items-center p-3 border-b">
+                          <h3 className="font-semibold">
+                            {t("notifications")}
+                          </h3>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={handleMarkAllAsRead}
+                            disabled={notifications.length === 0 || notifications.every(n => n.isRead)}
+                          >
+                            {t("markAllAsRead")}
+                          </Button>
+                        </div>
+                        {notifications.length > 0 ? (
+                          notifications.map((notification) => (
+                            <div
+                              key={notification.notification_id}
+                              className={`p-3 cursor-pointer hover:bg-gray-100 border-b ${
+                                notification.isRead ? "bg-gray-50" : "bg-white"
+                              } relative`}
+                              onClick={() => handleNotificationClick(notification)}
+                            >
+                              <div className="flex justify-between items-start space-x-2">
+                                <div className="flex-grow">
+                                  <p
+                                    className={`text-sm ${
+                                      notification.isRead
+                                        ? "text-gray-600"
+                                        : "text-black font-semibold"
+                                    }`}
+                                  >
+                                    {renderNotificationMessage(notification)}
+                                  </p>
+                                  <div className="flex items-center justify-between mt-1">
+                                    <p className="text-xs text-gray-500">
+                                      {notification.type === "new_application"
+                                        ? t("newApplicationNotification")
+                                        : t("jobApplicationNotification")}
+                                    </p>
+                                    <span className="text-xs text-gray-500">
+                                      {formatNotificationTime(
+                                        notification.createdAt
+                                      )}
+                                    </span>
+                                  </div>
+                                </div>
+                                <div className="flex-shrink-0">
+                                  <DropdownMenu>
+                                    <DropdownMenuTrigger
+                                      asChild
+                                      onClick={(e) => e.stopPropagation()}
+                                    >
+                                      <button className="focus:outline-none p-1 rounded-full hover:bg-gray-200">
+                                        <MoreVertical size={16} />
+                                      </button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent align="end">
+                                      <DropdownMenuItem
+                                        onClick={(e) =>
+                                          handleDeleteNotification(
+                                            notification.notification_id,
+                                            e
+                                          )
+                                        }
+                                        className="text-red-500 focus:text-red-500 focus:bg-red-50"
+                                      >
+                                        <Trash2 className="mr-2 h-4 w-4 text-red-500" />
+                                        <span>{t("deleteNotification")}</span>
+                                      </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                  </DropdownMenu>
+                                </div>
+                              </div>
+                            </div>
+                          ))
+                        ) : (
+                          <div className="p-3 text-center text-gray-500">
+                            {t("noNotifications")}
+                          </div>
+                        )}
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                </li>
+              )}
+
               {/* Add Language Select to mobile menu */}
               <li className="w-full max-w-[250px]">
                 <Select
                   onValueChange={handleLanguageChange}
                   defaultValue={i18n.language}
                 >
-                  <SelectTrigger className="w-full border-none bg-transparent focus:ring-0 focus:ring-offset-0">
+                  <SelectTrigger className="w-full bg-gray-200 border-none focus:ring-0 focus:ring-offset-0">
                     <SelectValue placeholder={i18n.language.toUpperCase()} />
                   </SelectTrigger>
                   <SelectContent>
@@ -346,7 +593,7 @@ function Navbar() {
         </div>
 
         {/* Login Button or User Avatar */}
-        <div className="ml-auto hidden md:block">
+        <div className="ml-auto hidden md:flex items-center space-x-4">
           {!user ? (
             <Link to="/login">
               <Button className="rounded-full px-6 py-2 text-sm md:px-10 md:py-2 font-bold bg-black text-white hover:bg-[#5721d4]">
@@ -354,7 +601,106 @@ function Navbar() {
               </Button>
             </Link>
           ) : (
-            <div>
+            <>
+              {/* Notifications */}
+              <Popover>
+                <PopoverTrigger asChild>
+                  <div className="relative cursor-pointer">
+                    <Bell size={20} />
+                    {unreadCount > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">
+                        {unreadCount}
+                      </span>
+                    )}
+                  </div>
+                </PopoverTrigger>
+                <PopoverContent className="w-full max-w-sm p-0 sm:w-96">
+                  <div className="max-h-[70vh] overflow-y-auto">
+                    <div className="flex justify-between items-center p-3 border-b">
+                      <h3 className="font-semibold">
+                        {t("notifications")}
+                      </h3>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={handleMarkAllAsRead}
+                        disabled={notifications.length === 0 || notifications.every(n => n.isRead)}
+                      >
+                        {t("markAllAsRead")}
+                      </Button>
+                    </div>
+                    {notifications.length > 0 ? (
+                      notifications.map((notification) => (
+                        <div
+                          key={notification.notification_id}
+                          className={`p-3 cursor-pointer hover:bg-gray-100 border-b ${
+                            notification.isRead ? "bg-gray-50" : "bg-white"
+                          } relative`}
+                          onClick={() => handleNotificationClick(notification)}
+                        >
+                          <div className="flex justify-between items-start space-x-2">
+                            <div className="flex-grow">
+                              <p
+                                className={`text-sm ${
+                                  notification.isRead
+                                    ? "text-gray-600"
+                                    : "text-black font-semibold"
+                                }`}
+                              >
+                                {renderNotificationMessage(notification)}
+                              </p>
+                              <div className="flex items-center justify-between mt-1">
+                                <p className="text-xs text-gray-500">
+                                  {notification.type === "new_application"
+                                    ? t("newApplicationNotification")
+                                    : t("jobApplicationNotification")}
+                                </p>
+                                <span className="text-xs text-gray-500">
+                                  {formatNotificationTime(
+                                    notification.createdAt
+                                  )}
+                                </span>
+                              </div>
+                            </div>
+                            <div className="flex-shrink-0">
+                              <DropdownMenu>
+                                <DropdownMenuTrigger
+                                  asChild
+                                  onClick={(e) => e.stopPropagation()}
+                                >
+                                  <button className="focus:outline-none p-1 rounded-full hover:bg-gray-200">
+                                    <MoreVertical size={16} />
+                                  </button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end">
+                                  <DropdownMenuItem
+                                    onClick={(e) =>
+                                      handleDeleteNotification(
+                                        notification.notification_id,
+                                        e
+                                      )
+                                    }
+                                    className="text-red-500 focus:text-red-500 focus:bg-red-50"
+                                  >
+                                    <Trash2 className="mr-2 h-4 w-4 text-red-500" />
+                                    <span>{t("deleteNotification")}</span>
+                                  </DropdownMenuItem>
+                                </DropdownMenuContent>
+                              </DropdownMenu>
+                            </div>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="p-3 text-center text-gray-500">
+                        {t("noNotifications")}
+                      </div>
+                    )}
+                  </div>
+                </PopoverContent>
+              </Popover>
+
+              {/* User Avatar */}
               <Popover>
                 <PopoverTrigger asChild>
                   <Avatar className="cursor-pointer">
@@ -363,44 +709,45 @@ function Navbar() {
                 </PopoverTrigger>
                 <PopoverContent className="w-64 md:w-80 p-0 border-none shadow-lg">
                   <div className="p-4">
-                    <div className="flex gap-4 space-y-2">
-                      <Avatar className="cursor-pointer">
+                    <div className="flex gap-4 items-start">
+                      <Avatar className="w-16 h-16">
                         <AvatarImage src={user?.profile.profilePhoto} />
                       </Avatar>
                       <div>
-                        <h4 className="font-medium">{user?.fullname}</h4>
-                        <p className="text-sm text-muted-foreground">
-                          {user?.profile?.bio}
-                        </p>
+                        <h4 className="font-semibold text-lg">
+                          {user?.fullname}
+                        </h4>
+                        <p className="text-sm text-gray-600">{user?.email}</p>
+
+                        {user?.profile?.bio && (
+                          <p className="text-sm text-gray-600 mt-2">
+                            {user.profile.bio}
+                          </p>
+                        )}
                       </div>
                     </div>
                     <div className="flex flex-col text-gray-600 mt-4">
                       {user && user.role === "student" && (
-                        <div className="flex items-center gap-2 cursor-pointer py-2">
-                          <User2 size={18} />
-                          <Link
-                            to="/profile"
-                            className="text-sm hover:underline"
-                          >
-                            {t("viewProfile")}
-                          </Link>
-                        </div>
-                      )}
-
-                      <div className="flex items-center gap-2 cursor-pointer py-2">
-                        <LogOut size={18} />
-                        <button
-                          onClick={logoutHandler}
-                          className="text-sm hover:underline"
+                        <Link
+                          to="/profile"
+                          className="flex items-center gap-2 py-2 px-3 hover:bg-gray-100 rounded-md"
                         >
-                          {t("logout")}
-                        </button>
-                      </div>
+                          <User2 size={18} />
+                          <span className="text-sm">{t("viewProfile")}</span>
+                        </Link>
+                      )}
+                      <button
+                        onClick={logoutHandler}
+                        className="flex items-center gap-2 py-2 px-3 hover:bg-gray-100 rounded-md text-red-500"
+                      >
+                        <LogOut size={18} />
+                        <span className="text-sm">{t("logout")}</span>
+                      </button>
                     </div>
                   </div>
                 </PopoverContent>
               </Popover>
-            </div>
+            </>
           )}
         </div>
       </div>
