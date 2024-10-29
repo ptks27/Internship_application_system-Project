@@ -377,3 +377,134 @@ export const PASSWORD_RESET_REQUEST_TEMPLATE = `
 </body>
 </html>
 `;
+
+export const WELCOME_EMAIL_TEMPLATE = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome Email</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+    body {
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.6;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+    }
+    .email-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .header {
+      text-align: center;
+      color: #723bcf;
+      padding: 20px 0;
+    }
+    .content {
+      text-align: center;
+      background-color: #723bcf;
+      color: #ffffff;
+      padding: 20px;
+      margin: 0 auto;
+      width: 80%;
+      max-width: 400px;
+    }
+    .content p {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 50;
+      font-style: italic;
+      letter-spacing: 2px;
+      margin: 0;
+   color: #ffffff;
+    }
+    h1 {
+      font-size: 30px;
+      font-weight: bold;
+      margin: 0;
+    }
+    .container {
+      text-align: center; 
+      padding: 20px;
+      width: 80%;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    h2 {
+      color: #ffffff;
+      font-size: 24px;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+    .g {
+margin-top:30px
+}
+    .code {
+      font-size: 24px;
+      font-weight: bold;
+      color: #723bcf;
+      margin: 20px 0;
+    }
+    .b{
+     font-weight: bold;
+}
+    .footer {
+      text-align: center;
+      background-color: #723bcf;
+      color: #ffffff;
+      padding: 10px;
+      font-size: 12px;
+      margin: 0 auto;
+      width: 80%;
+      max-width: 400px;
+    }
+    @media only screen and (max-width: 480px) {
+      .email-container {
+        padding: 10px;
+      }
+      .content, .container, .footer {
+        width: 100%;
+      }
+      h1 {
+        font-size: 24px;
+      }
+      h2 {
+        font-size: 20px;
+      }
+      .code {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="email-container">
+    <div class="header">
+      <h1>THE TRAINEE.</h1>
+    </div>
+    <div class="content">
+<h2>Welcome to The Trainee</h2>
+<p>THANK YOU FOR YOUR INTEREST IN OUR WEBSITE.<br>
+MAY YOU GET YOUR DREAM JOB.</p>
+      
+    </div>
+    <div class="container">
+ 
+     <div class="g">
+       <p>Best wishes,</p>
+       <p >The Trainee Team</p><br>
+ </div>
+
+    </div>
+    <div class="footer">
+      <p>Copyrights © Company All Rights Reserved</p>
+    </div>
+  </div>
+</body>
+</html>
+`;
+

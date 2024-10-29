@@ -2,6 +2,7 @@ import {
   PASSWORD_RESET_REQUEST_TEMPLATE,
   PASSWORD_RESET_SUCCESS_TEMPLATE,
   VERIFICATION_EMAIL_TEMPLATE,
+  WELCOME_EMAIL_TEMPLATE,
 } from "./emailTemplates.js";
 import { mailtrapClient, sender } from "./mailtrap.config.js";
 
@@ -21,8 +22,9 @@ export const sendVerificationEmail = async (email, verificationToken) => {
       category: "Email Verification",
     });
 
-    const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error('Send email timeout')), 10000) // 10 วินาที timeout
+    const timeoutPromise = new Promise(
+      (_, reject) =>
+        setTimeout(() => reject(new Error("Send email timeout")), 10000) // 10 วินาที timeout
     );
 
     const response = await Promise.race([sendPromise, timeoutPromise]);
@@ -41,11 +43,9 @@ export const sendWelcomeEmail = async (email, fullname) => {
     const res = await mailtrapClient.send({
       from: sender,
       to: recipient,
-      template_uuid: "f4353869-f84b-47ba-903d-a67febf0779d",
-      template_variables: {
-        company_info_name: "THE TRAINEE.",
-        user_fullname: fullname,
-      },
+      subject: "Welcome THE TRAINEE.",
+      html: WELCOME_EMAIL_TEMPLATE.replace("{fullname}", fullname),
+      category: "Welcome Email",
     });
     console.log("Welcome email sent successfully", res);
   } catch (error) {
