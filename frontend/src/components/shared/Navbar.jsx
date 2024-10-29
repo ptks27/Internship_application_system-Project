@@ -5,7 +5,14 @@ import logo from "../../assets/logo.png";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
-import { LogOut, User2, Bell, Trash2, MoreVertical } from "lucide-react";
+import {
+  LogOut,
+  User2,
+  Bell,
+  Trash2,
+  MoreVertical,
+  Pencil,
+} from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 import axios from "axios";
@@ -21,7 +28,11 @@ import {
   SelectValue,
 } from "../ui/select";
 import useNotifications from "../../hooks/useNotifications";
-import { markAsRead, removeNotification, markAllAsRead } from "../../redux/notificationSlice";
+import {
+  markAsRead,
+  removeNotification,
+  markAllAsRead,
+} from "../../redux/notificationSlice";
 import { format } from "date-fns";
 import { th, enUS } from "date-fns/locale";
 import {
@@ -121,10 +132,14 @@ function Navbar() {
     const date = new Date(createdAt);
     const now = new Date();
     const locale = i18n.language === "th" ? th : enUS;
-    
+
     if (i18n.language === "th") {
       // Thai format
-      if (date.getDate() === now.getDate() && date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()) {
+      if (
+        date.getDate() === now.getDate() &&
+        date.getMonth() === now.getMonth() &&
+        date.getFullYear() === now.getFullYear()
+      ) {
         return format(date, "'วันนี้' p", { locale });
       } else if (date.getFullYear() === now.getFullYear()) {
         return format(date, "d MMM p", { locale });
@@ -133,7 +148,11 @@ function Navbar() {
       }
     } else {
       // English format
-      if (date.getDate() === now.getDate() && date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()) {
+      if (
+        date.getDate() === now.getDate() &&
+        date.getMonth() === now.getMonth() &&
+        date.getFullYear() === now.getFullYear()
+      ) {
         return format(date, "'Today at' p", { locale });
       } else if (date.getFullYear() === now.getFullYear()) {
         return format(date, "MMM d 'at' p", { locale });
@@ -210,16 +229,42 @@ function Navbar() {
   const handleMarkAllAsRead = async () => {
     try {
       // Call API to mark all notifications as read
-      await axios.put(`${NOTIFICATION_API}/mark-all-read`, {}, {
-        withCredentials: true,
-      });
-      
+      await axios.put(
+        `${NOTIFICATION_API}/mark-all-read`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+
       // Update local state
       dispatch(markAllAsRead());
       toast.success(t("allNotificationsMarkedAsRead"));
     } catch (error) {
       console.error("Error marking all notifications as read:", error);
       toast.error(t("errorMarkingNotificationsAsRead"));
+    }
+  };
+
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [newName, setNewName] = useState(user?.fullname || "");
+
+  const handleNameUpdate = async () => {
+    try {
+      const res = await axios.post(
+        `${USER_API_END_POINT}/profile/update`,
+        { fullname: newName },
+        { withCredentials: true }
+      );
+
+      if (res.data.success) {
+        dispatch(setUser({ ...user, fullname: newName }));
+        setIsEditingName(false);
+        toast.success(t("nameUpdatedSuccessfully"));
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error(t("errorUpdatingName"));
     }
   };
 
@@ -479,7 +524,10 @@ function Navbar() {
                             variant="ghost"
                             size="sm"
                             onClick={handleMarkAllAsRead}
-                            disabled={notifications.length === 0 || notifications.every(n => n.isRead)}
+                            disabled={
+                              notifications.length === 0 ||
+                              notifications.every((n) => n.isRead)
+                            }
                           >
                             {t("markAllAsRead")}
                           </Button>
@@ -491,7 +539,9 @@ function Navbar() {
                               className={`p-3 cursor-pointer hover:bg-gray-100 border-b ${
                                 notification.isRead ? "bg-gray-50" : "bg-white"
                               } relative`}
-                              onClick={() => handleNotificationClick(notification)}
+                              onClick={() =>
+                                handleNotificationClick(notification)
+                              }
                             >
                               <div className="flex justify-between items-start space-x-2">
                                 <div className="flex-grow">
@@ -617,14 +667,15 @@ function Navbar() {
                 <PopoverContent className="w-full max-w-sm p-0 sm:w-96">
                   <div className="max-h-[70vh] overflow-y-auto">
                     <div className="flex justify-between items-center p-3 border-b">
-                      <h3 className="font-semibold">
-                        {t("notifications")}
-                      </h3>
+                      <h3 className="font-semibold">{t("notifications")}</h3>
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={handleMarkAllAsRead}
-                        disabled={notifications.length === 0 || notifications.every(n => n.isRead)}
+                        disabled={
+                          notifications.length === 0 ||
+                          notifications.every((n) => n.isRead)
+                        }
                       >
                         {t("markAllAsRead")}
                       </Button>
@@ -713,17 +764,58 @@ function Navbar() {
                       <Avatar className="w-16 h-16">
                         <AvatarImage src={user?.profile.profilePhoto} />
                       </Avatar>
-                      <div>
-                        <h4 className="font-semibold text-lg">
-                          {user?.fullname}
-                        </h4>
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between">
+                          {isEditingName && user?.role === "agent" ? (
+                            <div className="flex items-center gap-2">
+                              <input
+                                type="text"
+                                value={newName}
+                                onChange={(e) => setNewName(e.target.value)}
+                                className="font-semibold text-lg border rounded px-2 py-1 w-full"
+                                onKeyDown={(e) => {
+                                  if (e.key === "Enter") {
+                                    handleNameUpdate();
+                                  } else if (e.key === "Escape") {
+                                    setIsEditingName(false);
+                                    setNewName(user?.fullname || "");
+                                  }
+                                }}
+                                autoFocus
+                              />
+                              <button
+                                onClick={handleNameUpdate}
+                                className="text-green-500 hover:text-green-600"
+                              >
+                                ✓
+                              </button>
+                              <button
+                                onClick={() => {
+                                  setIsEditingName(false);
+                                  setNewName(user?.fullname || "");
+                                }}
+                                className="text-red-500 hover:text-red-600"
+                              >
+                                ✕
+                              </button>
+                            </div>
+                          ) : (
+                            <>
+                              <h4 className="font-semibold text-lg">
+                                {user?.fullname}
+                              </h4>
+                              {user?.role === "agent" && (
+                                <button
+                                  onClick={() => setIsEditingName(true)}
+                                  className="text-gray-500 hover:text-gray-700"
+                                >
+                                  <Pencil size={16} />
+                                </button>
+                              )}
+                            </>
+                          )}
+                        </div>
                         <p className="text-sm text-gray-600">{user?.email}</p>
-
-                        {user?.profile?.bio && (
-                          <p className="text-sm text-gray-600 mt-2">
-                            {user.profile.bio}
-                          </p>
-                        )}
                       </div>
                     </div>
                     <div className="flex flex-col text-gray-600 mt-4">

@@ -1,11 +1,6 @@
 import { useState, useEffect } from "react";
 import Select from "react-select"; // นำเข้า React Select
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "./ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "./ui/button";
@@ -15,8 +10,18 @@ import { USER_API_END_POINT } from "../components/utils/constant";
 import { toast } from "sonner";
 import { setLoading, setUser } from "@/redux/authSlice";
 import PropTypes from "prop-types";
-import { User, Mail, Phone, Camera, X, Image, Code, BookOpen, FileText } from "lucide-react";
-import { useTranslation } from 'react-i18next'; // เพิ่มการ import นี้
+import {
+  User,
+  Mail,
+  Phone,
+  Camera,
+  X,
+  Image,
+  Code,
+  BookOpen,
+  FileText,
+} from "lucide-react";
+import { useTranslation } from "react-i18next"; // เพิ่มการ import นี้
 
 const UpdateProfile = ({ open, setOpen }) => {
   const { t } = useTranslation(); // เพิ่มบรรทัดนี้เพื่อใช้งานฟังก์ชันแปลภาษา
@@ -30,7 +35,6 @@ const UpdateProfile = ({ open, setOpen }) => {
     file: null,
     profilePhoto: null,
   });
-
 
   const [fullnameError, setFullnameError] = useState(""); // State สำหรับเก็บ error message ของ fullname
   const [phoneError, setPhoneError] = useState(""); // State สำหรับเก็บ error message ของ phoneNumber
@@ -57,7 +61,7 @@ const UpdateProfile = ({ open, setOpen }) => {
     { value: "Agile", label: "Agile" },
     { value: "Scrum", label: "Scrum" },
     { value: "TDD", label: "Test-Driven Development (TDD)" },
-  
+
     // Web Developer
     { value: "HTML", label: "HTML" },
     { value: "CSS", label: "CSS" },
@@ -81,7 +85,7 @@ const UpdateProfile = ({ open, setOpen }) => {
     { value: "DevOps", label: "DevOps" },
     { value: "Docker", label: "Docker" },
     { value: "Kubernetes", label: "Kubernetes" },
-  
+
     // UX/UI Designer
     { value: "Figma", label: "Figma" },
     { value: "Sketch", label: "Sketch" },
@@ -89,19 +93,28 @@ const UpdateProfile = ({ open, setOpen }) => {
     { value: "InVision", label: "InVision" },
     { value: "User Research", label: "User Research" },
     { value: "Personas", label: "Personas" },
-    { value: "Information Architecture", label: "Information Architecture (IA)" },
+    {
+      value: "Information Architecture",
+      label: "Information Architecture (IA)",
+    },
     { value: "Interaction Design", label: "Interaction Design (IxD)" },
     { value: "Typography", label: "Typography" },
     { value: "Color Theory", label: "Color Theory" },
     { value: "Layouts", label: "Layouts" },
     { value: "Usability Testing", label: "Usability Testing" },
     { value: "Material Design", label: "Material Design" },
-    { value: "Human Interface Guidelines", label: "Human Interface Guidelines" },
+    {
+      value: "Human Interface Guidelines",
+      label: "Human Interface Guidelines",
+    },
     { value: "Accessibility", label: "Accessibility (WCAG)" },
-  
+
     // Business Analyst (BA)
     { value: "Requirements Gathering", label: "Requirements Gathering" },
-    { value: "Business Process Modeling", label: "Business Process Modeling (BPM)" },
+    {
+      value: "Business Process Modeling",
+      label: "Business Process Modeling (BPM)",
+    },
     { value: "Stakeholder Management", label: "Stakeholder Management" },
     { value: "Use Case Diagrams", label: "Use Case Diagrams" },
     { value: "User Stories", label: "User Stories" },
@@ -110,12 +123,15 @@ const UpdateProfile = ({ open, setOpen }) => {
     { value: "Tableau", label: "Tableau" },
     { value: "SWOT Analysis", label: "SWOT Analysis" },
     { value: "Risk Management", label: "Risk Management" },
-  
+
     // System Analyst (SA)
     { value: "System Architecture", label: "System Architecture" },
     { value: "Database Design", label: "Database Design" },
     { value: "Data Flow Diagrams", label: "Data Flow Diagrams (DFD)" },
-    { value: "Entity-Relationship Diagrams", label: "Entity-Relationship Diagrams (ERD)" },
+    {
+      value: "Entity-Relationship Diagrams",
+      label: "Entity-Relationship Diagrams (ERD)",
+    },
     { value: "UML", label: "UML" },
     { value: "System Integration", label: "System Integration" },
     { value: "Validation & Testing", label: "Validation & Testing" },
@@ -123,7 +139,7 @@ const UpdateProfile = ({ open, setOpen }) => {
     { value: "Azure", label: "Azure" },
     { value: "Jira", label: "Jira" },
     { value: "Trello", label: "Trello" },
-  
+
     // Tester/QA
     { value: "Manual Testing", label: "Manual Testing" },
     { value: "Test Automation", label: "Test Automation" },
@@ -139,7 +155,7 @@ const UpdateProfile = ({ open, setOpen }) => {
     { value: "Bugzilla", label: "Bugzilla" },
     { value: "Regression Testing", label: "Regression Testing" },
     { value: "Security Testing", label: "Security Testing" },
-  
+
     // IT Support
     { value: "Hardware Troubleshooting", label: "Hardware Troubleshooting" },
     { value: "Software Troubleshooting", label: "Software Troubleshooting" },
@@ -156,7 +172,6 @@ const UpdateProfile = ({ open, setOpen }) => {
     { value: "Customer Support", label: "Customer Support" },
   ];
 
-
   const bioOptions = [
     // Software Development
     { value: "Frontend Developer", label: "Frontend Developer" },
@@ -166,15 +181,21 @@ const UpdateProfile = ({ open, setOpen }) => {
     { value: "Mobile App Developer", label: "Mobile App Developer" },
     { value: "Software Engineer", label: "Software Engineer" },
     { value: "Game Developer", label: "Game Developer" },
-    { value: "Embedded Systems Developer", label: "Embedded Systems Developer" },
-  
+    {
+      value: "Embedded Systems Developer",
+      label: "Embedded Systems Developer",
+    },
+
     // Data & Analytics
     { value: "Data Scientist", label: "Data Scientist" },
     { value: "Data Engineer", label: "Data Engineer" },
-    { value: "Business Intelligence Analyst", label: "Business Intelligence Analyst" },
+    {
+      value: "Business Intelligence Analyst",
+      label: "Business Intelligence Analyst",
+    },
     { value: "Machine Learning Engineer", label: "Machine Learning Engineer" },
     { value: "Big Data Engineer", label: "Big Data Engineer" },
-  
+
     // Infrastructure & Operations
     { value: "System Administrator", label: "System Administrator" },
     { value: "Network Engineer", label: "Network Engineer" },
@@ -182,42 +203,51 @@ const UpdateProfile = ({ open, setOpen }) => {
     { value: "DevOps Engineer", label: "DevOps Engineer" },
     { value: "Site Reliability Engineer", label: "Site Reliability Engineer" },
     { value: "IT Support Technician", label: "IT Support Technician" },
-  
+
     // Cybersecurity
     { value: "Cybersecurity Analyst", label: "Cybersecurity Analyst" },
-    { value: "Information Security Specialist", label: "Information Security Specialist" },
+    {
+      value: "Information Security Specialist",
+      label: "Information Security Specialist",
+    },
     { value: "Penetration Tester", label: "Penetration Tester" },
     { value: "Security Engineer", label: "Security Engineer" },
-  
+
     // Database
     { value: "Database Administrator", label: "Database Administrator" },
     { value: "Database Developer", label: "Database Developer" },
-  
+
     // Design & UX
     { value: "UX/UI Designer", label: "UX/UI Designer" },
     { value: "Graphic Designer", label: "Graphic Designer" },
     { value: "Interaction Designer", label: "Interaction Designer" },
-  
+
     // Project Management & Analysis
     { value: "IT Project Manager", label: "IT Project Manager" },
     { value: "Scrum Master", label: "Scrum Master" },
     { value: "Business Analyst", label: "Business Analyst" },
     { value: "System Analyst", label: "System Analyst" },
-  
+
     // Emerging Technologies
     { value: "AI Specialist", label: "AI Specialist" },
     { value: "IoT Developer", label: "IoT Developer" },
     { value: "Blockchain Developer", label: "Blockchain Developer" },
     { value: "AR/VR Developer", label: "AR/VR Developer" },
-  
+
     // Quality Assurance
     { value: "QA Engineer", label: "QA Engineer" },
     { value: "Test Automation Engineer", label: "Test Automation Engineer" },
-  
+
     // IT Management
     { value: "IT Manager", label: "IT Manager" },
-    { value: "Chief Information Officer (CIO)", label: "Chief Information Officer (CIO)" },
-    { value: "Chief Technology Officer (CTO)", label: "Chief Technology Officer (CTO)" },
+    {
+      value: "Chief Information Officer (CIO)",
+      label: "Chief Information Officer (CIO)",
+    },
+    {
+      value: "Chief Technology Officer (CTO)",
+      label: "Chief Technology Officer (CTO)",
+    },
     { value: "Data Analyst", label: "Data Analyst" },
     { value: "Business Analyst", label: "Business Analyst" },
   ];
@@ -296,7 +326,6 @@ const UpdateProfile = ({ open, setOpen }) => {
     setInput({ ...input, bio: selectedValues.join(", ") }); // เชื่อมค่าด้วยจุลภาคและเว้นวรรค
   };
 
-
   const submitHandler = async (e) => {
     e.preventDefault();
 
@@ -364,23 +393,22 @@ const UpdateProfile = ({ open, setOpen }) => {
     }
   }, [input.profilePhoto]);
 
-
   return (
     <Dialog open={open}>
-      <DialogContent className="sm:max-w-[450px] md:max-w-[550px] bg-white rounded-xl shadow-2xl overflow-hidden">
-        <DialogHeader className="p-4 bg-gradient-to-r from-[#723bcf] to-[#723bcf] relative">
-          <DialogTitle className="text-white text-lg font-bold">
-            {t('updateYourProfile')} {/* แทนที่ข้อความด้วย t('key') */}
+      <DialogContent className="w-[95vw] max-w-[95vw] sm:max-w-[600px] md:max-w-[700px] lg:max-w-[800px] h-[90vh] sm:h-auto bg-white rounded-xl shadow-2xl overflow-y-auto">
+        <DialogHeader className="top-0 z-50 p-4 bg-white relative">
+          <DialogTitle className="text-[#723bcf]  font-bold text-2xl">
+            {t("updateYourProfile")}
           </DialogTitle>
           <Button
             onClick={() => setOpen(false)}
             variant="ghost"
             className="absolute right-2 top-2 rounded-full p-1 w-8 h-8 flex items-center justify-center"
           >
-            <X className="h-5 w-5 text-black" />
+            <X className="h-6 w-6 text-gray-600" />
           </Button>
         </DialogHeader>
-        <form onSubmit={submitHandler} className="p-4">
+        <form onSubmit={submitHandler} className="p-4 space-y-6">
           <div className="flex flex-col gap-4">
             {/* Profile Photo Section */}
             <div className="flex flex-col items-center space-y-3">
@@ -396,7 +424,10 @@ const UpdateProfile = ({ open, setOpen }) => {
                     <Image className="h-10 w-10 text-gray-400" />
                   </div>
                 )}
-                <label htmlFor="profilePhoto" className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-200 cursor-pointer">
+                <label
+                  htmlFor="profilePhoto"
+                  className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-200 cursor-pointer"
+                >
                   <Camera className="h-6 w-6 text-white" />
                 </label>
                 <Input
@@ -409,90 +440,152 @@ const UpdateProfile = ({ open, setOpen }) => {
               </div>
               <Button
                 type="button"
-                onClick={() => document.getElementById('profilePhoto').click()}
-                className="w-full py-2 px-3 bg-gradient-to-r from-[#723bcf] to-[#723bcf] text-white rounded-md hover:from-[#723bcf] hover:to-purple-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#723bcf] transition-colors duration-200 text-sm"
+                onClick={() => document.getElementById("profilePhoto").click()}
+                className="w-full max-w-xs py-2 px-3 bg-gradient-to-r from-[#723bcf] to-[#723bcf] text-white rounded-md hover:from-[#723bcf] hover:to-purple-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#723bcf] transition-colors duration-200 text-sm"
               >
-                {t('changePhoto')} {/* แทนที่ข้อความด้วย t('key') */}
+                {t("changePhoto")}
               </Button>
             </div>
 
             {/* Form Fields */}
             <div className="space-y-3">
               {[
-                { id: "fullname", label: t('name'), icon: User, value: input.fullname },
-                { id: "email", label: t('email'), icon: Mail, value: input.email, disabled: true },
-                { id: "phoneNumber", label: t('phone'), icon: Phone, value: input.phoneNumber },
-                { id: "bio", label: t('bio'), icon: BookOpen, value: input.bio, isSelect: true, options: bioOptions },
-                { id: "skills", label: t('skills'), icon: Code, value: input.skills, isSelect: true, options: skillOptions },
-                { id: "file", label: t('resume'), icon: FileText, value: input.file, isFile: true },
-              ].map(({ id, label, icon: Icon, value, disabled, isSelect, options, isFile }) => (
-                <div key={id} className="space-y-1">
-                  <label htmlFor={id} className="block text-sm font-medium text-gray-700">
-                    {label}
-                  </label>
-                  <div className="relative rounded-md shadow-sm">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Icon className="h-4 w-4 text-gray-400" />
+                {
+                  id: "fullname",
+                  label: t("name"),
+                  icon: User,
+                  value: input.fullname,
+                },
+                {
+                  id: "email",
+                  label: t("email"),
+                  icon: Mail,
+                  value: input.email,
+                  disabled: true,
+                },
+                {
+                  id: "phoneNumber",
+                  label: t("phone"),
+                  icon: Phone,
+                  value: input.phoneNumber,
+                },
+                {
+                  id: "bio",
+                  label: t("bio"),
+                  icon: BookOpen,
+                  value: input.bio,
+                  isSelect: true,
+                  options: bioOptions,
+                },
+                {
+                  id: "skills",
+                  label: t("skills"),
+                  icon: Code,
+                  value: input.skills,
+                  isSelect: true,
+                  options: skillOptions,
+                },
+                {
+                  id: "file",
+                  label: t("resume"),
+                  icon: FileText,
+                  value: input.file,
+                  isFile: true,
+                },
+              ].map(
+                ({
+                  id,
+                  label,
+                  icon: Icon,
+                  value,
+                  disabled,
+                  isSelect,
+                  options,
+                  isFile,
+                }) => (
+                  <div key={id} className="space-y-1">
+                    <label
+                      htmlFor={id}
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      {label}
+                    </label>
+                    <div className="relative rounded-md shadow-sm">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <Icon className="h-4 w-4 text-gray-400" />
+                      </div>
+                      {isSelect ? (
+                        <Select
+                          id={id}
+                          name={id}
+                          isMulti
+                          options={options}
+                          value={options.filter((option) =>
+                            value.includes(option.value)
+                          )}
+                          onChange={
+                            id === "bio"
+                              ? bioChangeHandler
+                              : skillsChangeHandler
+                          }
+                          className="pl-10 block w-full rounded-md border-gray-300 text-sm"
+                          styles={{
+                            control: (provided, state) => ({
+                              ...provided,
+                              paddingLeft: "2.5rem",
+                              borderColor: state.isFocused
+                                ? "#723bcf"
+                                : provided.borderColor,
+                              boxShadow: state.isFocused
+                                ? "0 0 0 1px #723bcf"
+                                : provided.boxShadow,
+                              "&:hover": {
+                                borderColor: "#723bcf",
+                              },
+                            }),
+                          }}
+                        />
+                      ) : isFile ? (
+                        <Input
+                          id={id}
+                          type="file"
+                          name={id}
+                          onChange={fileChangeHandler}
+                          className="pl-10 block w-full rounded-md border-gray-300 focus:ring-[#723bcf]  text-sm"
+                        />
+                      ) : (
+                        <Input
+                          id={id}
+                          name={id}
+                          value={value}
+                          onChange={changeEventHandler}
+                          disabled={disabled}
+                          className="pl-10 block w-full rounded-md border-gray-300 focus:ring-[#723bcf]  text-sm"
+                        />
+                      )}
                     </div>
-                    {isSelect ? (
-                      <Select
-                        id={id}
-                        name={id}
-                        isMulti
-                        options={options}
-                        value={options.filter((option) => value.includes(option.value))}
-                        onChange={id === "bio" ? bioChangeHandler : skillsChangeHandler}
-                        className="pl-10 block w-full rounded-md border-gray-300 text-sm"
-                        styles={{
-                          control: (provided, state) => ({
-                            ...provided,
-                            paddingLeft: '2.5rem',
-                            borderColor: state.isFocused ? '#723bcf' : provided.borderColor,
-                            boxShadow: state.isFocused ? '0 0 0 1px #723bcf' : provided.boxShadow,
-                            '&:hover': {
-                              borderColor: '#723bcf',
-                            },
-                          }),
-                        }}
-                      />
-                    ) : isFile ? (
-                      <Input
-                        id={id}
-                        type="file"
-                        name={id}
-                        onChange={fileChangeHandler}
-                        className="pl-10 block w-full rounded-md border-gray-300 focus:ring-[#723bcf]  text-sm"
-                      />
-                    ) : (
-                      <Input
-                        id={id}
-                        name={id}
-                        value={value}
-                        onChange={changeEventHandler}
-                        disabled={disabled}
-                        className="pl-10 block w-full rounded-md border-gray-300 focus:ring-[#723bcf]  text-sm"
-                      />
+                    {id === "fullname" && fullnameError && (
+                      <p className="text-red-600 text-xs mt-1">
+                        {fullnameError}
+                      </p>
+                    )}
+                    {id === "phoneNumber" && phoneError && (
+                      <p className="text-red-600 text-xs mt-1">{phoneError}</p>
                     )}
                   </div>
-                  {id === "fullname" && fullnameError && (
-                    <p className="text-red-600 text-xs mt-1">{fullnameError}</p>
-                  )}
-                  {id === "phoneNumber" && phoneError && (
-                    <p className="text-red-600 text-xs mt-1">{phoneError}</p>
-                  )}
-                </div>
-              ))}
+                )
+              )}
             </div>
 
             <Button
               type="submit"
-              className="w-full py-2 px-3 bg-gradient-to-r from-[#723bcf] to-[#723bcf] text-white rounded-md hover:from-[#723bcf] hover:to-purple-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#723bcf] transition-colors duration-200 text-sm"
+              className="w-full max-w-xs mx-auto py-2 px-3 bg-gradient-to-r from-[#723bcf] to-[#723bcf] text-white rounded-md hover:from-[#723bcf] hover:to-purple-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#723bcf] transition-colors duration-200 text-sm"
               disabled={loading || !!fullnameError}
             >
               {loading ? (
                 <Loader2 className="animate-spin h-4 w-4 mx-auto" />
               ) : (
-                t('updateProfile') // แทนที่ข้อความด้วย t('key')
+                t("updateProfile")
               )}
             </Button>
           </div>
@@ -501,7 +594,6 @@ const UpdateProfile = ({ open, setOpen }) => {
     </Dialog>
   );
 };
-
 
 UpdateProfile.propTypes = {
   open: PropTypes.bool.isRequired,

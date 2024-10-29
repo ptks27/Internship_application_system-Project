@@ -9,8 +9,8 @@ import { useState } from "react";
 import UpdateProfile from "./UpdateProfile";
 import { useSelector } from "react-redux";
 import { useMediaQuery } from "react-responsive";
-import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { t } = useTranslation();
@@ -23,33 +23,49 @@ const Profile = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       <Navbar />
-      <div className="max-w-4xl mx-auto my-4 md:my-20">
+      <div className="max-w-4xl mx-auto my-4 md:my-10">
         <Button
           onClick={() => navigate(-1)}
           className="mb-4 bg-white text-[#723bcf] hover:bg-gray-100"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          {t('back')}
+          {t("back")}
         </Button>
         <div className="bg-[#723bcf] border border-[#723bcf] rounded-2xl p-4 md:p-20">
-          <div className={`flex ${isMobile ? 'flex-col' : 'justify-between'} items-center mb-6`}>
-            <div className={`flex ${isMobile ? 'flex-col' : 'items-center'} gap-4`}>
-              <Avatar className={`h-24 w-24 ${isMobile ? 'mx-auto mb-4' : 'mr-4 mt-[-25px]'}`}>
+          <div
+            className={`flex ${
+              isMobile ? "flex-col" : "justify-between"
+            } items-center mb-6`}
+          >
+            <div
+              className={`flex ${isMobile ? "flex-col" : "items-center"} gap-4`}
+            >
+              <Avatar
+                className={`h-24 w-24 ${
+                  isMobile ? "mx-auto mb-4" : "mr-4 mt-[-25px]"
+                }`}
+              >
                 <AvatarImage src={user?.profile.profilePhoto} alt="profile" />
               </Avatar>
-              <div className={`${isMobile ? 'text-center' : ''}`}>
+              <div className={`${isMobile ? "text-center" : ""}`}>
                 <h1 className="font-bold text-white text-xl my-2">
                   {user?.fullname}
                 </h1>
-                <p className="font-bold text-yellow-500 text-lg">{user?.profile.bio}</p>
+                <p className="font-bold text-yellow-500 text-lg">
+                  {user?.profile.bio}
+                </p>
               </div>
             </div>
             <Button
               onClick={() => setOpen(true)}
-              className={`bg-black border border-black ${isMobile ? 'mt-4' : ''}`}
+              className={`bg-black border border-black ${
+                isMobile ? "mt-4" : ""
+              }`}
             >
               <PencilLine className="text-white mr-2" />
-              {isMobile && <span className="text-white">{t('updateProfile')}</span>}
+              {isMobile && (
+                <span className="text-white">{t("updateProfile")}</span>
+              )}
             </Button>
           </div>
           <div className="my-6 md:my-10">
@@ -64,7 +80,7 @@ const Profile = () => {
             </div>
           </div>
           <div className="my-6 md:my-10">
-            <h5 className="text-xl font-bold text-white my-2">{t('skills')}</h5>
+            <h5 className="text-xl font-bold text-white my-2">{t("skills")}</h5>
             <div className="flex flex-wrap items-center gap-2 my-4">
               {user?.profile.skills && user.profile.skills.length > 0 ? (
                 user.profile.skills.map((item, index) => (
@@ -78,7 +94,9 @@ const Profile = () => {
             </div>
           </div>
           <div className="grid w-full max-w-sm items-center gap-1.5 my-6 md:my-10">
-            <Label className="text-md font-bold text-white my-2">{t('resume')}</Label>
+            <Label className="text-md font-bold text-white my-2">
+              {t("resume")}
+            </Label>
             {user?.profile?.resume ? (
               <a
                 target="_blank"

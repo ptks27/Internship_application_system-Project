@@ -303,6 +303,8 @@ i18n.use(initReactI18next).init({
         allNotificationsMarkedAsRead: "All notifications marked as read",
         errorMarkingNotificationsAsRead: "Error marking notifications as read",
         markAllAsRead: "Mark all as read",
+        nameUpdatedSuccessfully: "Name updated successfully",
+        errorUpdatingName: "Error updating name",
       },
     },
     th: {
@@ -437,7 +439,7 @@ i18n.use(initReactI18next).init({
         companyRegisteredSuccess: "บริษัทลงทะเบียนสำเร็จ",
         failedToRegisterCompany: "ลงทะเบียนบริษัทไม่สำเร็จ",
         enterCompanyDescription: "กรอกคำอธิบายบริษัท",
-        enterEmail: "กรอกที่อยู่อ��เมล",
+        enterEmail: "กรอกที่อยู่อีเมล",
         jobPositions: "ตำแหน่งงาน",
         filterByCompanyAndRole: "กรองตาบริษัทและตำแหน่ง",
         newJob: "งานใหม่",
@@ -602,6 +604,8 @@ i18n.use(initReactI18next).init({
         errorMarkingNotificationsAsRead:
           "เกิดข้อผิดพลาดในการทำเครื่องหมายว่าอ่านแล้ว",
         markAllAsRead: "อ่านทั้งหมด",
+        nameUpdatedSuccessfully: "อัปเดตชื่อสำเร็จ",
+        errorUpdatingName: "เกิดข้อผิดพลาดในการอัปเดตชื่อ",
       },
     },
   },
