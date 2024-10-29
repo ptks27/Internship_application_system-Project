@@ -252,28 +252,28 @@ const UpdateProfile = ({ open, setOpen }) => {
     { value: "Business Analyst", label: "Business Analyst" },
   ];
   const validateFullname = (value) => {
-    const thaiEnglishRegex = /^[ก-๏a-zA-Z\s]+$/; // ตรวจสอบภาษาไทยและอังกฤษเท่านั้น
+    const thaiEnglishRegex = /^[ก-๏a-zA-Z\s]+$/;
     if (value.length > 0 && value.length < 5) {
-      setFullnameError("กรุณากรอกอย่างน้อย 5 ตัว");
+      setFullnameError(t("fullnameTooShort"));
     } else if (value.length > 30) {
-      setFullnameError("กรอกได้มากสุด 30 ตัว");
+      setFullnameError(t("fullnameTooLong"));
     } else if (!thaiEnglishRegex.test(value)) {
-      setFullnameError("กรุณากรอกเฉพาะภาษาไทยและภาษาอังกฤษเท่านั้น");
+      setFullnameError(t("fullnameInvalidChars"));
     } else {
-      setFullnameError(""); // Clear error if validation passes
+      setFullnameError("");
     }
   };
 
   const validatePhoneNumber = (value) => {
-    const onlyNumbersRegex = /^[0-9]*$/; // ตรวจสอบให้กรอกได้แค่ตัวเลขเท่านั้น
+    const onlyNumbersRegex = /^[0-9]*$/;
     if (!onlyNumbersRegex.test(value)) {
-      setPhoneError("กรุณากรอกเฉพาะตัวเลขเท่านั้น");
+      setPhoneError(t("phoneInvalidDigits"));
     } else if (value.length !== 10) {
-      setPhoneError("กรุณากรอกหมายเลขโทรศัพท์ 10 ตัว");
+      setPhoneError(t("phoneInvalidLength"));
     } else if (value[0] !== "0") {
-      setPhoneError("หมายเลขโทรศัพท์ต้องขึ้นต้นด้วยเลข 0");
+      setPhoneError(t("phoneStartWithZero"));
     } else {
-      setPhoneError(""); // Clear error if validation passes
+      setPhoneError("");
     }
   };
 
@@ -316,8 +316,8 @@ const UpdateProfile = ({ open, setOpen }) => {
 
   const bioChangeHandler = (selectedOptions) => {
     if (selectedOptions.length > 3) {
-      toast.error("Cannot select more than 3 bios."); // แสดงข้อความแจ้งเตือน
-      return; // ไม่ทำงานต่อเมื่อเลือกเกิน 3
+      toast.error(t("bioMaxSelection"));
+      return;
     }
 
     const selectedValues = selectedOptions
@@ -330,7 +330,7 @@ const UpdateProfile = ({ open, setOpen }) => {
     e.preventDefault();
 
     if (fullnameError || phoneError) {
-      return; // ป้องกันการส่งข้อมูลถ้ามี error
+      return;
     }
 
     const formData = new FormData();
@@ -360,22 +360,20 @@ const UpdateProfile = ({ open, setOpen }) => {
       );
       if (res.data.success) {
         dispatch(setUser(res.data.user));
-        toast.success(res.data.message);
+        toast.success(t("profileUpdateSuccess"));
+        setOpen(false);
       }
     } catch (error) {
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
+      if (error.response?.data?.message === "This phone number is already in use.") {
+        setPhoneError(t("phoneAlreadyInUse"));
+      } else if (error.response?.data?.message) {
         toast.error(error.response.data.message);
       } else {
-        toast.error("An unexpected error occurred. Please try again.");
+        toast.error(t("unexpectedError"));
       }
       console.error("Error during profile update:", error);
     } finally {
       dispatch(setLoading(false));
-      setOpen(false);
     }
   };
 
@@ -398,7 +396,7 @@ const UpdateProfile = ({ open, setOpen }) => {
       <DialogContent className="w-[95vw] max-w-[95vw] sm:max-w-[600px] md:max-w-[700px] lg:max-w-[800px] h-[90vh] sm:h-auto bg-white rounded-xl shadow-2xl overflow-y-auto">
         <DialogHeader className="top-0 z-50 p-4 bg-white relative">
           <DialogTitle className="text-[#723bcf]  font-bold text-2xl">
-            {t("updateYourProfile")}
+            {t("updateProfileTitle")}
           </DialogTitle>
           <Button
             onClick={() => setOpen(false)}
@@ -443,7 +441,7 @@ const UpdateProfile = ({ open, setOpen }) => {
                 onClick={() => document.getElementById("profilePhoto").click()}
                 className="w-full max-w-xs py-2 px-3 bg-gradient-to-r from-[#723bcf] to-[#723bcf] text-white rounded-md hover:from-[#723bcf] hover:to-purple-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#723bcf] transition-colors duration-200 text-sm"
               >
-                {t("changePhoto")}
+                {t("uploadNewPhoto")}
               </Button>
             </div>
 

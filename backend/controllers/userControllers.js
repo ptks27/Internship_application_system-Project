@@ -24,20 +24,29 @@ export const register = async (req, res) => {
       });
     }
 
-    const file = req.file;
-
-    const fileUri = getDataUri(file);
-
-    const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
-
-    // Check if user already exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
+    // Check if email exists
+    const existingEmail = await User.findOne({ email });
+    if (existingEmail) {
       return res.status(400).json({
         message: "User already exists with this email.",
         success: false,
       });
     }
+
+    // Check if phone number exists
+    const existingPhone = await User.findOne({ phoneNumber });
+    if (existingPhone) {
+      return res.status(400).json({
+        message: "User already exists with this phone number.",
+        success: false,
+      });
+    }
+
+    const file = req.file;
+
+    const fileUri = getDataUri(file);
+
+    const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const verificationToken = Math.floor(
@@ -324,10 +333,10 @@ export const logout = async (req, res) => {
 export const updateProfile = async (req, res) => {
   try {
     const { fullname, email, phoneNumber, bio, skills } = req.body;
-    const file = req.files?.file?.[0]; // Get resume file
-    const profilePhoto = req.files?.profilePhoto?.[0]; // Get profile photo file
+    const file = req.files?.file?.[0];
+    const profilePhoto = req.files?.profilePhoto?.[0];
 
-    let userId = Number(req.id); // This assumes req.id holds the correct user ID
+    let userId = Number(req.id);
 
     if (isNaN(userId)) {
       return res.status(400).json({
@@ -343,6 +352,17 @@ export const updateProfile = async (req, res) => {
         message: "User not found.",
         success: false,
       });
+    }
+
+    // Check if phone number is being changed and if it's already in use
+    if (phoneNumber && phoneNumber !== user.phoneNumber) {
+      const existingPhone = await User.findOne({ phoneNumber });
+      if (existingPhone) {
+        return res.status(400).json({
+          message: "This phone number is already in use.",
+          success: false,
+        });
+      }
     }
 
     // Update fields

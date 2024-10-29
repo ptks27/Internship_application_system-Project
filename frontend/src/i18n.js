@@ -305,6 +305,28 @@ i18n.use(initReactI18next).init({
         markAllAsRead: "Mark all as read",
         nameUpdatedSuccessfully: "Name updated successfully",
         errorUpdatingName: "Error updating name",
+        // Add new translations for UpdateProfile
+        updateProfileTitle: "Update Profile",
+        uploadNewPhoto: "Upload New Photo",
+        removePhoto: "Remove Photo",
+        uploadResume: "Upload Resume",
+        removeResume: "Remove Resume",
+        bioPlaceholder: "Select your bio (max 3)",
+        skillsPlaceholder: "Select your skills",
+        // Validation messages
+        fullnameTooShort: "Please enter at least 5 characters",
+        fullnameTooLong: "Maximum 30 characters allowed",
+        fullnameInvalidChars: "Only Thai or English characters allowed",
+        phoneInvalidDigits: "Please enter numbers only",
+        phoneInvalidLength: "Phone number must be 10 digits",
+        phoneStartWithZero: "Phone number must start with 0",
+        phoneAlreadyInUse: "This phone number is already in use",
+        // Success messages
+        profileUpdateSuccess: "Profile updated successfully",
+        // Error messages
+        bioMaxSelection: "Cannot select more than 3 bios",
+       
+        fileTypeError: "Please select only PNG, JPG, or JPEG files",
       },
     },
     th: {
@@ -476,7 +498,7 @@ i18n.use(initReactI18next).init({
           "กรุณากรอกเฉพาะตัวอักษรภาษาไทยหรืออังกฤษเท่านั้น",
         phoneNumberOnlyDigits: "กรุณากรอกเฉพาะตัวเลขเท่านั้น",
 
-        phoneNumberStartWithZero: "หมายเลขโทรศัพท์ต้องขึ้นต้นด้ยเข 0",
+        phoneNumberStartWithZero: "หมายเลขโทรศัพท์ต้องขึ้นต้นด้วย 0",
 
         invalidEmail: "รูปแบบอีเมลไม่ถูกต้อง",
         passwordRequired: "กรุณากรอกรหัสผ่านของคุณ",
@@ -606,6 +628,27 @@ i18n.use(initReactI18next).init({
         markAllAsRead: "อ่านทั้งหมด",
         nameUpdatedSuccessfully: "อัปเดตชื่อสำเร็จ",
         errorUpdatingName: "เกิดข้อผิดพลาดในการอัปเดตชื่อ",
+        updateProfileTitle: "อัปเดตโปรไฟล์",
+        uploadNewPhoto: "อัปโหลดรูปใหม่",
+        removePhoto: "ลบรูปภาพ",
+        uploadResume: "อัปโหลดเรซูเม่",
+        removeResume: "ลบเรซูเม่",
+        bioPlaceholder: "เลือกประวัติย่อของคุณ (สูงสุด 3 รายการ)",
+        skillsPlaceholder: "เลือกทักษะของคุณ",
+        // Validation messages
+        fullnameTooShort: "กรุณากรอกอย่างน้อย 5 ตัวอักษร",
+        fullnameTooLong: "กรอกได้สูงสุด 30 ตัวอักษร",
+        fullnameInvalidChars: "กรุณากรอกภาษาไทยหรือภาษาอังกฤษเท่านั้น",
+        phoneInvalidDigits: "กรุณากรอกตัวเลขเท่านั้น",
+        phoneInvalidLength: "หมายเลขโทรศัพท์ต้องมี 10 หลัก",
+        phoneStartWithZero: "หมายเลขโทรศัพท์ต้องขึ้นต้นด้วย 0",
+        phoneAlreadyInUse: "หมายเลขโทรศัพท์นี้ถูกใช้งานแล้ว",
+        // Success messages
+        profileUpdateSuccess: "อัปเดตโปรไฟล์สำเร็จ",
+        // Error messages
+        bioMaxSelection: "ไม่สามารถเลือกประวัติย่อได้มากกว่า 3 รายการ",
+        
+        fileTypeError: "กรุณาเลือกไฟล์ PNG, JPG หรือ JPEG เท่านั้น",
       },
     },
   },
