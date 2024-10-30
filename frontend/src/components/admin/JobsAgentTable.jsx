@@ -40,8 +40,7 @@ const JobsAgentTable = () => {
       const searchText = searchJobByText.toLowerCase();
       return (
         job?.title?.toLowerCase().includes(searchText) ||
-        (typeof job?.company === "string" &&
-          job.company.toLowerCase().includes(searchText))
+        job?.company?.name?.toLowerCase().includes(searchText)
       );
     });
     setFilterJobs(filteredJobs);
