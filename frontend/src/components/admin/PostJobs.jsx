@@ -7,14 +7,7 @@ import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
 import {
   ArrowLeftIcon,
-  Briefcase,
-  FileText,
-  MapPin,
-  Banknote,
-  Users,
-  BarChart2,
-  Type,
-  Building2,
+  
 } from "lucide-react";
 import {
   Select,
@@ -176,7 +169,7 @@ const PostJobs = () => {
         { en: "Nong Han", th: "หนองหาน" },
         { en: "Ban Dung", th: "บ้านดุง" },
         { en: "Nam Som", th: "น้ำโสม" },
-        // ���พิ่มอำเภออื่นๆที่อุดรธานี
+        // พิ่มอำเภออื่นๆที่อุดรธานี
       ],
     },
     {
@@ -318,8 +311,8 @@ const PostJobs = () => {
               <ArrowLeftIcon size={18} />
               <span>{t("back")}</span>
             </Button>
-            <div className="flex-grow flex justify-center">
-              <h1 className="text-3xl font-bold text-[#7e22ce]">
+            <div className="flex-grow">
+              <h1 className="text-3xl font-bold text-[#7e22ce] ml-4">
                 {t("jobSetup")}
               </h1>
             </div>
@@ -331,17 +324,13 @@ const PostJobs = () => {
                 {t("jobPosition")}
               </Label>
               <div className="relative">
-                <Briefcase
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  size={18}
-                />
                 <Input
                   type="text"
                   placeholder={t("enterJobPosition")}
                   name="title"
                   value={input.title}
                   onChange={changeEventHandler}
-                  className={`pl-10 pr-4 py-2 w-full border ${
+                  className={`px-4 py-2 w-full border ${
                     errors.title ? "border-red-500" : "border-gray-400"
                   } rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent`}
                   disabled={loading}
@@ -357,17 +346,13 @@ const PostJobs = () => {
                 {t("description")}
               </Label>
               <div className="relative">
-                <FileText
-                  className="absolute left-3 top-3 text-gray-400 "
-                  size={18}
-                />
                 <textarea
                   placeholder={t("enterJobDescription")}
                   name="description"
                   value={input.description}
                   onChange={changeEventHandler}
                   maxLength={400}
-                  className={`pl-10 w-full h-24 px-4 py-2 border ${
+                  className={`w-full h-24 px-4 py-2 border ${
                     errors.description ? "border-red-500" : "border-gray-400"
                   } rounded-md focus:outline-none focus:ring-2 focus:ring-[#7e22ce] focus:border-[#7e22ce] resize-none`}
                   disabled={loading}
@@ -388,10 +373,6 @@ const PostJobs = () => {
                 {t("location")}
               </Label>
               <div className="relative">
-                <MapPin
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  size={18}
-                />
                 <select
                   name="province"
                   value={selectedProvince}
@@ -399,7 +380,7 @@ const PostJobs = () => {
                     setSelectedProvince(e.target.value);
                     setSelectedDistrict("");
                   }}
-                  className={`pl-10 pr-4 py-2 w-full border ${
+                  className={`px-4 py-2 w-full border ${
                     errors.location ? "border-red-500" : "border-gray-400"
                   } rounded-md focus:outline-none focus:ring-2 focus:ring-[#7e22ce] focus:border-[#7e22ce] resize-none`}
                   disabled={loading}
@@ -426,7 +407,7 @@ const PostJobs = () => {
                       location: `${selectedProvince} - ${e.target.value}`,
                     }));
                   }}
-                  className={`pl-10 pr-4 py-2 w-full border ${
+                  className={`px-4 py-2 w-full border ${
                     errors.location ? "border-red-500" : "border-gray-400"
                   } rounded-md focus:outline-none focus:ring-2 focus:ring-[#7e22ce] focus:border-[#7e22ce] resize-none`}
                   disabled={loading || !selectedProvince}
@@ -456,10 +437,6 @@ const PostJobs = () => {
                 {t("salary")}
               </Label>
               <div className="relative">
-                <Banknote
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  size={18}
-                />
                 <Input
                   type="text"
                   placeholder={t("enterSalary")}
@@ -472,7 +449,7 @@ const PostJobs = () => {
                     setInput({ ...input, salary: value });
                     setErrors({ ...errors, salary: "" });
                   }}
-                  className={`pl-10 pr-4 py-2 w-full border ${
+                  className={`px-4 py-2 w-full border ${
                     errors.salary ? "border-red-500" : "border-gray-400"
                   } rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent`}
                   disabled={loading}
@@ -488,17 +465,13 @@ const PostJobs = () => {
                 {t("numberOfPositions")}
               </Label>
               <div className="relative">
-                <Users
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  size={18}
-                />
                 <Input
                   type="number"
                   placeholder={t("enterNumberOfPositions")}
                   name="position"
                   value={input.position >= 0 ? input.position : 0}
                   onChange={changeEventHandler}
-                  className={`pl-10 pr-4 py-2 w-full border ${
+                  className={`px-4 py-2 w-full border ${
                     errors.position ? "border-red-500" : "border-gray-400"
                   } rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent`}
                   disabled={loading}
@@ -514,17 +487,13 @@ const PostJobs = () => {
                 {t("experienceLevel")}
               </Label>
               <div className="relative">
-                <BarChart2
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  size={18}
-                />
                 <Input
                   type="number"
                   placeholder={t("enterExperienceLevel")}
                   name="experience"
                   value={input.experience >= 0 ? input.experience : 0}
                   onChange={changeEventHandler}
-                  className={`pl-10 pr-4 py-2 w-full border ${
+                  className={`px-4 py-2 w-full border ${
                     errors.experience ? "border-red-500" : "border-gray-400"
                   } rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent`}
                   disabled={loading}
@@ -540,13 +509,9 @@ const PostJobs = () => {
                 {t("jobType")}
               </Label>
               <div className="relative">
-                <Type
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  size={18}
-                />
                 <Select onValueChange={changeSelectHandler}>
                   <SelectTrigger 
-                    className={`pl-10 pr-4 py-2 w-full border ${
+                    className={`px-4 py-2 w-full border ${
                       errors.jobType ? "border-red-500" : "border-gray-400"
                     } rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent`}
                   >
@@ -573,13 +538,9 @@ const PostJobs = () => {
                 {t("company")}
               </Label>
               <div className="relative">
-                <Building2
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  size={18}
-                />
                 <Select onValueChange={selectChangeHandler}>
                   <SelectTrigger 
-                    className={`pl-10 pr-4 py-2 w-full border ${
+                    className={`px-4 py-2 w-full border ${
                       errors.companyId ? "border-red-500" : "border-gray-400"
                     } rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent`}
                   >

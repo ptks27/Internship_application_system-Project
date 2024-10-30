@@ -1,12 +1,6 @@
 import {
   ArrowLeftIcon,
-  Building2,
-  Mail,
-  Phone,
-  MapPin,
   FileImage,
-  FileText,
-  User,
 } from "lucide-react";
 import Navbar from "../shared/Navbar";
 import { Button } from "../ui/button";
@@ -202,8 +196,8 @@ const UpdateCompany = () => {
               <ArrowLeftIcon size={18} />
               <span>{t("back")}</span>
             </Button>
-            <div className="flex-grow flex justify-center">
-              <h1 className="text-3xl font-bold text-[#7e22ce]">
+            <div className="flex-grow">
+              <h1 className="text-3xl font-bold text-[#7e22ce] ml-4">
                 {t("updateCompany")}
               </h1>
             </div>
@@ -215,17 +209,13 @@ const UpdateCompany = () => {
                 {t("companyName")}
               </Label>
               <div className="relative">
-                <Building2
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  size={18}
-                />
                 <Input
                   type="text"
                   placeholder={t("enterCompanyName")}
                   name="name"
                   value={input.name}
                   onChange={changeEventHandler}
-                  className={`pl-10 pr-4 py-2 w-full border ${
+                  className={`px-4 py-2 w-full border ${
                     errors.name ? "border-red-500" : "border-gray-400"
                   } rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent`}
                   disabled={loading}
@@ -241,16 +231,12 @@ const UpdateCompany = () => {
                 {t("description")}
               </Label>
               <div className="relative">
-                <FileText
-                  className="absolute left-3 top-3 text-gray-400"
-                  size={18}
-                />
                 <textarea
                   placeholder={t("enterCompanyDescription")}
                   name="description"
                   value={input.description}
                   onChange={changeEventHandler}
-                  className={`pl-10 w-full h-24 px-4 py-2 border ${
+                  className={`w-full h-24 px-4 py-2 border ${
                     errors.description ? "border-red-500" : "border-gray-400"
                   } rounded-md focus:outline-none focus:ring-2 focus:ring-[#7e22ce] focus:border-[#7e22ce] resize-none`}
                   disabled={loading}
@@ -272,17 +258,13 @@ const UpdateCompany = () => {
                 {t("agentName")}
               </Label>
               <div className="relative">
-                <User
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  size={18}
-                />
                 <Input
                   type="text"
                   placeholder={t("enterAgentName")}
                   name="agent_fullname"
                   value={input.agent_fullname}
                   onChange={changeEventHandler}
-                  className={`pl-10 pr-4 py-2 w-full border ${
+                  className={`px-4 py-2 w-full border ${
                     errors.agent_fullname ? "border-red-500" : "border-gray-400"
                   } rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent`}
                   disabled={loading}
@@ -301,17 +283,13 @@ const UpdateCompany = () => {
                 {t("location")}
               </Label>
               <div className="relative">
-                <MapPin
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  size={18}
-                />
                 <Input
                   type="text"
                   placeholder={t("enterLocation")}
                   name="location"
                   value={input.location}
                   onChange={changeEventHandler}
-                  className={`pl-10 pr-4 py-2 w-full border ${
+                  className={`px-4 py-2 w-full border ${
                     errors.location ? "border-red-500" : "border-gray-400"
                   } rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent`}
                   disabled={loading}
@@ -327,17 +305,13 @@ const UpdateCompany = () => {
                 {t("email")}
               </Label>
               <div className="relative">
-                <Mail
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  size={18}
-                />
                 <Input
                   type="email"
                   placeholder={t("enterEmail")}
                   name="email"
                   value={input.email}
                   onChange={changeEventHandler}
-                  className={`pl-10 pr-4 py-2 w-full border ${
+                  className={`px-4 py-2 w-full border ${
                     errors.email ? "border-red-500" : "border-gray-400"
                   } rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent`}
                   disabled={loading}
@@ -353,17 +327,13 @@ const UpdateCompany = () => {
                 {t("phoneNumber")}
               </Label>
               <div className="relative">
-                <Phone
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  size={18}
-                />
                 <Input
                   type="tel"
                   placeholder={t("enterPhoneNumber")}
                   name="phoneNumber"
                   value={input.phoneNumber}
                   onChange={changeEventHandler}
-                  className={`pl-10 pr-4 py-2 w-full border ${
+                  className={`px-4 py-2 w-full border ${
                     errors.phoneNumber ? "border-red-500" : "border-gray-400"
                   } rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent`}
                   disabled={loading}

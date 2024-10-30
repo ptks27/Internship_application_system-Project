@@ -1,13 +1,4 @@
-import {
-  ArrowLeftIcon,
-  Building2,
-  Mail,
-  Phone,
-  MapPin,
-  FileImage,
-  FileText,
-  User,
-} from "lucide-react";
+import { ArrowLeftIcon, FileImage } from "lucide-react";
 import Navbar from "../shared/Navbar";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
@@ -183,10 +174,10 @@ const CompanySetup = () => {
       <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-semibold text-gray-800 mb-2">
-            Loading company data...
+            {t("loadingCompanyData")}
           </h2>
           <p className="text-gray-600">
-            Please wait while we fetch the company information.
+            {t("pleaseWaitCompany")}
           </p>
         </div>
       </div>
@@ -208,8 +199,8 @@ const CompanySetup = () => {
               <ArrowLeftIcon size={18} />
               <span>{t("back")}</span>
             </Button>
-            <div className="flex-grow flex justify-center">
-              <h1 className="text-3xl font-bold text-[#7e22ce]">
+            <div className="flex-grow">
+              <h1 className="text-3xl font-bold text-[#7e22ce] ml-4">
                 {t("companySetup")}
               </h1>
             </div>
@@ -217,26 +208,20 @@ const CompanySetup = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-10">
             <div className="space-y-2">
-              <Label className="text-sm font-medium text-gray-700">
+              <Label className="text-sm font-medium  text-gray-700">
                 {t("companyName")}
               </Label>
-              <div className="relative">
-                <Building2
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  size={18}
-                />
-                <Input
-                  type="text"
-                  placeholder={t("enterCompanyName")}
-                  name="name"
-                  value={input.name}
-                  onChange={changeEventHandler}
-                  className={`pl-10 pr-4 py-2 w-full border ${
-                    errors.name ? "border-red-500" : "border-gray-400"
-                  } rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent`}
-                  disabled={loading}
-                />
-              </div>
+              <Input
+                type="text"
+                placeholder={t("enterCompanyName")}
+                name="name"
+                value={input.name}
+                onChange={changeEventHandler}
+                className={`w-full border px-4 ${
+                  errors.name ? "border-red-500" : "border-gray-400"
+                } rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent`}
+                disabled={loading}
+              />
               {errors.name && (
                 <p className="text-red-500 text-xs mt-1">{t(errors.name)}</p>
               )}
@@ -246,25 +231,19 @@ const CompanySetup = () => {
               <Label className="text-sm font-medium text-gray-700">
                 {t("description")}
               </Label>
-              <div className="relative">
-                <FileText
-                  className="absolute left-3 top-3 text-gray-400"
-                  size={18}
-                />
-                <textarea
-                  placeholder={t("enterCompanyDescription")}
-                  name="description"
-                  value={input.description}
-                  onChange={changeEventHandler}
-                  className={`pl-10 w-full h-24 px-4 py-2 border ${
-                    errors.description ? "border-red-500" : "border-gray-400"
-                  } rounded-md focus:outline-none focus:ring-2 focus:ring-[#7e22ce] focus:border-[#7e22ce] resize-none`}
-                  disabled={loading}
-                  maxLength={400}
-                />
-                <div className="absolute right-2 bottom-2 text-xs text-gray-500">
-                  {charCount}/400
-                </div>
+              <textarea
+                placeholder={t("enterCompanyDescription")}
+                name="description"
+                value={input.description}
+                onChange={changeEventHandler}
+                className={`w-full h-24 px-4 py-2 border ${
+                  errors.description ? "border-red-500" : "border-gray-400"
+                } rounded-md focus:outline-none focus:ring-2 focus:ring-[#7e22ce] focus:border-[#7e22ce] resize-none`}
+                disabled={loading}
+                maxLength={400}
+              />
+              <div className="text-xs text-gray-500 text-right">
+                {charCount}/400
               </div>
               {errors.description && (
                 <p className="text-red-500 text-xs mt-1">
@@ -277,24 +256,18 @@ const CompanySetup = () => {
               <Label className="text-sm font-medium text-gray-700">
                 {t("agentName")}
               </Label>
-              <div className="relative">
-                <User
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  size={18}
-                />
-                <Input
-                  type="text"
-                  placeholder={t("enterAgentName")}
-                  name="agent_fullname"
-                  value={input.agent_fullname}
-                  onChange={changeEventHandler}
-                  className={`pl-10 pr-4 py-2 w-full border ${
-                    errors.agent_fullname ? "border-red-500" : "border-gray-400"
-                  } rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent`}
-                  disabled={loading}
-                  maxLength={100} // Prevent typing more than 100 characters
-                />
-              </div>
+              <Input
+                type="text"
+                placeholder={t("enterAgentName")}
+                name="agent_fullname"
+                value={input.agent_fullname}
+                onChange={changeEventHandler}
+                className={`w-full border px-4 ${
+                  errors.agent_fullname ? "border-red-500" : "border-gray-400"
+                } rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent`}
+                disabled={loading}
+                maxLength={100}
+              />
               {errors.agent_fullname && (
                 <p className="text-red-500 text-xs mt-1">
                   {t(errors.agent_fullname)}
@@ -306,23 +279,17 @@ const CompanySetup = () => {
               <Label className="text-sm font-medium text-gray-700">
                 {t("location")}
               </Label>
-              <div className="relative">
-                <MapPin
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  size={18}
-                />
-                <Input
-                  type="text"
-                  placeholder={t("enterLocation")}
-                  name="location"
-                  value={input.location}
-                  onChange={changeEventHandler}
-                  className={`pl-10 pr-4 py-2 w-full border ${
-                    errors.location ? "border-red-500" : "border-gray-400"
-                  } rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent`}
-                  disabled={loading}
-                />
-              </div>
+              <Input
+                type="text"
+                placeholder={t("enterLocation")}
+                name="location"
+                value={input.location}
+                onChange={changeEventHandler}
+                className={`w-full border px-4 ${
+                  errors.location ? "border-red-500" : "border-gray-400"
+                } rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent`}
+                disabled={loading}
+              />
               {errors.location && (
                 <p className="text-red-500 text-xs mt-1">
                   {t(errors.location)}
@@ -334,23 +301,17 @@ const CompanySetup = () => {
               <Label className="text-sm font-medium text-gray-700">
                 {t("email")}
               </Label>
-              <div className="relative">
-                <Mail
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  size={18}
-                />
-                <Input
-                  type="email"
-                  placeholder={t("enterEmail")}
-                  name="email"
-                  value={input.email}
-                  onChange={changeEventHandler}
-                  className={`pl-10 pr-4 py-2 w-full border ${
-                    errors.email ? "border-red-500" : "border-gray-400"
-                  } rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent`}
-                  disabled={loading}
-                />
-              </div>
+              <Input
+                type="email"
+                placeholder={t("enterEmail")}
+                name="email"
+                value={input.email}
+                onChange={changeEventHandler}
+                className={`w-full border px-4 ${
+                  errors.email ? "border-red-500" : "border-gray-400"
+                } rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent`}
+                disabled={loading}
+              />
               {errors.email && (
                 <p className="text-red-500 text-xs mt-1">{t(errors.email)}</p>
               )}
@@ -360,24 +321,18 @@ const CompanySetup = () => {
               <Label className="text-sm font-medium text-gray-700">
                 {t("phoneNumber")}
               </Label>
-              <div className="relative">
-                <Phone
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  size={18}
-                />
-                <Input
-                  type="tel"
-                  placeholder={t("enterPhoneNumber")}
-                  name="phoneNumber"
-                  value={input.phoneNumber}
-                  onChange={changeEventHandler}
-                  className={`pl-10 pr-4 py-2 w-full border ${
-                    errors.phoneNumber ? "border-red-500" : "border-gray-400"
-                  } rounded-md focus:ring-2 focus:ring-purple-500 focus:border-transparent`}
-                  disabled={loading}
-                  maxLength={10}
-                />
-              </div>
+              <Input
+                type="tel"
+                placeholder={t("enterPhoneNumber")}
+                name="phoneNumber"
+                value={input.phoneNumber}
+                onChange={changeEventHandler}
+                className={`w-full border px-4 ${
+                  errors.phoneNumber ? "border-red-500" : "border-gray-400"
+                } rounded-md focus:ring-2 focus:ring-purple-500 focus:border-transparent`}
+                disabled={loading}
+                maxLength={10}
+              />
               {errors.phoneNumber && (
                 <p className="text-red-500 text-xs mt-1">
                   {t(errors.phoneNumber)}

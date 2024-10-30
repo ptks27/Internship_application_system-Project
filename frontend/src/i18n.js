@@ -91,7 +91,7 @@ i18n.use(initReactI18next).init({
         enterAgentName: "Enter agent name (Thai or English only)",
         enterLocation: "Enter location",
         enterEmailAddress: "Enter email address",
-        enterPhoneNumber: "Enter 10-digit phone number",
+        enterPhoneNumber: "Enter 8-13 digit phone number",
         companyLogo: "Company Logo",
         chooseFile: "Choose file",
         updating: "Updating...",
@@ -152,15 +152,16 @@ i18n.use(initReactI18next).init({
         jobType: "Job Type",
         selectJobType: "Select Job Type",
         selectCompany: "Select a Company",
-        postJob: "Post Job",
+        postJob: "Post New Job",
         posting: "Posting...",
         pleaseRegisterCompany:
           "Please register a company first, before posting a job",
         fillAllFields: "Please fill in all required fields correctly.",
         // Add new translations for UpdateJobs
         updateJob: "Update Job",
+        jobUpdate: "Job Update",
         enterFullname: "Enter your full name",
-
+        passwordError: "Password must be at least 8 characters long",
         fullnameMinLength: "Full name must be at least 5 characters long",
         fullnameMaxLength: "Full name must not exceed 30 characters",
         fullnameOnlyThaiEnglish: "Please enter only Thai or English characters",
@@ -240,7 +241,8 @@ i18n.use(initReactI18next).init({
         jobTypeNotSpecified: "Job type not specified",
         pending: "Pending",
         // Add new translations for Signup
-        createAccount: "Create Account",
+        createAccount: "Create your",
+        newsAccount: "new account",
         phoneNumberPlaceholder: "Enter your phone number",
         emailPlaceholder: "Enter your email",
         passwordPlaceholder: "Enter your password",
@@ -248,6 +250,8 @@ i18n.use(initReactI18next).init({
         selectRole: "Select your role",
         uploadProfilePicture: "Upload Profile Picture",
         signupButton: "Sign Up",
+        emailPrefixLengthError:
+          "Please enter no more than 20 characters before '@'.",
 
         loginHere: "Login here",
         fullnameValidation:
@@ -281,7 +285,7 @@ i18n.use(initReactI18next).init({
         unknownJob: "Unknown Job",
         unknownCompany: "Unknown Company",
         generalNotification: "General Notification",
-
+        confirmPasswordError: "Passwords do not match",
         noNotifications: "No notifications",
         deleteNotification: "Delete",
         youHaveAppliedForTheJob: "You have applied for the job : ",
@@ -324,10 +328,12 @@ i18n.use(initReactI18next).init({
         phoneAlreadyInUse: "This phone number is already in use",
         // Success messages
         profileUpdateSuccess: "Profile updated successfully",
+        failedToRegisterCompany: "Failed to register company",
         // Error messages
         bioMaxSelection: "Cannot select more than 3 bios",
         pleaseCorrectErrors: "Please correct the errors below",
         fileTypeError: "Please select only PNG, JPG, or JPEG files",
+        companyRegisteredSuccess: "Company registered successfully",
         notFound: {
           title: "404",
           heading: "Page Not Found",
@@ -338,6 +344,7 @@ i18n.use(initReactI18next).init({
     },
     th: {
       translation: {
+        passwordError: "รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร",
         expiringsSoon: "ใกล้หมดอายุ",
         pleaseWaitLogin: "กรุณารอสักครู่",
         jobTypeNotSpecified: "ประเภทงานไม่ระบุ",
@@ -427,7 +434,7 @@ i18n.use(initReactI18next).init({
         enterAgentName: "กรอกชื่อตัวแทน (ภาษาไทยหรืออังกฤษเท่านั้น)",
         enterLocation: "กรอกสถานที่",
         enterEmailAddress: "กรอกที่อยู่อีเมล",
-        enterPhoneNumber: "กรอกหมายเลขโทรศัพท์ 10 หลัก",
+        enterPhoneNumber: "กรอกหมายเลขโทรศัพท์ 8-13 หลัก",
         companyLogo: "โลโก้บริษัท",
         chooseFile: "เลือกไฟล์",
         updating: "กำลังอัปเดต...",
@@ -448,6 +455,8 @@ i18n.use(initReactI18next).init({
         yesDelete: "ใช่, ลบเลย!",
         somethingWentWrong: "เกิดข้อผิดพลาดบางอย่าง!",
         back: "กลับ",
+        emailPrefixLengthError:
+          "กรุณาระบุอีเมลที่มีความยาวอย่างน้อย 20 ตัวอักษรก่อน '@'",
         update: "อัปเดต",
         companySetup: "กรอกข้อมูลบริษัท",
         companyNameRequired: "กรุณาระบุชื่อบริษัท",
@@ -477,6 +486,7 @@ i18n.use(initReactI18next).init({
         wantToDeleteJob: "คุณต้องการลบงานนี้หรือไม่?",
         role: "ตำแหน่ง",
         applicants: "ผู้สมัคร",
+        jobUpdate: "อัปเดตงาน",
         // Add new translations for PostJobs
         jobSetup: "กรอกข้อมูลงาน",
         enterJobPosition: "กรอกตำแหน่งงาน",
@@ -496,13 +506,13 @@ i18n.use(initReactI18next).init({
         // Add new translations for UpdateJobs
         updateJob: "อัปเดตงาน",
         enterFullname: "กรอกชื่อเต็มของคุณ",
-        passwordError: "รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร",
+
         confirmPasswordError: "รหัสผ่านไม่ตรงกัน",
 
         fullnameMinLength: "ชื่อเต็มต้องมีความยาวอย่างน้อย 5 ตัวอักษร",
         fullnameMaxLength: "ชื่อเต็มต้องไม่เกิน 30 ตัวอักษร",
         fullnameOnlyThaiEnglish:
-          "กรุณากรอกเฉพาะตัวอักษรภาษาไทยหรืออังกฤษเท่านั้น",
+          "กรุณากรอกเฉพาะตัวอักษรภาษาไทยหรืออังกฤษเท่าน���้น",
         phoneNumberOnlyDigits: "กรุณากรอกเฉพาะตัวเลขเท่านั้น",
 
         phoneNumberStartWithZero: "หมายเลขโทรศัพท์ต้องขึ้นต้นด้วย 0",
@@ -549,8 +559,7 @@ i18n.use(initReactI18next).init({
         failedToResendOTP: "ไม่สามารถส่งรหัส OTP ใหม่ได้",
         pleaseWaitForOTP: "กรุณารอให้รหัส OTP ปัจจุบันหมดอายุก่อนขอรหัสใหม่",
         passwordResetSuccessful: "รีเซ็ตรหัสผ่านสำเร็จ!",
-        passwordResetSuccessMessage:
-          "รหัสผ่านของคุณด้รับการรีเซ็ตเรียบร้อยแล้ว",
+        passwordResetSuccessMessage: "รัสผ่านของคุณด้รับการรีเซ็ตเรียบร้อยแล้ว",
         redirectingToLoginPage: "กำลังนำทางไปยังหน้าเข้าสู่ระบบใน",
         resetPassword: "รีเซ็ตรัสผ่าน",
         enterNewPasswordBelow:
@@ -577,6 +586,7 @@ i18n.use(initReactI18next).init({
         pending: "รอดำเนินการ",
         // Add new translations for Signup
         createAccount: "สร้างบัญชี",
+        newsAccount: "ใหม่ของคุณ",
         phoneNumberPlaceholder: "กรอกหมายเลขโทรศัพท์ของคุณ",
         emailPlaceholder: "กรอกอีเมลของคุณ",
         passwordPlaceholder: "กรอกรหัสผ่านของคุณ",

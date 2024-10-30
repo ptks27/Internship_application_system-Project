@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { RadioGroup } from "../ui/radio-group";
 import { useState } from "react";
 import axios from "axios";
 import { USER_API_END_POINT } from "../../components/utils/constant";
@@ -64,7 +63,7 @@ const Signup = () => {
         if (digitOnly.length === 0) {
           setErrors({
             ...errors,
-            phoneNumber: t("phoneNumberRequired"), 
+            phoneNumber: t("phoneNumberRequired"),
           });
         } else if (digitOnly.length < 8 || digitOnly.length > 13) {
           setErrors({
@@ -81,6 +80,12 @@ const Signup = () => {
       const isAllowedDomain =
         /(gmail\.com|ku\.th|outlook\.com|yahoo\.com|hotmail\.com)$/.test(value);
 
+      if (!value) {
+        setErrors({ ...errors, email: t("emailRequired") });
+        setInput({ ...input, email: value });
+        return;
+      }
+
       const [prefix, domain] = value.split("@");
 
       const isValidPrefixLength = prefix.length <= 20;
@@ -89,7 +94,7 @@ const Signup = () => {
       if (prefix.length > 20) {
         setErrors({
           ...errors,
-          email: "Please enter no more than 20 characters before '@'.",
+          email: t("emailPrefixLengthError"),
         });
         return;
       }
@@ -99,13 +104,13 @@ const Signup = () => {
       } else if (isValidPrefixLength && isValidDomainLength) {
         setInput({ ...input, email: value });
       } else {
-        setErrors({ ...errors, email: "Please enter a valid email address." });
+        setErrors({ ...errors, email: t("emailValidation") });
       }
 
       if (!isNotThai) {
-        setErrors({ ...errors, email: "Please enter English." });
+        setErrors({ ...errors, email: t("emailEnterEnglish") });
       } else if (!isValidEmail || !isAllowedDomain) {
-        setErrors({ ...errors, email: "Please enter a valid email address." });
+        setErrors({ ...errors, email: t("emailValidation") });
       } else {
         setErrors({ ...errors, email: false });
       }
@@ -160,20 +165,31 @@ const Signup = () => {
     // เพิ่มการตรวจสอบเพิ่มเติม
     const additionalValidation = {
       fullname: input.fullname.trim() === "",
-      email: input.email.trim() === "",
-      phoneNumber: input.phoneNumber.trim() === "" || input.phoneNumber.length < 8 || input.phoneNumber.length > 13,
-      password: input.password.trim() === "" || input.password.length < 8 || input.password.length > 30,
-      confirmPassword: input.confirmPassword.trim() === "" || input.confirmPassword !== input.password,
+      email: !input.email.trim() ? t("emailRequired") : false,
+      phoneNumber: !input.phoneNumber.trim()
+        ? t("phoneNumberRequired")
+        : input.phoneNumber.length < 8 || input.phoneNumber.length > 13
+        ? t("phoneNumberLengthError")
+        : false,
+      password:
+        input.password.trim() === "" ||
+        input.password.length < 8 ||
+        input.password.length > 30,
+      confirmPassword:
+        input.confirmPassword.trim() === "" ||
+        input.confirmPassword !== input.password,
       role: input.role.trim() === "",
-      file: !input.file
+      file: !input.file,
     };
 
-    const hasErrors = Object.values(additionalValidation).some(value => value === true);
+    const hasErrors = Object.values(additionalValidation).some(
+      (value) => value === true
+    );
 
     if (hasErrors) {
-      setErrors(prevErrors => ({
+      setErrors((prevErrors) => ({
         ...prevErrors,
-        ...additionalValidation
+        ...additionalValidation,
       }));
       toast.error(t("fillAllFieldsCorrectly"));
       return;
@@ -193,14 +209,20 @@ const Signup = () => {
           input.email
         ) ||
         input.email.split("@")[0].length > 20,
-      phoneNumber: !input.phoneNumber ? t("phoneNumberRequired") : (input.phoneNumber.length < 8 || input.phoneNumber.length > 13 ? t("phoneNumberLengthError") : ""),
+      phoneNumber: !input.phoneNumber
+        ? t("phoneNumberRequired")
+        : input.phoneNumber.length < 8 || input.phoneNumber.length > 13
+        ? t("phoneNumberLengthError")
+        : "",
       password: input.password.length < 8 || input.password.length > 30,
       confirmPassword: input.confirmPassword !== input.password,
       role: !input.role,
       file: !input.file || errors.file,
     };
 
-    if (Object.values(newErrors).some(error => error !== false && error !== "")) {
+    if (
+      Object.values(newErrors).some((error) => error !== false && error !== "")
+    ) {
       setErrors(newErrors);
       toast.error(t("fillAllFieldsCorrectly"));
       return;
@@ -239,128 +261,142 @@ const Signup = () => {
   };
 
   return (
-    <div className="bg-[#f4f4f4]">
+    <div className="min-h-screen bg-[#f4f4f4]">
       <Navbar2 />
-      <div className="flex items-center justify-center max-w-7xl mx-auto my-5 px-4">
+      <div className="container mx-auto px-4 py-8">
         <motion.form
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           onSubmit={submitHandler}
-          className="w-full md:w-3/4 lg:w-1/2 border border-purple-900 rounded-lg p-6 sm:p-8 md:p-10 my-10 bg-[#723bcf] shadow-lg shadow-purple-500/50 transform translate-x-2 translate-y-2"
+          className="max-w-3xl mx-auto border border-purple-900 rounded-2xl p-6 sm:p-8 md:p-10 bg-[#723bcf] shadow-xl"
         >
-          <motion.h1
+          {/* Form Header */}
+          <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="font-bold text-2xl sm:text-3xl md:text-4xl mb-5 text-center my-1 text-white"
+            className="text-center mb-8"
           >
-            {t("createAccount")}
-          </motion.h1>
-          <hr className="my-3" />
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+              {t("createAccount")}{" "}
+              <span className="text-orange-400">{t("newsAccount")}</span>
+            </h1>
+          </motion.div>
 
-          {/* Profile Picture Upload */}
-          <div className="flex flex-col items-center mb-6">
-            <Label className="font-bold text-white mb-2 my-2">
-              {t("uploadProfilePicture")}
-            </Label>
-            <div className="flex flex-col items-center space-y-4">
-              <div className="flex-shrink-0">
+          {/* Profile Picture Section */}
+          <div className="mb-8">
+            <div className="flex flex-col items-center gap-4">
+              <div className="relative">
                 {previewUrl ? (
                   <img
                     src={previewUrl}
                     alt="Profile Preview"
-                    className="w-32 h-32 object-cover rounded-full border-4 border-white"
+                    className="w-32 h-32 object-cover rounded-full border-4 border-white transition-all duration-300 hover:scale-105"
                   />
                 ) : (
-                  <div className="w-32 h-32 bg-gray-300 rounded-full flex items-center justify-center">
-                    <ImageIcon className="text-gray-600 w-10 h-10" />
+                  <div className="w-32 h-32 bg-white/10 rounded-full flex items-center justify-center border-4 border-white/30 transition-all duration-300 hover:border-white">
+                    <ImageIcon className="text-white/70 w-12 h-12" />
                   </div>
                 )}
               </div>
-              <div className="flex-grow">
+              <div className="w-full max-w-md">
                 <Input
                   type="file"
                   accept="image/*"
+                  
                   onChange={changeFileHandler}
-                  className={`bg-[#723bcf] border ${
-                    errors.file ? "border-red-500" : "border-white"
-                  } text-white font-semibold`}
+                  className={`file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-white/10 file:text-white hover:file:bg-white/20 text-white cursor-pointer w-full ${
+                    errors.file ? "border-red-400" : "border-white/30"
+                  } rounded-lg transition-all duration-300`}
                 />
                 {errors.file && (
-                  <div className="text-red-400 text-sm mt-1">
+                  <p className="mt-2 text-red-400 text-sm">
                     {t("fileValidationMessage")}
-                  </div>
+                  </p>
                 )}
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="my-2">
-              <Label className="font-bold text-white">{t("fullname")}</Label>
-              <Input
-                value={input.fullname}
-                name="fullname"
-                onChange={changeEventHandler}
-                className={`my-2 bg-[#723bcf] border ${
-                  errors.fullname ? "border-red-500" : "border-white"
-                } text-white font-semibold`}
-                type="text"
-                placeholder={t("enterFullname")}
-              />
-              {errors.fullname && (
-                <div className="text-red-400 text-sm">
-                  {t("fullnameValidation")}
-                </div>
-              )}
+          {/* Form Fields Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Fullname Field */}
+            <div className="form-group">
+              <Label className="block text-white font-semibold mb-2">
+                {t("fullname")}
+              </Label>
+              <div className="relative">
+                <Input
+                  value={input.fullname}
+                  name="fullname"
+                  onChange={changeEventHandler}
+                  className={`w-full px-4 py-3 rounded-lg bg-white/10 border ${
+                    errors.fullname ? "border-red-400" : "border-white/30"
+                  } text-white placeholder-white/50 focus:border-white focus:ring-2 focus:ring-white/20 transition-all duration-300`}
+                  type="text"
+                  placeholder={t("enterFullname")}
+                />
+                {errors.fullname && (
+                  <p className="mt-2 text-red-400 text-sm">
+                    {t("fullnameValidation")}
+                  </p>
+                )}
+              </div>
             </div>
 
-            <div className="my-2">
-              <Label className="font-bold text-white">{t("phoneNumber")}</Label>
-              <Input
-                value={input.phoneNumber}
-                name="phoneNumber"
-                onChange={changeEventHandler}
-                className={`my-2 bg-[#723bcf] border ${
-                  errors.phoneNumber ? "border-red-500" : "border-white"
-                } text-white font-semibold`}
-                type="tel"
-                placeholder={t("phoneNumberPlaceholder")}
-                maxLength={13}
-              />
-              {errors.phoneNumber && (
-                <div className="text-red-400 text-sm">{t("phoneNumberValidation")}</div>
-              )}
+            {/* Phone Number Field */}
+            <div className="form-group">
+              <Label className="block text-white font-semibold mb-2">
+                {t("phoneNumber")}
+              </Label>
+              <div className="relative">
+                <Input
+                  value={input.phoneNumber}
+                  name="phoneNumber"
+                  onChange={changeEventHandler}
+                  className={`w-full px-4 py-3 rounded-lg bg-white/10 border ${
+                    errors.phoneNumber ? "border-red-400" : "border-white/30"
+                  } text-white placeholder-white/50 focus:border-white focus:ring-2 focus:ring-white/20 transition-all duration-300`}
+                  type="tel"
+                  placeholder={t("enterPhoneNumber")}
+                />
+                {errors.phoneNumber && (
+                  <p className="mt-2 text-red-400 text-sm">
+                    {errors.phoneNumber}
+                  </p>
+                )}
+              </div>
             </div>
 
-            <div className="my-2">
-              <Label className="font-bold text-white">{t("email")}</Label>
-              <Input
-                value={input.email}
-                name="email"
-                onChange={changeEventHandler}
-                className={`my-2 bg-[#723bcf] border ${
-                  errors.email ? "border-red-500" : "border-white"
-                } text-white font-semibold`}
-                type="email"
-                placeholder={t("emailPlaceholder")}
-              />
-              {errors.email && (
-                <div className="text-red-400 text-sm">
-                  {errors.email === "Please enter English."
-                    ? t("emailEnterEnglish")
-                    : errors.email ===
-                      "Please enter no more than 20 characters before '@'."
-                    ? t("emailMaxCharacters")
-                    : t("emailValidDomains")}
-                </div>
-              )}
+            {/* Email Field */}
+            <div className="form-group">
+              <Label className="block text-white font-semibold mb-2">
+                {t("email")}
+              </Label>
+              <div className="relative">
+                <Input
+                  value={input.email}
+                  name="email"
+                  onChange={changeEventHandler}
+                  className={`w-full px-4 py-3 rounded-lg bg-white/10 border ${
+                    errors.email ? "border-red-400" : "border-white/30"
+                  } text-white placeholder-white/50 focus:border-white focus:ring-2 focus:ring-white/20 transition-all duration-300`}
+                  type="email"
+                  placeholder={t("enterEmail")}
+                />
+                {errors.email && (
+                  <p className="mt-2 text-red-400 text-sm">{errors.email}</p>
+                )}
+              </div>
             </div>
 
-            <div className="my-2">
-              <Label className="font-bold text-white">{t("role")}</Label>
-              <RadioGroup className="flex space-x-4 my-2">
+            {/* Role Field */}
+            <div className="form-group">
+              <Label className="block text-white font-semibold mb-2">
+                {t("role")}
+              </Label>
+              <div className="flex space-x-4">
                 <div className="flex items-center space-x-2">
                   <Input
                     type="radio"
@@ -368,14 +404,9 @@ const Signup = () => {
                     value="student"
                     checked={input.role === "student"}
                     onChange={changeEventHandler}
-                    className="cursor-pointer bg-[#723bcf] border-white text-white"
+                    className="w-4 h-4 text-purple-600 bg-white/10 border-white/30 focus:ring-purple-500"
                   />
-                  <Label
-                    htmlFor="option-one"
-                    className="text-white font-semibold"
-                  >
-                    {t("student")}
-                  </Label>
+                  <Label className="text-white">{t("student")}</Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Input
@@ -384,92 +415,114 @@ const Signup = () => {
                     value="agent"
                     checked={input.role === "agent"}
                     onChange={changeEventHandler}
-                    className="cursor-pointer bg-[#723bcf] border-white text-white"
+                    className="w-4 h-4 text-purple-600 bg-white/10 border-white/30 focus:ring-purple-500"
                   />
-                  <Label
-                    htmlFor="option-two"
-                    className="text-white font-semibold"
-                  >
-                    {t("agent")}
-                  </Label>
+                  <Label className="text-white">{t("agent")}</Label>
                 </div>
-              </RadioGroup>
+              </div>
               {errors.role && (
-                <div className="text-red-400 text-sm">{t("roleValidation")}</div>
+                <p className="mt-2 text-red-400 text-sm">
+                  {t("roleValidation")}
+                </p>
               )}
             </div>
 
-            <div className="my-2 relative">
-              <Label className="font-bold text-white">{t("password")}</Label>
-              <Input
-                value={input.password}
-                name="password"
-                onChange={changeEventHandler}
-                type={passwordVisible ? "text" : "password"}
-                className={`my-2 bg-[#723bcf] border ${
-                  errors.password ? "border-red-500" : "border-white"
-                } text-white font-semibold`}
-                placeholder={t("enterPassword")}
-              />
-              <button
-                type="button"
-                className="absolute right-3 top-10"
-                onClick={() => setPasswordVisible(!passwordVisible)}
-              >
-                {passwordVisible ? <EyeOff /> : <Eye />}
-              </button>
+            {/* Password Field */}
+            <div className="form-group">
+              <Label className="block text-white font-semibold mb-2">
+                {t("password")}
+              </Label>
+              <div className="relative h-[46px]">
+                <Input
+                  value={input.password}
+                  name="password"
+                  onChange={changeEventHandler}
+                  type={passwordVisible ? "text" : "password"}
+                  className={`w-full px-4 py-3 rounded-lg bg-white/10 border ${
+                    errors.password ? "border-red-400" : "border-white/30"
+                  } text-white placeholder-white/50 pr-12`}
+                  placeholder={t("enterPassword")}
+                />
+                <button
+                  type="button"
+                  className="absolute right-3 top-[50%] -translate-y-1/2 text-white/70 hover:text-white transition-colors duration-300"
+                  onClick={() => setPasswordVisible(!passwordVisible)}
+                >
+                  {passwordVisible ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
               {errors.password && (
-                <div className="text-red-400 text-sm">{t("passwordError")}</div>
+                <p className="mt-2 text-red-400 text-sm">
+                  {t("passwordError")}
+                </p>
               )}
             </div>
 
-            <div className="my-2 relative">
-              <Label className="font-bold text-white">
+            {/* Confirm Password Field */}
+            <div className="form-group">
+              <Label className="block text-white font-semibold mb-2">
                 {t("confirmPassword")}
               </Label>
-              <Input
-                value={input.confirmPassword}
-                name="confirmPassword"
-                onChange={handleConfirmPasswordChange}
-                type={confirmPasswordVisible ? "text" : "password"}
-                className={`my-2 bg-[#723bcf] border ${
-                  errors.confirmPassword ? "border-red-500" : "border-white"
-                } text-white font-semibold`}
-                placeholder={t("confirmPasswordPlaceholder")}
-              />
-              <button
-                type="button"
-                className="absolute right-3 top-10"
-                onClick={() =>
-                  setConfirmPasswordVisible(!confirmPasswordVisible)
-                }
-              >
-                {confirmPasswordVisible ? <EyeOff /> : <Eye />}
-              </button>
+              <div className="relative h-[46px]">
+                <Input
+                  value={input.confirmPassword}
+                  name="confirmPassword"
+                  onChange={handleConfirmPasswordChange}
+                  type={confirmPasswordVisible ? "text" : "password"}
+                  className={`w-full px-4 py-3 rounded-lg bg-white/10 border ${
+                    errors.confirmPassword
+                      ? "border-red-400"
+                      : "border-white/30"
+                  } text-white placeholder-white/50 pr-12`}
+                  placeholder={t("confirmPassword")}
+                />
+                <button
+                  type="button"
+                  className="absolute right-3 top-[50%] -translate-y-1/2 text-white/70 hover:text-white transition-colors duration-300"
+                  onClick={() =>
+                    setConfirmPasswordVisible(!confirmPasswordVisible)
+                  }
+                >
+                  {confirmPasswordVisible ? (
+                    <EyeOff size={20} />
+                  ) : (
+                    <Eye size={20} />
+                  )}
+                </button>
+              </div>
               {errors.confirmPassword && (
-                <div className="text-red-400 text-sm">
+                <p className="mt-2 text-red-400 text-sm">
                   {t("confirmPasswordError")}
-                </div>
+                </p>
               )}
             </div>
           </div>
 
+          {/* Submit Button */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
+            className="mt-8 flex flex-col items-center"
           >
             <Button
               type="submit"
-              className="w-full mt-5 bg-black hover:bg-purple-800 text-white font-bold py-2 px-4 rounded"
+              className="w-80 bg-black hover:bg-purple-800 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-[1.02]"
               disabled={loading}
             >
-              {loading ? <Loader2 className="animate-spin" /> : t("signupButton")}
+              {loading ? (
+                <Loader2 className="animate-spin mx-auto" />
+              ) : (
+                t("signupButton")
+              )}
             </Button>
 
-            <p className="mt-5 text-center text-white text-sm sm:text-base">
+            <p className="mt-6 text-center text-white">
               {t("alreadyHaveAccount")}{" "}
-              <Link to="/login" className="text-orange-400 font-bold">
+              <Link
+                to="/login"
+                className="text-orange-400 font-bold hover:text-orange-300 transition-colors duration-300"
+              >
                 {t("loginHere")}
               </Link>
             </p>
