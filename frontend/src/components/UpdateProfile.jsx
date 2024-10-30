@@ -10,17 +10,7 @@ import { USER_API_END_POINT } from "../components/utils/constant";
 import { toast } from "sonner";
 import { setLoading, setUser } from "@/redux/authSlice";
 import PropTypes from "prop-types";
-import {
-  User,
-  Mail,
-  Phone,
-  Camera,
-  X,
-  Image,
-  Code,
-  BookOpen,
-  FileText,
-} from "lucide-react";
+import { Camera, X, Image } from "lucide-react";
 import { useTranslation } from "react-i18next"; // เพิ่มการ import นี้
 
 const UpdateProfile = ({ open, setOpen }) => {
@@ -364,7 +354,9 @@ const UpdateProfile = ({ open, setOpen }) => {
         setOpen(false);
       }
     } catch (error) {
-      if (error.response?.data?.message === "This phone number is already in use.") {
+      if (
+        error.response?.data?.message === "This phone number is already in use."
+      ) {
         setPhoneError(t("phoneAlreadyInUse"));
       } else if (error.response?.data?.message) {
         toast.error(error.response.data.message);
@@ -446,31 +438,27 @@ const UpdateProfile = ({ open, setOpen }) => {
             </div>
 
             {/* Form Fields */}
-            <div className="space-y-3">
+            <div className="space-y-4">
               {[
                 {
                   id: "fullname",
                   label: t("name"),
-                  icon: User,
                   value: input.fullname,
                 },
                 {
                   id: "email",
                   label: t("email"),
-                  icon: Mail,
                   value: input.email,
                   disabled: true,
                 },
                 {
                   id: "phoneNumber",
                   label: t("phone"),
-                  icon: Phone,
                   value: input.phoneNumber,
                 },
                 {
                   id: "bio",
                   label: t("bio"),
-                  icon: BookOpen,
                   value: input.bio,
                   isSelect: true,
                   options: bioOptions,
@@ -478,7 +466,6 @@ const UpdateProfile = ({ open, setOpen }) => {
                 {
                   id: "skills",
                   label: t("skills"),
-                  icon: Code,
                   value: input.skills,
                   isSelect: true,
                   options: skillOptions,
@@ -486,32 +473,19 @@ const UpdateProfile = ({ open, setOpen }) => {
                 {
                   id: "file",
                   label: t("resume"),
-                  icon: FileText,
                   value: input.file,
                   isFile: true,
                 },
               ].map(
-                ({
-                  id,
-                  label,
-                  icon: Icon,
-                  value,
-                  disabled,
-                  isSelect,
-                  options,
-                  isFile,
-                }) => (
-                  <div key={id} className="space-y-1">
+                ({ id, label, value, disabled, isSelect, options, isFile }) => (
+                  <div key={id} className="space-y-2">
                     <label
                       htmlFor={id}
                       className="block text-sm font-medium text-gray-700"
                     >
                       {label}
                     </label>
-                    <div className="relative rounded-md shadow-sm">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <Icon className="h-4 w-4 text-gray-400" />
-                      </div>
+                    <div className="w-full">
                       {isSelect ? (
                         <Select
                           id={id}
@@ -526,20 +500,30 @@ const UpdateProfile = ({ open, setOpen }) => {
                               ? bioChangeHandler
                               : skillsChangeHandler
                           }
-                          className="pl-10 block w-full rounded-md border-gray-300 text-sm"
+                          className="block w-full rounded-md border-gray-400 text-sm"
                           styles={{
                             control: (provided, state) => ({
                               ...provided,
-                              paddingLeft: "2.5rem",
                               borderColor: state.isFocused
                                 ? "#723bcf"
-                                : provided.borderColor,
+                                : "#9CA3AF",
+                              borderWidth: "1px",
                               boxShadow: state.isFocused
-                                ? "0 0 0 1px #723bcf"
-                                : provided.boxShadow,
+                                ? "0 0 0 2px rgba(114, 59, 207, 0.2)"
+                                : "none",
                               "&:hover": {
                                 borderColor: "#723bcf",
                               },
+                              paddingLeft: "8px",
+                            }),
+                            multiValue: (provided) => ({
+                              ...provided,
+                              backgroundColor: "#f3f0ff",
+                              borderRadius: "4px",
+                            }),
+                            multiValueLabel: (provided) => ({
+                              ...provided,
+                              color: "#000",
                             }),
                           }}
                         />
@@ -549,7 +533,7 @@ const UpdateProfile = ({ open, setOpen }) => {
                           type="file"
                           name={id}
                           onChange={fileChangeHandler}
-                          className="pl-10 block w-full rounded-md border-gray-300 focus:ring-[#723bcf]  text-sm"
+                          className="block py-2 w-full rounded-md border-gray-400 focus:border-[#723bcf] text-sm px-4"
                         />
                       ) : (
                         <Input
@@ -558,17 +542,15 @@ const UpdateProfile = ({ open, setOpen }) => {
                           value={value}
                           onChange={changeEventHandler}
                           disabled={disabled}
-                          className="pl-10 block w-full rounded-md border-gray-300 focus:ring-[#723bcf]  text-sm"
+                          className="block w-full rounded-md border-gray-400 focus:ring-[#723bcf] text-sm px-4"
                         />
                       )}
                     </div>
                     {id === "fullname" && fullnameError && (
-                      <p className="text-red-600 text-xs mt-1">
-                        {fullnameError}
-                      </p>
+                      <p className="text-red-600 text-xs">{fullnameError}</p>
                     )}
                     {id === "phoneNumber" && phoneError && (
-                      <p className="text-red-600 text-xs mt-1">{phoneError}</p>
+                      <p className="text-red-600 text-xs">{phoneError}</p>
                     )}
                   </div>
                 )

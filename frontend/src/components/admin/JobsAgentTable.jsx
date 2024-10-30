@@ -18,7 +18,7 @@ import axios from "axios";
 import { JOB_ALL_API } from "../utils/constant";
 import { setAllJobs } from "@/redux/jobSlice";
 import Swal from "sweetalert2";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 const JobsAgentTable = () => {
   const { allJobsAgent, searchJobByText } = useSelector((state) => state.job);
@@ -40,7 +40,8 @@ const JobsAgentTable = () => {
       const searchText = searchJobByText.toLowerCase();
       return (
         job?.title?.toLowerCase().includes(searchText) ||
-        (typeof job?.company === 'string' && job.company.toLowerCase().includes(searchText))
+        (typeof job?.company === "string" &&
+          job.company.toLowerCase().includes(searchText))
       );
     });
     setFilterJobs(filteredJobs);
@@ -48,14 +49,14 @@ const JobsAgentTable = () => {
 
   const deleteJob = async (jobId) => {
     const result = await Swal.fire({
-      title: t('areYouSure'),
-      text: t('wantToDeleteJob'),
+      title: t("areYouSure"),
+      text: t("wantToDeleteJob"),
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#723bcf",
       cancelButtonColor: "#d33",
-      confirmButtonText: t('yesDelete'),
-      cancelButtonText: t('cancel'),
+      confirmButtonText: t("yesDelete"),
+      cancelButtonText: t("cancel"),
     });
 
     if (result.isConfirmed) {
@@ -89,18 +90,45 @@ const JobsAgentTable = () => {
     if (!dateString) return "N/A";
     const date = new Date(dateString);
     const day = date.getDate();
-    
+
     // Define month names for both English and Thai
     const monthNames = {
-      en: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-      th: ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."]
+      en: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
+      th: [
+        "ม.ค.",
+        "ก.พ.",
+        "มี.ค.",
+        "เม.ย.",
+        "พ.ค.",
+        "มิ.ย.",
+        "ก.ค.",
+        "ส.ค.",
+        "ก.ย.",
+        "ต.ค.",
+        "พ.ย.",
+        "ธ.ค.",
+      ],
     };
 
     // Select the appropriate month name based on the provided language
     const month = monthNames[language][date.getMonth()];
 
     // Adjust the year based on the language
-    const year = language === 'th' ? date.getFullYear() + 543 : date.getFullYear();
+    const year =
+      language === "th" ? date.getFullYear() + 543 : date.getFullYear();
 
     return `${day} ${month} ${year}`;
   };
@@ -108,19 +136,23 @@ const JobsAgentTable = () => {
   return (
     <div className="overflow-x-auto rounded-lg shadow">
       <Table>
-        <TableCaption>{t('recentlyPostedJobs')}</TableCaption>
+        <TableCaption>{t("recentlyPostedJobs")}</TableCaption>
         <TableHeader>
           <TableRow className="bg-[#723bcf] hover:bg-[#5f31ad]">
-            <TableHead className="bg-purple-700 text-white">{t('logo')}</TableHead>
             <TableHead className="bg-purple-700 text-white">
-              {t('companyName')}
+              {t("logo")}
             </TableHead>
-            <TableHead className="bg-purple-700 text-white">{t('role')}</TableHead>
+            <TableHead className="bg-purple-700 text-white">
+              {t("companyName")}
+            </TableHead>
+            <TableHead className="bg-purple-700 text-white">
+              {t("role")}
+            </TableHead>
             <TableHead className="bg-purple-700 text-white hidden sm:table-cell">
-              {t('date')}
+              {t("date")}
             </TableHead>
             <TableHead className="bg-purple-700 text-white text-right">
-              {t('action')}
+              {t("action")}
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -128,7 +160,7 @@ const JobsAgentTable = () => {
           {filterJobs.length === 0 ? (
             <TableRow>
               <TableCell colSpan={5} className="text-center py-4">
-                {t('noJobsPostedYet')}
+                {t("noJobsPostedYet")}
               </TableCell>
             </TableRow>
           ) : (
@@ -162,14 +194,14 @@ const JobsAgentTable = () => {
                         className="flex w-full items-center px-3 py-2 text-sm hover:bg-gray-100 text-gray-700 cursor-pointer"
                       >
                         <Edit2 className="mr-2 h-4 w-4 text-blue-500" />
-                        {t('edit')}
+                        {t("edit")}
                       </div>
                       <div
                         onClick={() => deleteJob(job.job_id)}
                         className="flex w-full items-center px-3 py-2 text-sm hover:bg-gray-100 text-red-600 cursor-pointer"
                       >
                         <Trash2 className="mr-2 h-4 w-4" />
-                        {t('delete')}
+                        {t("delete")}
                       </div>
                       <div
                         onClick={() =>
@@ -178,7 +210,7 @@ const JobsAgentTable = () => {
                         className="flex w-full items-center px-3 py-2 text-sm hover:bg-gray-100 text-green-500 cursor-pointer"
                       >
                         <Eye className="mr-2 h-4 w-4" />
-                        {t('applicants')}
+                        {t("applicants")}
                       </div>
                     </PopoverContent>
                   </Popover>

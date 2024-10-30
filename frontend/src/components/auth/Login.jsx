@@ -16,7 +16,7 @@ import { resetJobs } from "@/redux/jobSlice"; // Add this import
 import { motion } from "framer-motion";
 import Navbar2 from "../shared/Navbar2";
 import Footer from "../shared/Footer";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
   const { t } = useTranslation();
@@ -35,18 +35,18 @@ const Login = () => {
   const validateEmail = (email) => {
     const emailRegex = /^[^@]+@[^@]+\.[^@]+$/;
     if (!email) {
-      return t('emailRequired');
+      return t("emailRequired");
     } else if (!emailRegex.test(email)) {
-      return t('invalidEmail');
+      return t("invalidEmail");
     }
     return "";
   };
 
   const validatePassword = (password) => {
     if (!password) {
-      return t('passwordRequired');
+      return t("passwordRequired");
     } else if (password.length > 30) {
-      return t('passwordTooLong');
+      return t("passwordTooLong");
     }
     return "";
   };
@@ -176,15 +176,15 @@ const Login = () => {
           {/* Heading with Logo */}
           <div className="flex items-center justify-between mb-5">
             <h1 className="font-bold text-3xl md:text-4xl text-white leading-tight">
-              {t('welcome')} <br />
+              {t("welcome")} <br />
               <span className="text-sm font-normal leading-none">
-                {t('welcomeSubtitle')}
+                {t("welcomeSubtitle")}
               </span>
             </h1>
             {/* Logo on the right */}
             <img
               src={LOGOLOGIN}
-              alt={t('logo')}
+              alt={t("logo")}
               className="w-12 h-12 md:w-16 md:h-16" // Responsive logo size
             />
           </div>
@@ -192,31 +192,31 @@ const Login = () => {
           {/* Login Form */}
           <div className="space-y-6">
             <div>
-              <Label className="font-bold text-white">{t('email')}</Label>
+              <Label className="font-bold text-white">{t("email")}</Label>
               <Input
                 value={input.email}
                 name="email"
                 onChange={changeEventHandler}
-                className={`mt-2 w-full bg-[#723bcf] text-white font-semibold ${
+                className={`mt-2 pl-3 w-full bg-[#723bcf] text-white font-semibold ${
                   errors.email ? "border-red-500" : "border-white"
                 }`}
                 type="email"
-                placeholder={t('enterEmail')}
+                placeholder={t("enterEmail")}
               />
               {errors.email && <p className="text-red-500">{errors.email}</p>}
             </div>
 
             <div className="relative">
-              <Label className="font-bold text-white">{t('password')}</Label>
+              <Label className="font-bold text-white">{t("password")}</Label>
               <Input
                 value={input.password}
                 name="password"
                 onChange={changeEventHandler}
-                className={`mt-2 w-full bg-[#723bcf] text-white font-semibold pr-10 ${
+                className={`mt-2 pl-3 w-full bg-[#723bcf] text-white font-semibold pr-10 ${
                   errors.password ? "border-red-500" : "border-white"
                 }`}
                 type={passwordVisible ? "text" : "password"}
-                placeholder={t('enterPassword')}
+                placeholder={t("enterPassword")}
               />
               <button
                 type="button"
@@ -231,7 +231,7 @@ const Login = () => {
             )}
 
             <div className="mt-4">
-              <Label className="font-bold text-white">{t('role')}</Label>
+              <Label className="font-bold text-white">{t("role")}</Label>
               <RadioGroup
                 defaultValue="student"
                 className="flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-6 mt-2"
@@ -246,7 +246,7 @@ const Login = () => {
                     className="cursor-pointer h-4 w-4"
                   />
                   <Label htmlFor="student" className="text-white ml-2">
-                    {t('student')}
+                    {t("student")}
                   </Label>
                 </div>
                 <div className="flex items-center">
@@ -259,7 +259,7 @@ const Login = () => {
                     className="cursor-pointer h-4 w-4"
                   />
                   <Label htmlFor="agent" className="text-white ml-2">
-                    {t('agent')}
+                    {t("agent")}
                   </Label>
                 </div>
               </RadioGroup>
@@ -270,29 +270,29 @@ const Login = () => {
                 to="/forgot-password"
                 className="text-sm text-yellow-500 hover:underline font-bold"
               >
-                {t('forgotPassword')}
+                {t("forgotPassword")}
               </Link>
             </div>
 
             {loading ? (
               <Button className="mt-4 w-full bg-black text-white py-3 rounded-lg font-bold hover:bg-purple-900">
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                {t('pleaseWaitLogin')}
+                {t("pleaseWaitLogin")}
               </Button>
             ) : (
               <Button
                 type="submit"
                 className="mt-4 w-full bg-black text-white py-3 rounded-lg font-bold hover:bg-purple-900"
               >
-                {t('login')}
+                {t("login")}
               </Button>
             )}
 
             <div className="text-center mt-4">
               <span className="font-bold text-white">
-                {t('dontHaveAccount')}{" "}
+                {t("dontHaveAccount")}{" "}
                 <Link to="/signup" className="text-yellow-500">
-                  {t('signup')}
+                  {t("signup")}
                 </Link>
               </span>
             </div>

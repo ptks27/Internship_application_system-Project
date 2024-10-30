@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 import Navbar from "../shared/Navbar";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
@@ -176,7 +176,7 @@ const PostJobs = () => {
         { en: "Nong Han", th: "หนองหาน" },
         { en: "Ban Dung", th: "บ้านดุง" },
         { en: "Nam Som", th: "น้ำโสม" },
-        // เพิ่มอำเภออื่นๆที่อุดรธานี
+        // ���พิ่มอำเภออื่นๆที่อุดรธานี
       ],
     },
     {
@@ -193,7 +193,6 @@ const PostJobs = () => {
     },
     // เพิ่มจังหวัดและอำเภออื่นๆที่เหลือ
   ];
-
 
   const [selectedProvince, setSelectedProvince] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
@@ -224,12 +223,14 @@ const PostJobs = () => {
 
     if (!input.jobType) newErrors.jobType = "Please specify the Job type.";
 
-    if (!String(input.experience).trim()) // Convert to string before trimming
+    if (!String(input.experience).trim())
+      // Convert to string before trimming
       newErrors.experience = "Please specify the Experience level.";
     else if (isNaN(parseInt(input.experience)))
       newErrors.experience = "Experience must be a number";
 
-    if (!String(input.position).trim()) // Convert to string before trimming
+    if (!String(input.position).trim())
+      // Convert to string before trimming
       newErrors.position = "Please specify the Number of positions.";
     else if (isNaN(parseInt(input.position)))
       newErrors.position = "Number of positions must be a number";
@@ -250,7 +251,10 @@ const PostJobs = () => {
     } else if (name === "experience" || name === "position") {
       // Allow any integer value for experience and position
       const numValue = parseInt(value, 10);
-      setInput(prev => ({ ...prev, [name]: isNaN(numValue) ? '' : numValue }));
+      setInput((prev) => ({
+        ...prev,
+        [name]: isNaN(numValue) ? "" : numValue,
+      }));
     } else {
       setInput({ ...input, [name]: value });
     }
@@ -312,17 +316,19 @@ const PostJobs = () => {
               disabled={loading}
             >
               <ArrowLeftIcon size={18} />
-              <span>{t('back')}</span>
+              <span>{t("back")}</span>
             </Button>
             <div className="flex-grow flex justify-center">
-              <h1 className="text-3xl font-bold text-[#7e22ce]">{t('jobSetup')}</h1>
+              <h1 className="text-3xl font-bold text-[#7e22ce]">
+                {t("jobSetup")}
+              </h1>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-10">
             <div className="space-y-2">
               <Label className="text-sm font-medium text-gray-700">
-                {t('jobPosition')}
+                {t("jobPosition")}
               </Label>
               <div className="relative">
                 <Briefcase
@@ -331,12 +337,12 @@ const PostJobs = () => {
                 />
                 <Input
                   type="text"
-                  placeholder={t('enterJobPosition')}
+                  placeholder={t("enterJobPosition")}
                   name="title"
                   value={input.title}
                   onChange={changeEventHandler}
                   className={`pl-10 pr-4 py-2 w-full border ${
-                    errors.title ? "border-red-500" : "border-gray-300"
+                    errors.title ? "border-red-500" : "border-gray-400"
                   } rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent`}
                   disabled={loading}
                 />
@@ -348,21 +354,21 @@ const PostJobs = () => {
 
             <div className="space-y-2">
               <Label className="text-sm font-medium text-gray-700">
-                {t('description')}
+                {t("description")}
               </Label>
               <div className="relative">
                 <FileText
-                  className="absolute left-3 top-3 text-gray-400"
+                  className="absolute left-3 top-3 text-gray-400 "
                   size={18}
                 />
                 <textarea
-                  placeholder={t('enterJobDescription')}
+                  placeholder={t("enterJobDescription")}
                   name="description"
                   value={input.description}
                   onChange={changeEventHandler}
                   maxLength={400}
                   className={`pl-10 w-full h-24 px-4 py-2 border ${
-                    errors.description ? "border-red-500" : "border-gray-300"
+                    errors.description ? "border-red-500" : "border-gray-400"
                   } rounded-md focus:outline-none focus:ring-2 focus:ring-[#7e22ce] focus:border-[#7e22ce] resize-none`}
                   disabled={loading}
                 />
@@ -379,7 +385,7 @@ const PostJobs = () => {
 
             <div className="space-y-2">
               <Label className="text-sm font-medium text-gray-700">
-                {t('location')}
+                {t("location")}
               </Label>
               <div className="relative">
                 <MapPin
@@ -393,12 +399,17 @@ const PostJobs = () => {
                     setSelectedProvince(e.target.value);
                     setSelectedDistrict("");
                   }}
-                  className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#7e22ce] focus:border-[#7e22ce] resize-none"
+                  className={`pl-10 pr-4 py-2 w-full border ${
+                    errors.location ? "border-red-500" : "border-gray-400"
+                  } rounded-md focus:outline-none focus:ring-2 focus:ring-[#7e22ce] focus:border-[#7e22ce] resize-none`}
                   disabled={loading}
                 >
-                  <option value="">{t('selectProvince')}</option>
+                  <option value="">{t("selectProvince")}</option>
                   {provinces.map((province) => (
-                    <option key={province.name.en} value={province.name[i18n.language]}>
+                    <option
+                      key={province.name.en}
+                      value={province.name[i18n.language]}
+                    >
                       {province.name[i18n.language]}
                     </option>
                   ))}
@@ -415,12 +426,17 @@ const PostJobs = () => {
                       location: `${selectedProvince} - ${e.target.value}`,
                     }));
                   }}
-                  className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#7e22ce] focus:border-[#7e22ce] resize-none"
+                  className={`pl-10 pr-4 py-2 w-full border ${
+                    errors.location ? "border-red-500" : "border-gray-400"
+                  } rounded-md focus:outline-none focus:ring-2 focus:ring-[#7e22ce] focus:border-[#7e22ce] resize-none`}
                   disabled={loading || !selectedProvince}
                 >
-                  <option value="">{t('selectDistrict')}</option>
+                  <option value="">{t("selectDistrict")}</option>
                   {provinces
-                    .find((province) => province.name[i18n.language] === selectedProvince)
+                    .find(
+                      (province) =>
+                        province.name[i18n.language] === selectedProvince
+                    )
                     ?.districts.map((district) => (
                       <option key={district.en} value={district[i18n.language]}>
                         {district[i18n.language]}
@@ -429,13 +445,15 @@ const PostJobs = () => {
                 </select>
               </div>
               {errors.location && (
-                <p className="text-red-500 text-xs mt-1">{t(errors.location)}</p>
+                <p className="text-red-500 text-xs mt-1">
+                  {t(errors.location)}
+                </p>
               )}
             </div>
 
             <div className="space-y-2">
               <Label className="text-sm font-medium text-gray-700">
-                {t('salary')}
+                {t("salary")}
               </Label>
               <div className="relative">
                 <Banknote
@@ -444,7 +462,7 @@ const PostJobs = () => {
                 />
                 <Input
                   type="text"
-                  placeholder={t('enterSalary')}
+                  placeholder={t("enterSalary")}
                   name="salary"
                   value={input.salary}
                   onChange={(e) => {
@@ -455,7 +473,7 @@ const PostJobs = () => {
                     setErrors({ ...errors, salary: "" });
                   }}
                   className={`pl-10 pr-4 py-2 w-full border ${
-                    errors.salary ? "border-red-500" : "border-gray-300"
+                    errors.salary ? "border-red-500" : "border-gray-400"
                   } rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent`}
                   disabled={loading}
                 />
@@ -467,7 +485,7 @@ const PostJobs = () => {
 
             <div className="space-y-2">
               <Label className="text-sm font-medium text-gray-700">
-                {t('numberOfPositions')}
+                {t("numberOfPositions")}
               </Label>
               <div className="relative">
                 <Users
@@ -476,12 +494,12 @@ const PostJobs = () => {
                 />
                 <Input
                   type="number"
-                  placeholder={t('enterNumberOfPositions')}
+                  placeholder={t("enterNumberOfPositions")}
                   name="position"
                   value={input.position >= 0 ? input.position : 0}
                   onChange={changeEventHandler}
                   className={`pl-10 pr-4 py-2 w-full border ${
-                    errors.position ? "border-red-500" : "border-gray-300"
+                    errors.position ? "border-red-500" : "border-gray-400"
                   } rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent`}
                   disabled={loading}
                 />
@@ -493,7 +511,7 @@ const PostJobs = () => {
 
             <div className="space-y-2">
               <Label className="text-sm font-medium text-gray-700">
-                {t('experienceLevel')}
+                {t("experienceLevel")}
               </Label>
               <div className="relative">
                 <BarChart2
@@ -502,12 +520,12 @@ const PostJobs = () => {
                 />
                 <Input
                   type="number"
-                  placeholder={t('enterExperienceLevel')}
+                  placeholder={t("enterExperienceLevel")}
                   name="experience"
                   value={input.experience >= 0 ? input.experience : 0}
                   onChange={changeEventHandler}
                   className={`pl-10 pr-4 py-2 w-full border ${
-                    errors.experience ? "border-red-500" : "border-gray-300"
+                    errors.experience ? "border-red-500" : "border-gray-400"
                   } rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent`}
                   disabled={loading}
                 />
@@ -519,7 +537,7 @@ const PostJobs = () => {
 
             <div className="space-y-2">
               <Label className="text-sm font-medium text-gray-700">
-                {t('jobType')}
+                {t("jobType")}
               </Label>
               <div className="relative">
                 <Type
@@ -527,8 +545,12 @@ const PostJobs = () => {
                   size={18}
                 />
                 <Select onValueChange={changeSelectHandler}>
-                  <SelectTrigger className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent">
-                    <SelectValue placeholder={t('selectJobType')} />
+                  <SelectTrigger 
+                    className={`pl-10 pr-4 py-2 w-full border ${
+                      errors.jobType ? "border-red-500" : "border-gray-400"
+                    } rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent`}
+                  >
+                    <SelectValue placeholder={t("selectJobType")} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
@@ -548,7 +570,7 @@ const PostJobs = () => {
 
             <div className="space-y-2">
               <Label className="text-sm font-medium text-gray-700">
-                {t('company')}
+                {t("company")}
               </Label>
               <div className="relative">
                 <Building2
@@ -556,8 +578,12 @@ const PostJobs = () => {
                   size={18}
                 />
                 <Select onValueChange={selectChangeHandler}>
-                  <SelectTrigger className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent">
-                    <SelectValue placeholder={t('selectCompany')} />
+                  <SelectTrigger 
+                    className={`pl-10 pr-4 py-2 w-full border ${
+                      errors.companyId ? "border-red-500" : "border-gray-400"
+                    } rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent`}
+                  >
+                    <SelectValue placeholder={t("selectCompany")} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
@@ -607,16 +633,16 @@ const PostJobs = () => {
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
                   </svg>
-                  {t('posting')}
+                  {t("posting")}
                 </div>
               ) : (
-                t('postJob')
+                t("postJob")
               )}
             </Button>
           </div>
           {companies.length === 0 && (
             <p className="text-xs text-red-600 font-bold text-center my-3">
-              {t('pleaseRegisterCompany')}
+              {t("pleaseRegisterCompany")}
             </p>
           )}
         </form>

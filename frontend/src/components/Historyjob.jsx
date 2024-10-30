@@ -11,7 +11,7 @@ import {
   TableRow,
 } from "./ui/table";
 import { Button } from "./ui/button";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 const Historyjob = () => {
   const { allAppliedJobs } = useSelector((state) => state.job);
@@ -36,18 +36,45 @@ const Historyjob = () => {
     if (!dateString) return "N/A";
     const date = new Date(dateString);
     const day = date.getDate();
-    
+
     // Define month names for both English and Thai
     const monthNames = {
-      en: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-      th: ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."]
+      en: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
+      th: [
+        "ม.ค.",
+        "ก.พ.",
+        "มี.ค.",
+        "เม.ย.",
+        "พ.ค.",
+        "มิ.ย.",
+        "ก.ค.",
+        "ส.ค.",
+        "ก.ย.",
+        "ต.ค.",
+        "พ.ย.",
+        "ธ.ค.",
+      ],
     };
 
     // Select the appropriate month name based on the provided language
     const month = monthNames[language][date.getMonth()];
 
     // Adjust the year based on the language
-    const year = language === 'th' ? date.getFullYear() + 543 : date.getFullYear();
+    const year =
+      language === "th" ? date.getFullYear() + 543 : date.getFullYear();
 
     return `${day} ${month} ${year}`;
   };
@@ -63,27 +90,27 @@ const Historyjob = () => {
   };
 
   return (
-    <div className="p-4 overflow-x-auto">
+    <div className="overflow-x-auto rounded-lg shadow">
       <Table className="w-full">
         <TableCaption className="text-lg font-semibold mb-4">
-          {t('appliedJobs')}
+          {t("appliedJobs")}
         </TableCaption>
         <TableHeader>
           <TableRow className="bg-[#723bcf] hover:bg-[#5f31ad]">
             <TableHead className="text-white font-bold px-4 py-3 text-left">
-              {t('logo')}
+              {t("logo")}
             </TableHead>
             <TableHead className="text-white font-bold px-9 py-4 text-left">
-              {t('company')}
+              {t("company")}
             </TableHead>
             <TableHead className="text-white font-bold px-4 py-3 text-left">
-              {t('jobPosition')}
+              {t("jobPosition")}
             </TableHead>
             <TableHead className="text-white font-bold px-4 py-3 text-left">
-              {t('date')}
+              {t("date")}
             </TableHead>
             <TableHead className="text-white font-bold px-4 py-3 text-left">
-              {t('status')}
+              {t("status")}
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -91,7 +118,7 @@ const Historyjob = () => {
           {currentItems.length <= 0 ? (
             <TableRow>
               <TableCell colSpan={5} className="text-center py-8">
-                {t('youHaveNotAppliedForAnyJobs')}
+                {t("youHaveNotAppliedForAnyJobs")}
               </TableCell>
             </TableRow>
           ) : (
@@ -109,7 +136,7 @@ const Historyjob = () => {
                         className="w-9 h-9 rounded-full object-cover"
                       />
                     ) : (
-                      <span className="text-gray-400">{t('noLogo')}</span>
+                      <span className="text-gray-400">{t("noLogo")}</span>
                     )}
                   </div>
                 </TableCell>
@@ -147,10 +174,10 @@ const Historyjob = () => {
           variant="outline"
           className="px-4 py-2 text-gray-600 bg-gray-200 rounded"
         >
-          {t('previous')}
+          {t("previous")}
         </Button>
         <span className="text-gray-600">
-          {t('page')} {currentPage} {t('of')} {totalPages}
+          {t("page")} {currentPage} {t("of")} {totalPages}
         </span>
         <Button
           onClick={() => handlePageChange(currentPage + 1)}
@@ -158,7 +185,7 @@ const Historyjob = () => {
           variant="outline"
           className="px-4 py-2 text-gray-600 bg-gray-200 rounded"
         >
-          {t('next')}
+          {t("next")}
         </Button>
       </div>
     </div>

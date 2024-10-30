@@ -272,6 +272,7 @@ i18n.use(initReactI18next).init({
         applyWarning:
           "You won't be able to cancel this application once submitted!",
         yesApply: "Yes, apply!",
+        logoRequired: "Please upload a logo",
 
         applyError: "An error occurred while applying for the job.",
         notifications: "Notifications",
@@ -325,8 +326,14 @@ i18n.use(initReactI18next).init({
         profileUpdateSuccess: "Profile updated successfully",
         // Error messages
         bioMaxSelection: "Cannot select more than 3 bios",
-       
+        pleaseCorrectErrors: "Please correct the errors below",
         fileTypeError: "Please select only PNG, JPG, or JPEG files",
+        notFound: {
+          title: "404",
+          heading: "Page Not Found",
+          description: "Sorry, we couldn't find the page you're looking for.",
+          backToHome: "Back to Home",
+        },
       },
     },
     th: {
@@ -421,7 +428,7 @@ i18n.use(initReactI18next).init({
         enterLocation: "กรอกสถานที่",
         enterEmailAddress: "กรอกที่อยู่อีเมล",
         enterPhoneNumber: "กรอกหมายเลขโทรศัพท์ 10 หลัก",
-        companyLogo: "โลโก้บิษัท",
+        companyLogo: "โลโก้บริษัท",
         chooseFile: "เลือกไฟล์",
         updating: "กำลังอัปเดต...",
         loadingCompanyData: "กำลังโหลดข้อมูลบริษัท...",
@@ -441,7 +448,7 @@ i18n.use(initReactI18next).init({
         yesDelete: "ใช่, ลบเลย!",
         somethingWentWrong: "เกิดข้อผิดพลาดบางอย่าง!",
         back: "กลับ",
-        update: "ัปเดต",
+        update: "อัปเดต",
         companySetup: "กรอกข้อมูลบริษัท",
         companyNameRequired: "กรุณาระบุชื่อบริษัท",
         agentNameRequired: "กรุณาระบุชื่อตัวแทน",
@@ -647,8 +654,16 @@ i18n.use(initReactI18next).init({
         profileUpdateSuccess: "อัปเดตโปรไฟล์สำเร็จ",
         // Error messages
         bioMaxSelection: "ไม่สามารถเลือกประวัติย่อได้มากกว่า 3 รายการ",
-        
+        pleaseCorrectErrors: "กรุณากรอกข้อมูลให้ถูกต้อง",
+        logoRequired: "กรุณาอัปโหลดไฟล์รูปภาพ",
+
         fileTypeError: "กรุณาเลือกไฟล์ PNG, JPG หรือ JPEG เท่านั้น",
+        notFound: {
+          title: "404",
+          heading: "ไม่พบหน้า",
+          description: "ขออภัย, เราไม่พบหน้าที่คุณต้องการ.",
+          backToHome: "กลับสู่หน้าหลัก",
+        },
       },
     },
   },

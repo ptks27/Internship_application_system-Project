@@ -350,7 +350,7 @@ const UpdateJobs = () => {
                   value={input.title}
                   onChange={changeEventHandler}
                   className={`pl-10 pr-4 py-2 w-full border ${
-                    errors.title ? "border-red-500" : "border-gray-300"
+                    errors.title ? "border-red-500" : "border-gray-400"
                   } rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent`}
                   disabled={loading}
                 />
@@ -376,7 +376,7 @@ const UpdateJobs = () => {
                   onChange={changeEventHandler}
                   maxLength={400}
                   className={`pl-10 w-full h-24 px-4 py-2 border ${
-                    errors.description ? "border-red-500" : "border-gray-300"
+                    errors.description ? "border-red-500" : "border-gray-400"
                   } rounded-md focus:outline-none focus:ring-2 focus:ring-[#7e22ce] focus:border-[#7e22ce] resize-none`}
                   disabled={loading}
                 />
@@ -411,7 +411,7 @@ const UpdateJobs = () => {
                       location: `${e.target.value} - `,
                     }));
                   }}
-                  className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#7e22ce] focus:border-[#7e22ce] resize-none"
+                  className="pl-10 pr-4 py-2 w-full border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-[#7e22ce] focus:border-[#7e22ce] resize-none"
                   disabled={loading}
                 >
                   <option value="">{t('selectProvince')}</option>
@@ -433,7 +433,7 @@ const UpdateJobs = () => {
                       location: `${selectedProvince} - ${e.target.value}`,
                     }));
                   }}
-                  className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#7e22ce] focus:border-[#7e22ce] resize-none"
+                  className="pl-10 pr-4 py-2 w-full border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-[#7e22ce] focus:border-[#7e22ce] resize-none"
                   disabled={loading || !selectedProvince}
                 >
                   <option value="">{t('selectDistrict')}</option>
@@ -467,7 +467,7 @@ const UpdateJobs = () => {
                   value={input.salary}
                   onChange={changeEventHandler}
                   className={`pl-10 pr-4 py-2 w-full border ${
-                    errors.salary ? "border-red-500" : "border-gray-300"
+                    errors.salary ? "border-red-500" : "border-gray-400"
                   } rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent`}
                   disabled={loading}
                 />
@@ -492,7 +492,7 @@ const UpdateJobs = () => {
                   name="position"
                   value={input.position >= 0 ? input.position : 0}
                   onChange={changeEventHandler}
-                  className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent"
+                  className="pl-10 pr-4 py-2 w-full border border-gray-400 rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent"
                   disabled={loading}
                 />
               </div>
@@ -513,7 +513,7 @@ const UpdateJobs = () => {
                   name="experience"
                   value={input.experience >= 0 ? input.experience : 0}
                   onChange={changeEventHandler}
-                  className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent"
+                  className="pl-10 pr-4 py-2 w-full border border-gray-400 rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent"
                   disabled={loading}
                 />
               </div>
@@ -535,7 +535,7 @@ const UpdateJobs = () => {
                   onValueChange={changeSelectHandler}
                   value={input.jobType}
                 >
-                  <SelectTrigger className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent">
+                  <SelectTrigger className="pl-10 pr-4 py-2 w-full border border-gray-400 rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent">
                     <SelectValue placeholder={t('selectJobType')} />
                   </SelectTrigger>
                   <SelectContent>

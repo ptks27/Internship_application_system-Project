@@ -9,7 +9,7 @@ import Navbar from "../shared/Navbar";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 const CompanyNew = () => {
   const { t } = useTranslation();
@@ -81,14 +81,17 @@ const CompanyNew = () => {
 
         <div className="space-y-4 md:space-y-6">
           <div className="my-2">
-            <Label htmlFor="companyName" className="text-base md:text-lg font-medium ">
+            <Label
+              htmlFor="companyName"
+              className="text-base md:text-lg font-medium "
+            >
               {t("companyName")}
             </Label>
             <Input
               id="companyName"
               type="text"
-              className={`mt-1 w-full rounded-md focus:ring-2 focus:ring-[#723bcf] ${
-                errors.companyName ? 'border-red-500' : ''
+              className={`mt-1 pl-4 pr-4 py-2 w-full rounded-md focus:ring-2 focus:ring-[#723bcf] ${
+                errors.companyName ? "border-red-500" : "border-gray-400"
               }`}
               placeholder={t("enterCompanyName")}
               value={companyName}
