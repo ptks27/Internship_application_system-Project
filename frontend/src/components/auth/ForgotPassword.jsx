@@ -35,9 +35,7 @@ const ForgotPassword = () => {
         navigate("/forgot-password-success", { state: { email } });
       }
     } catch (error) {
-      toast.error(
-        error.response?.data?.message || t("failedToSendResetEmail")
-      );
+      toast.error(error.response?.data?.message || t("failedToSendResetEmail"));
     } finally {
       setLoading(false);
     }
@@ -89,7 +87,7 @@ const ForgotPassword = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder={t("enterEmailAddress")}
-            className="w-full border-2 border-[#723bcf] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#723bcf] focus:border-transparent transition-all duration-200 text-sm sm:text-base"
+            className="w-full pl-4 border-2 border-[#723bcf] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#723bcf] focus:border-transparent transition-all duration-200 text-sm sm:text-base"
             required
           />
           <Button

@@ -135,7 +135,7 @@ const ResetPassword = () => {
               value={password}
               onChange={handlePasswordChange}
               placeholder={t("newPassword")}
-              className="w-full border-2 border-[#723bcf] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#723bcf] focus:border-transparent transition-all duration-200 pr-10"
+              className="w-full pl-4 border-2 border-[#723bcf] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#723bcf] focus:border-transparent transition-all duration-200 pr-10"
               required
             />
             <button
@@ -152,7 +152,7 @@ const ResetPassword = () => {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder={t("confirmNewPassword")}
-              className="w-full border-2 border-[#723bcf] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#723bcf] focus:border-transparent transition-all duration-200 pr-10"
+              className="w-full pl-4 border-2 border-[#723bcf] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#723bcf] focus:border-transparent transition-all duration-200 pr-10"
               required
             />
             <button
