@@ -49,16 +49,15 @@ const ApplicantsTable = () => {
     try {
       axios.defaults.withCredentials = true;
       const res = await axios.post(
-        `${Application_API}/status/${id}/update`, // Ensure id is a number
+        `${Application_API}/status/${id}/update`,
         { status }
       );
       if (res.data.success) {
-        toast.success(res.data.message);
-        // Dispatch the updateApplicantStatus action to update the state
+        toast.success(t(res.data.message));
         dispatch(updateApplicantStatus({ id, status }));
       }
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(t(error.response.data.message));
     }
   };
 

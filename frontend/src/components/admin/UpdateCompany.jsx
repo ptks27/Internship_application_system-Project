@@ -105,10 +105,21 @@ const UpdateCompany = () => {
 
   const changeFileHandler = (e) => {
     const file = e.target.files?.[0];
-    setInput({
-      ...input,
-      file,
-    });
+    
+    if (file) {
+      // ตรวจสอบประเภทไฟล์
+      const validTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+      if (!validTypes.includes(file.type)) {
+        toast.error(t('fileTypeError'));
+        e.target.value = ''; // รีเซ็ตค่า input file
+        return;
+      }
+      
+      setInput({
+        ...input,
+        file,
+      });
+    }
   };
 
   const submitHandler = async (e) => {
@@ -142,12 +153,12 @@ const UpdateCompany = () => {
         }
       );
       if (res.data.success) {
-        toast.success(res.data.message);
+        toast.success(t(res.data.message));
         navigate("/admin/companies");
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.response?.data?.message || "Something went wrong!");
+      toast.error(t(error.response?.data?.message || "INTERNAL_SERVER_ERROR"));
     } finally {
       setLoading(false);
     }
@@ -368,7 +379,7 @@ const UpdateCompany = () => {
                 <div className="flex-grow">
                   <Input
                     type="file"
-                    accept="image/*"
+                    accept="image/png,image/jpeg,image/jpg"
                     onChange={changeFileHandler}
                     className="hidden"
                     id="logo-upload"

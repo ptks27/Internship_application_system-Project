@@ -59,11 +59,11 @@ function Navbar() {
         dispatch(setUser(null));
         dispatch(resetJobs());
         navigate("/");
-        toast.success(res.data.message);
+        toast.success(t("loggedOutSuccess"));
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.message);
+      toast.error(t("errorLoggingOut"));
     }
   };
 

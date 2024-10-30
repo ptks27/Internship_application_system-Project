@@ -194,41 +194,50 @@ const PostJobs = () => {
     let newErrors = {};
 
     if (!input.title.trim())
-      newErrors.title = "Please specify the Job position.";
+      newErrors.title = t("VALIDATION.JOB_POSITION_REQUIRED");
     else if (input.title.length < 3)
-      newErrors.title = "Job position must be at least 3 characters long";
+      newErrors.title = t("VALIDATION.JOB_POSITION_MIN_LENGTH");
 
     if (!input.description.trim())
-      newErrors.description = "Please specify the Job description.";
+      newErrors.description = t("VALIDATION.DESCRIPTION_REQUIRED");
     else if (input.description.length < 20)
-      newErrors.description = "Description must be at least 20 characters long";
+      newErrors.description = t("VALIDATION.DESCRIPTION_MIN_LENGTH");
     else if (input.description.length > 400)
-      newErrors.description = "Description must not exceed 400 characters";
+      newErrors.description = t("VALIDATION.DESCRIPTION_MAX_LENGTH");
 
     if (!input.location.trim())
-      newErrors.location = "Please specify the Location.";
+      newErrors.location = t("VALIDATION.LOCATION_REQUIRED");
 
-    if (!input.salary.trim()) newErrors.salary = "Please specify the Salary.";
+    if (!input.salary.trim()) 
+      newErrors.salary = t("VALIDATION.SALARY_REQUIRED");
     else if (isNaN(parseInt(input.salary)))
-      newErrors.salary = "Salary must be a number";
+      newErrors.salary = t("VALIDATION.SALARY_MUST_BE_NUMBER");
     else if (input.salary.length > 10)
-      newErrors.salary = "Salary must not exceed 10 digits";
+      newErrors.salary = t("VALIDATION.SALARY_MAX_LENGTH");
 
-    if (!input.jobType) newErrors.jobType = "Please specify the Job type.";
+    if (!input.jobType) 
+      newErrors.jobType = t("VALIDATION.JOB_TYPE_REQUIRED");
 
     if (!String(input.experience).trim())
-      // Convert to string before trimming
-      newErrors.experience = "Please specify the Experience level.";
+      newErrors.experience = t("VALIDATION.EXPERIENCE_REQUIRED");
     else if (isNaN(parseInt(input.experience)))
-      newErrors.experience = "Experience must be a number";
+      newErrors.experience = t("VALIDATION.EXPERIENCE_MUST_BE_NUMBER");
 
     if (!String(input.position).trim())
-      // Convert to string before trimming
-      newErrors.position = "Please specify the Number of positions.";
+      newErrors.position = t("VALIDATION.POSITION_REQUIRED");
     else if (isNaN(parseInt(input.position)))
-      newErrors.position = "Number of positions must be a number";
+      newErrors.position = t("VALIDATION.POSITION_MUST_BE_NUMBER");
 
-    if (!input.companyId) newErrors.companyId = "Please specify the Company.";
+    if (!input.companyId) 
+      newErrors.companyId = t("VALIDATION.COMPANY_REQUIRED");
+
+    if (selectedProvince && !selectedDistrict) {
+      newErrors.district = t("VALIDATION.DISTRICT_REQUIRED");
+    }
+
+    if (!input.location.trim() || (selectedProvince && !selectedDistrict)) {
+      newErrors.location = t("VALIDATION.LOCATION_REQUIRED");
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -283,16 +292,16 @@ const PostJobs = () => {
           withCredentials: true,
         });
         if (res.data.success) {
-          toast.success(res.data.message);
+          toast.success(t(res.data.message));
           navigate("/admin/jobs");
         }
       } catch (error) {
-        toast.error(error.response.data.message);
+        toast.error(t(error.response?.data?.message || "UNEXPECTED_ERROR"));
       } finally {
         setLoading(false);
       }
     } else {
-      toast.error("Please fill in all required fields correctly.");
+      toast.error(t("FILL_INFORMATION_COMPLETELY"));
     }
   };
 
@@ -379,6 +388,7 @@ const PostJobs = () => {
                   onChange={(e) => {
                     setSelectedProvince(e.target.value);
                     setSelectedDistrict("");
+                    setErrors({ ...errors, location: "" });
                   }}
                   className={`px-4 py-2 w-full border ${
                     errors.location ? "border-red-500" : "border-gray-400"
@@ -406,9 +416,14 @@ const PostJobs = () => {
                       ...prev,
                       location: `${selectedProvince} - ${e.target.value}`,
                     }));
+                    setErrors((prev) => ({
+                      ...prev,
+                      district: "",
+                      location: ""
+                    }));
                   }}
                   className={`px-4 py-2 w-full border ${
-                    errors.location ? "border-red-500" : "border-gray-400"
+                    errors.district ? "border-red-500" : "border-gray-400"
                   } rounded-md focus:outline-none focus:ring-2 focus:ring-[#7e22ce] focus:border-[#7e22ce] resize-none`}
                   disabled={loading || !selectedProvince}
                 >
@@ -424,6 +439,9 @@ const PostJobs = () => {
                       </option>
                     ))}
                 </select>
+                {errors.district && (
+                  <p className="text-red-500 text-xs mt-1">{errors.district}</p>
+                )}
               </div>
               {errors.location && (
                 <p className="text-red-500 text-xs mt-1">
@@ -570,7 +588,7 @@ const PostJobs = () => {
             <Button
               type="submit"
               className="px-6 py-2 bg-[#7e22ce] text-white rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-[#7e22ce] focus:ring-offset-2 transition-colors duration-300"
-              disabled={loading}
+              disabled={loading || (selectedProvince && !selectedDistrict)}
             >
               {loading ? (
                 <div className="flex items-center">

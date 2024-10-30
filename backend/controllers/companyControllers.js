@@ -131,37 +131,35 @@ export const updateCompany = async (req, res) => {
         
         let updateData = { name, agent_fullname, email, phoneNumber, description, website, location };
 
-        // Check if a file is uploaded
         if (req.file) {
             const fileUri = getDataUri(req.file);
             const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
             updateData.logo = cloudResponse.secure_url;
         }
 
-        // Find and update the company by company_id, not _id
         const company = await Company.findOneAndUpdate(
-            { company_id: req.params.id }, // Query by company_id
+            { company_id: req.params.id },
             updateData,
-            { new: true } // Return the updated document
+            { new: true }
         );
 
         if (!company) {
             return res.status(404).json({
-                message: "Company not found.",
+                message: "COMPANY_NOT_FOUND",
                 success: false
             });
         }
 
         return res.status(200).json({
-            message: "Company information updated.",
-            company, // Return the updated company data
+            message: "COMPANY_UPDATED_SUCCESSFULLY",
+            company,
             success: true
         });
-
+        
     } catch (error) {
         console.log(error);
         return res.status(500).json({
-            message: "An error occurred while updating the company.",
+            message: "INTERNAL_SERVER_ERROR",
             success: false
         });
     }
@@ -172,24 +170,23 @@ export const deleteCompany = async (req, res) => {
     try {
         const companyId = req.params.id;
 
-        // Find and delete the company by company_id
         const company = await Company.findOneAndDelete({ company_id: companyId });
 
         if (!company) {
             return res.status(404).json({
-                message: "Company not found.",
+                message: "COMPANY_NOT_FOUND",
                 success: false
             });
         }
 
         return res.status(200).json({
-            message: "Company deleted successfully.",
+            message: "COMPANY_DELETED_SUCCESSFULLY",
             success: true
         });
     } catch (error) {
         console.log(error);
         return res.status(500).json({
-            message: "An error occurred while deleting the company.",
+            message: "ERROR_DELETING_COMPANY",
             success: false
         });
     }

@@ -72,7 +72,7 @@ export const CompaniesAgentTable = () => {
           }
         );
         if (res.data.success) {
-          toast.success(res.data.message);
+          toast.success(t(res.data.message));
           dispatch(
             setAllCompany(
               companies.filter((company) => company.company_id !== companyId)
@@ -81,7 +81,7 @@ export const CompaniesAgentTable = () => {
         }
       } catch (error) {
         console.log(error);
-        toast.error(error.response?.data?.message || t("somethingWentWrong"));
+        toast.error(t(error.response?.data?.message || "somethingWentWrong"));
       }
     }
   };

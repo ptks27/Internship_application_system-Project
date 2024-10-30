@@ -30,7 +30,7 @@ export const postJob = async (req, res) => {
       !companyId
     ) {
       return res.status(400).json({
-        message: "Something is missing.",
+        message: "FILL_INFORMATION_COMPLETELY",
         success: false,
       });
     }
@@ -38,7 +38,7 @@ export const postJob = async (req, res) => {
     // Check if userId is a valid number
     if (isNaN(userId)) {
       return res.status(400).json({
-        message: "Invalid user ID.",
+        message: "INVALID_USER_ID",
         success: false,
       });
     }
@@ -47,7 +47,7 @@ export const postJob = async (req, res) => {
     const companyIdNumber = Number(companyId);
     if (isNaN(companyIdNumber)) {
       return res.status(400).json({
-        message: "Invalid company ID.",
+        message: "INVALID_COMPANY_ID",
         success: false,
       });
     }
@@ -55,7 +55,7 @@ export const postJob = async (req, res) => {
     // Validate jobType
     if (!allowedJobTypes.includes(jobType)) {
       return res.status(400).json({
-        message: "Invalid job type.",
+        message: "INVALID_JOB_TYPE",
         success: false,
       });
     }
@@ -76,7 +76,7 @@ export const postJob = async (req, res) => {
     });
 
     return res.status(201).json({
-      message: "New job created successfully.",
+      message: "JOB_CREATED_SUCCESSFULLY",
       job,
       success: true,
     });
@@ -243,7 +243,6 @@ export const updateJob = async (req, res) => {
     const updates = req.body;
     const userId = Number(req.id);
 
-    // Ensure experience is converted to a number
     if (updates.experience !== undefined) {
       updates.experienceLevel = Number(updates.experience);
       delete updates.experience;
@@ -257,20 +256,20 @@ export const updateJob = async (req, res) => {
 
     if (!job) {
       return res.status(404).json({
-        message: "Job not found or you don't have permission to update this job.",
+        message: "JOB_NOT_FOUND_OR_NO_PERMISSION",
         success: false,
       });
     }
 
     return res.status(200).json({
-      message: "Job updated successfully.",
+      message: "JOB_UPDATED_SUCCESSFULLY",
       job,
       success: true,
     });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
-      message: "Internal server error.",
+      message: "INTERNAL_SERVER_ERROR",
       success: false,
     });
   }
@@ -279,10 +278,9 @@ export const updateJob = async (req, res) => {
 // Delete a job without ObjectId
 export const deleteJob = async (req, res) => {
   try {
-    const jobId = Number(req.params.id); // Convert jobId to a number
-    const userId = Number(req.id); // Ensure userId is a number
+    const jobId = Number(req.params.id);
+    const userId = Number(req.id);
 
-    // Find the job by job_id and created_by_UserId and delete it
     const job = await Job.findOneAndDelete({
       job_id: jobId,
       created_by_UserId: userId,
@@ -290,20 +288,19 @@ export const deleteJob = async (req, res) => {
 
     if (!job) {
       return res.status(404).json({
-        message:
-          "Job not found or you don't have permission to delete this job.",
+        message: "JOB_NOT_FOUND_OR_NO_PERMISSION",
         success: false,
       });
     }
 
     return res.status(200).json({
-      message: "Job deleted successfully.",
+      message: "JOB_DELETED_SUCCESSFULLY",
       success: true,
     });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
-      message: "Internal server error.",
+      message: "INTERNAL_SERVER_ERROR",
       success: false,
     });
   }

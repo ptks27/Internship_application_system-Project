@@ -212,42 +212,43 @@ const UpdateJobs = () => {
     let newErrors = {};
 
     if (!input.title.trim())
-      newErrors.title = "Please specify the Job position.";
+      newErrors.title = t("VALIDATION.JOB_POSITION_REQUIRED");
     else if (input.title.length < 3)
-      newErrors.title = "Job position must be at least 3 characters long";
+      newErrors.title = t("VALIDATION.JOB_POSITION_MIN_LENGTH");
 
     if (!input.description.trim())
-      newErrors.description = "Please specify the Job description.";
+      newErrors.description = t("VALIDATION.DESCRIPTION_REQUIRED");
     else if (input.description.length < 20)
-      newErrors.description = "Description must be at least 20 characters long";
+      newErrors.description = t("VALIDATION.DESCRIPTION_MIN_LENGTH");
     else if (input.description.length > 400)
-      newErrors.description = "Description must not exceed 400 characters";
+      newErrors.description = t("VALIDATION.DESCRIPTION_MAX_LENGTH");
 
     if (!input.location.trim())
-      newErrors.location = "Please specify the Location.";
+      newErrors.location = t("VALIDATION.LOCATION_REQUIRED");
 
     if (!String(input.salary).trim()) {
-      newErrors.salary = "Please specify the Salary.";
+      newErrors.salary = t("VALIDATION.SALARY_REQUIRED");
     } else {
       const salaryValue = String(input.salary).trim();
       if (isNaN(parseInt(salaryValue))) {
-        newErrors.salary = "Salary must be a number";
+        newErrors.salary = t("VALIDATION.SALARY_MUST_BE_NUMBER");
       } else if (salaryValue.length > 10) {
-        newErrors.salary = "Salary must not exceed 10 digits";
+        newErrors.salary = t("VALIDATION.SALARY_MAX_LENGTH");
       }
     }
 
-    if (!input.jobType) newErrors.jobType = "Please specify the Job type.";
+    if (!input.jobType) 
+      newErrors.jobType = t("VALIDATION.JOB_TYPE_REQUIRED");
 
     if (!input.experience.toString().trim())
-      newErrors.experience = "Please specify the Experience level.";
+      newErrors.experience = t("VALIDATION.EXPERIENCE_REQUIRED");
     else if (isNaN(parseInt(input.experience)))
-      newErrors.experience = "Experience must be a number";
+      newErrors.experience = t("VALIDATION.EXPERIENCE_MUST_BE_NUMBER");
 
     if (!input.position.toString().trim())
-      newErrors.position = "Please specify the Number of positions.";
+      newErrors.position = t("VALIDATION.POSITION_REQUIRED");
     else if (isNaN(parseInt(input.position)))
-      newErrors.position = "Number of positions must be a number";
+      newErrors.position = t("VALIDATION.POSITION_MUST_BE_NUMBER");
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -293,17 +294,17 @@ const UpdateJobs = () => {
           withCredentials: true,
         });
         if (res.data.success) {
-          toast.success(res.data.message);
+          toast.success(t(res.data.message));
           dispatch(setSingleJob(res.data.job));
           navigate("/admin/jobs");
         }
       } catch (error) {
-        toast.error(error.response?.data?.message || "Something went wrong!");
+        toast.error(t(error.response?.data?.message || "INTERNAL_SERVER_ERROR"));
       } finally {
         setLoading(false);
       }
     } else {
-      toast.error("Please fill in all required fields correctly.");
+      toast.error(t("VALIDATION.FILL_ALL_FIELDS"));
     }
   };
 

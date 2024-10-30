@@ -112,9 +112,14 @@ const Login = () => {
     } catch (error) {
       console.error("Login error:", error);
       if (error.response && error.response.status === 403) {
-        // ถ้าเซิร์ฟเวอร์ส่งสถานะ 403 (Forbidden) กลับมา
         navigate("/verify-email", { state: { email: input.email } });
-        toast.error("Please verify your email before logging in.");
+        toast.error(t("verifyEmailBeforeLogin"));
+      } else if (error.response?.data?.message === "ACCOUNT_NOT_EXIST_WITH_ROLE") {
+        toast.error(t("accountNotExistWithRole"));
+      } else if (error.response?.data?.message === "FILL_INFORMATION_COMPLETELY") {
+        toast.error(t("fillInformationCompletely"));
+      } else if (error.response?.data?.message === "INCORRECT_EMAIL_OR_PASSWORD") {
+        toast.error(t("incorrectEmailOrPassword"));
       } else {
         const errorMessage =
           error.response?.data?.message ||

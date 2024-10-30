@@ -234,7 +234,7 @@ export const login = async (req, res) => {
 
     if (!email || !password || !role) {
       return res.status(400).json({
-        message: "Please fill out the information completely.",
+        message: "FILL_INFORMATION_COMPLETELY",
         success: false,
       });
     }
@@ -242,7 +242,7 @@ export const login = async (req, res) => {
     let user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({
-        message: "Incorrect email or password.",
+        message: "INCORRECT_EMAIL_OR_PASSWORD",
         success: false,
       });
     }
@@ -259,7 +259,7 @@ export const login = async (req, res) => {
       await sendVerificationEmail(user.email, newVerificationToken);
 
       return res.status(403).json({
-        message: "Please verify your email before logging in.",
+        message: "VERIFY_EMAIL_BEFORE_LOGIN",
         success: false,
         requireVerification: true,
         email: user.email,
@@ -269,14 +269,14 @@ export const login = async (req, res) => {
     const isPasswordMatch = await bcrypt.compare(password, user.password);
     if (!isPasswordMatch) {
       return res.status(400).json({
-        message: "Incorrect email or password.",
+        message: "INCORRECT_EMAIL_OR_PASSWORD",
         success: false,
       });
     }
 
     if (role !== user.role) {
       return res.status(400).json({
-        message: "Account doesn't exist with current role.",
+        message: "ACCOUNT_NOT_EXIST_WITH_ROLE",
         success: false,
       });
     }
@@ -305,7 +305,7 @@ export const login = async (req, res) => {
         sameSite: "strict",
       })
       .json({
-        message: `Welcome back ${user.fullname}`,
+        message: `Welcome ${user.fullname}`,
         user,
         success: true,
       });
@@ -322,11 +322,15 @@ export const login = async (req, res) => {
 export const logout = async (req, res) => {
   try {
     return res.status(200).cookie("token", "", { maxAge: 0 }).json({
-      message: "Logged out successfully.",
+      message: "loggedOutSuccess",
       success: true,
     });
   } catch (error) {
     console.log(error);
+    return res.status(500).json({
+      message: "errorLoggingOut",
+      success: false,
+    });
   }
 };
 

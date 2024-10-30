@@ -278,13 +278,13 @@ export const updateStatus = async (req, res) => {
     );
 
     return res.status(200).json({
-      message: "Status updated successfully.",
+      message: "STATUS_UPDATED_SUCCESSFULLY",
       success: true,
     });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
-      message: "Internal server error.",
+      message: "INTERNAL_SERVER_ERROR",
       success: false,
     });
   }

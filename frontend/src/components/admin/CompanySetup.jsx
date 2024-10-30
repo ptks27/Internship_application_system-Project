@@ -106,16 +106,27 @@ const CompanySetup = () => {
 
   const changeFileHandler = (e) => {
     const file = e.target.files?.[0];
-    setInput({
-      ...input,
-      file,
-    });
+    
+    if (file) {
+      // ตรวจสอบประเภทไฟล์
+      const validTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+      if (!validTypes.includes(file.type)) {
+        toast.error(t('fileTypeError'));
+        e.target.value = ''; // รีเซ็ตค่า input file
+        return;
+      }
+      
+      setInput({
+        ...input,
+        file,
+      });
+    }
   };
 
   const submitHandler = async (e) => {
     e.preventDefault();
     if (!validateForm()) {
-      toast.error("Please correct the errors in the form");
+      toast.error(t('pleaseCorrectFormErrors'));
       return;
     }
     setLoading(true);
@@ -143,12 +154,12 @@ const CompanySetup = () => {
         }
       );
       if (res.data.success) {
-        toast.success(res.data.message);
+        toast.success(t("COMPANY_UPDATED_SUCCESSFULLY"));
         navigate("/admin/companies");
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.response?.data?.message || "Something went wrong!");
+      toast.error(error.response?.data?.message || t("somethingWentWrong"));
     } finally {
       setLoading(false);
     }
@@ -174,10 +185,10 @@ const CompanySetup = () => {
       <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-semibold text-gray-800 mb-2">
-            {t("loadingCompanyData")}
+            Loading company data...
           </h2>
           <p className="text-gray-600">
-            {t("pleaseWaitCompany")}
+            Please wait while we fetch the company information.
           </p>
         </div>
       </div>

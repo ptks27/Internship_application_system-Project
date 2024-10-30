@@ -64,9 +64,8 @@ const JobsAgentTable = () => {
           withCredentials: true,
         });
         if (res.data.success) {
-          toast.success(res.data.message);
+          toast.success(t(res.data.message));
 
-          // Remove the job from both allJobsAgent and filterJobs after deletion
           const updatedJobs = allJobsAgent.filter(
             (job) => job.job_id !== jobId
           );
@@ -74,13 +73,12 @@ const JobsAgentTable = () => {
             (job) => job.job_id !== jobId
           );
 
-          // Update state after deletion
           dispatch(setAllJobs(updatedJobs));
           setFilterJobs(updatedFilterJobs);
         }
       } catch (error) {
         console.log(error);
-        toast.error(error.response?.data?.message || "Something went wrong!");
+        toast.error(t(error.response?.data?.message) || t("somethingWentWrong"));
       }
     }
   };
