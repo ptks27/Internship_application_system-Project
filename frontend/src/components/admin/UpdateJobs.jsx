@@ -133,7 +133,7 @@ const provinces = [
     districts: [
       { en: "Mueang Chiang Rai", th: "เมืองเชียงราย" },
       { en: "Mae Sai", th: "แม่สาย" },
-      { en: "Chiang Saen", th: "เชียงแสน" },
+      { en: "Chiang Saen", th: "เชียงแส���" },
       { en: "Phan", th: "พาน" },
       { en: "Wiang Pa Pao", th: "เวียงป่าเป้า" },
       // เพิ่มอำเภออื่นๆที่เชียงราย
@@ -162,7 +162,7 @@ const provinces = [
       // เพิ่มอำเภออื่นๆที่นนทบุร
     ],
   },
-  // เพิ่มจังหวัดและอำเภออื่นๆที่เหลือ
+  // เพ�����มจังหวัดและอำเภออื่นๆที่เหลือ
 ];
 
 const UpdateJobs = () => {
@@ -223,8 +223,11 @@ const UpdateJobs = () => {
     else if (input.description.length > 400)
       newErrors.description = t("VALIDATION.DESCRIPTION_MAX_LENGTH");
 
-    if (!input.location.trim())
-      newErrors.location = t("VALIDATION.LOCATION_REQUIRED");
+    if (!selectedProvince) {
+      newErrors.location = t("VALIDATION.PROVINCE_REQUIRED");
+    } else if (!selectedDistrict) {
+      newErrors.location = t("VALIDATION.DISTRICT_REQUIRED");
+    }
 
     if (!String(input.salary).trim()) {
       newErrors.salary = t("VALIDATION.SALARY_REQUIRED");
@@ -395,8 +398,11 @@ const UpdateJobs = () => {
                       ...prev,
                       location: `${e.target.value} - `,
                     }));
+                    setErrors((prev) => ({ ...prev, location: "" }));
                   }}
-                  className="px-4 py-2 w-full border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-[#7e22ce] focus:border-[#7e22ce] text-left"
+                  className={`px-4 py-2 w-full border ${
+                    errors.location && !selectedProvince ? "border-red-500" : "border-gray-400"
+                  } rounded-md focus:outline-none focus:ring-2 focus:ring-[#7e22ce] focus:border-[#7e22ce] text-left`}
                   disabled={loading}
                 >
                   <option value="" className="text-left">
@@ -423,8 +429,11 @@ const UpdateJobs = () => {
                       ...prev,
                       location: `${selectedProvince} - ${e.target.value}`,
                     }));
+                    setErrors((prev) => ({ ...prev, location: "" }));
                   }}
-                  className="px-4 py-2 w-full border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-[#7e22ce] focus:border-[#7e22ce] text-left"
+                  className={`px-4 py-2 w-full border ${
+                    errors.location && selectedProvince && !selectedDistrict ? "border-red-500" : "border-gray-400"
+                  } rounded-md focus:outline-none focus:ring-2 focus:ring-[#7e22ce] focus:border-[#7e22ce] text-left`}
                   disabled={loading || !selectedProvince}
                 >
                   <option value="" className="text-left">
@@ -448,7 +457,7 @@ const UpdateJobs = () => {
               </div>
               {errors.location && (
                 <p className="text-red-500 text-xs mt-1">
-                  {t(errors.location)}
+                  {errors.location}
                 </p>
               )}
             </div>

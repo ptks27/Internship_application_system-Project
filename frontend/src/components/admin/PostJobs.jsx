@@ -231,12 +231,10 @@ const PostJobs = () => {
     if (!input.companyId) 
       newErrors.companyId = t("VALIDATION.COMPANY_REQUIRED");
 
-    if (selectedProvince && !selectedDistrict) {
-      newErrors.district = t("VALIDATION.DISTRICT_REQUIRED");
-    }
-
-    if (!input.location.trim() || (selectedProvince && !selectedDistrict)) {
-      newErrors.location = t("VALIDATION.LOCATION_REQUIRED");
+    if (!selectedProvince) {
+      newErrors.location = t("VALIDATION.PROVINCE_REQUIRED");
+    } else if (!selectedDistrict) {
+      newErrors.location = t("VALIDATION.DISTRICT_REQUIRED");
     }
 
     setErrors(newErrors);
@@ -301,7 +299,9 @@ const PostJobs = () => {
         setLoading(false);
       }
     } else {
-      toast.error(t("FILL_INFORMATION_COMPLETELY"));
+      if (Object.keys(errors).length > 0) {
+        toast.error(t("FILL_INFORMATION_COMPLETELY"));
+      }
     }
   };
 
@@ -388,18 +388,25 @@ const PostJobs = () => {
                   onChange={(e) => {
                     setSelectedProvince(e.target.value);
                     setSelectedDistrict("");
-                    setErrors({ ...errors, location: "" });
+                    setInput((prev) => ({
+                      ...prev,
+                      location: `${e.target.value} - `,
+                    }));
+                    setErrors((prev) => ({ ...prev, location: "" }));
                   }}
                   className={`px-4 py-2 w-full border ${
-                    errors.location ? "border-red-500" : "border-gray-400"
-                  } rounded-md focus:outline-none focus:ring-2 focus:ring-[#7e22ce] focus:border-[#7e22ce] resize-none`}
+                    errors.location && !selectedProvince ? "border-red-500" : "border-gray-400"
+                  } rounded-md focus:outline-none focus:ring-2 focus:ring-[#7e22ce] focus:border-[#7e22ce] text-left`}
                   disabled={loading}
                 >
-                  <option value="">{t("selectProvince")}</option>
+                  <option value="" className="text-left">
+                    {t("selectProvince")}
+                  </option>
                   {provinces.map((province) => (
                     <option
                       key={province.name.en}
                       value={province.name[i18n.language]}
+                      className="text-left"
                     >
                       {province.name[i18n.language]}
                     </option>
@@ -416,36 +423,35 @@ const PostJobs = () => {
                       ...prev,
                       location: `${selectedProvince} - ${e.target.value}`,
                     }));
-                    setErrors((prev) => ({
-                      ...prev,
-                      district: "",
-                      location: ""
-                    }));
+                    setErrors((prev) => ({ ...prev, location: "" }));
                   }}
                   className={`px-4 py-2 w-full border ${
-                    errors.district ? "border-red-500" : "border-gray-400"
-                  } rounded-md focus:outline-none focus:ring-2 focus:ring-[#7e22ce] focus:border-[#7e22ce] resize-none`}
+                    errors.location && selectedProvince && !selectedDistrict ? "border-red-500" : "border-gray-400"
+                  } rounded-md focus:outline-none focus:ring-2 focus:ring-[#7e22ce] focus:border-[#7e22ce] text-left`}
                   disabled={loading || !selectedProvince}
                 >
-                  <option value="">{t("selectDistrict")}</option>
+                  <option value="" className="text-left">
+                    {t("selectDistrict")}
+                  </option>
                   {provinces
                     .find(
                       (province) =>
                         province.name[i18n.language] === selectedProvince
                     )
                     ?.districts.map((district) => (
-                      <option key={district.en} value={district[i18n.language]}>
+                      <option
+                        key={district.en}
+                        value={district[i18n.language]}
+                        className="text-left"
+                      >
                         {district[i18n.language]}
                       </option>
                     ))}
                 </select>
-                {errors.district && (
-                  <p className="text-red-500 text-xs mt-1">{errors.district}</p>
-                )}
               </div>
               {errors.location && (
                 <p className="text-red-500 text-xs mt-1">
-                  {t(errors.location)}
+                  {errors.location}
                 </p>
               )}
             </div>
@@ -588,7 +594,7 @@ const PostJobs = () => {
             <Button
               type="submit"
               className="px-6 py-2 bg-[#7e22ce] text-white rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-[#7e22ce] focus:ring-offset-2 transition-colors duration-300"
-              disabled={loading || (selectedProvince && !selectedDistrict)}
+              disabled={loading}
             >
               {loading ? (
                 <div className="flex items-center">

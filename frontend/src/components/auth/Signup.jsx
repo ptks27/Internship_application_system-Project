@@ -7,7 +7,7 @@ import { useState } from "react";
 import axios from "axios";
 import { USER_API_END_POINT } from "../../components/utils/constant";
 import { toast } from "sonner";
-import { Loader2, Eye, EyeOff, Image as ImageIcon } from "lucide-react";
+import { Loader2, Eye, EyeOff, Image as ImageIcon, Check, X } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "@/redux/authSlice";
 import { motion } from "framer-motion";
@@ -43,6 +43,27 @@ const Signup = () => {
   const { loading } = useSelector((store) => store.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [passwordCriteria, setPasswordCriteria] = useState({
+    length: false,
+    lowercase: false,
+    uppercase: false,
+    number: false,
+    special: false,
+  });
+
+  const [showPasswordCriteria, setShowPasswordCriteria] = useState(false);
+  const [showPasswordError, setShowPasswordError] = useState(false);
+
+  const validatePassword = (password) => {
+    setPasswordCriteria({
+      length: password.length >= 8,
+      lowercase: /[a-z]/.test(password),
+      uppercase: /[A-Z]/.test(password),
+      number: /[0-9]/.test(password),
+      special: /[!@#$%^&*]/.test(password),
+    });
+  };
 
   const changeEventHandler = (e) => {
     const { name, value } = e.target;
@@ -117,6 +138,9 @@ const Signup = () => {
     } else if (name === "password") {
       if (value.length <= 30) {
         setInput({ ...input, password: value });
+        validatePassword(value);
+        setShowPasswordError(false);
+        setShowPasswordCriteria(true);
       }
       setErrors({ ...errors, password: value.length < 8 });
     } else if (name === "role") {
@@ -162,7 +186,11 @@ const Signup = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    // เพิ่มการตรวจสอบเพิ่มเติม
+    if (!input.password.trim()) {
+      setShowPasswordError(true);
+      setShowPasswordCriteria(false);
+    }
+
     const additionalValidation = {
       fullname: input.fullname.trim() === "",
       email: !input.email.trim() ? t("emailRequired") : false,
@@ -250,11 +278,17 @@ const Signup = () => {
 
       if (res.data.success) {
         navigate("/verify-email", { state: { email: input.email } });
-        toast.success(res.data.message);
+        toast.success(t(res.data.message));
       }
     } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message);
+      const errorMessage = error.response?.data?.message;
+      if (errorMessage === "User already exists with this email.") {
+        toast.error(t("EMAIL_ALREADY_EXISTS"));
+      } else if (errorMessage === "User already exists with this phone number.") {
+        toast.error(t("PHONE_ALREADY_EXISTS"));
+      } else {
+        toast.error(t(errorMessage));
+      }
     } finally {
       dispatch(setLoading(false));
     }
@@ -437,6 +471,7 @@ const Signup = () => {
                   value={input.password}
                   name="password"
                   onChange={changeEventHandler}
+                  onFocus={() => setShowPasswordCriteria(true)}
                   type={passwordVisible ? "text" : "password"}
                   className={`w-full px-4 py-3 rounded-lg bg-white/10 border ${
                     errors.password ? "border-red-400" : "border-white/30"
@@ -451,10 +486,26 @@ const Signup = () => {
                   {passwordVisible ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
               </div>
-              {errors.password && (
+              {showPasswordError && (
                 <p className="mt-2 text-red-400 text-sm">
                   {t("passwordError")}
                 </p>
+              )}
+              {showPasswordCriteria && (
+                <div className="space-y-2 mt-2">
+                  {Object.entries(passwordCriteria).map(([criterion, isValid]) => (
+                    <div key={criterion} className="flex items-center text-xs">
+                      {isValid ? (
+                        <Check className="text-green-400 mr-2" size={14} />
+                      ) : (
+                        <X className="text-red-400 mr-2" size={14} />
+                      )}
+                      <span className={isValid ? "text-green-400" : "text-red-400"}>
+                        {t(getCriterionText(criterion))}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               )}
             </div>
 
@@ -533,5 +584,22 @@ const Signup = () => {
     </div>
   );
 };
+
+function getCriterionText(criterion) {
+  switch (criterion) {
+    case "length":
+      return "passwordLengthCriterion";
+    case "lowercase":
+      return "passwordLowercaseCriterion";
+    case "uppercase":
+      return "passwordUppercaseCriterion";
+    case "number":
+      return "passwordNumberCriterion";
+    case "special":
+      return "passwordSpecialCharCriterion";
+    default:
+      return "";
+  }
+}
 
 export default Signup;

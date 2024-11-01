@@ -48,7 +48,7 @@ const VerifyEmail = () => {
   useEffect(() => {
     if (!email) {
       navigate("/login", { replace: true });
-      toast.error("Please log in to verify your email.");
+      toast.error(t('pleaseLoginToVerify'));
       return;
     }
 
@@ -68,14 +68,14 @@ const VerifyEmail = () => {
         clearInterval(timer);
         localStorage.removeItem("verificationEndTime");
         navigate("/login", { replace: true });
-        toast.error("Verification time expired. Please sign up again.");
+        toast.error(t('verificationTimeExpired'));
       }
     }, 1000);
 
     return () => {
       clearInterval(timer);
     };
-  }, [email, navigate]);
+  }, [email, navigate, t]);
 
   useEffect(() => {
     if (verificationCode.every((code) => code !== "")) {
@@ -115,15 +115,14 @@ const VerifyEmail = () => {
       );
 
       if (response.data.success) {
-        // รอ 2 วินาทีก่อนแสดงข้อความสำเร็จและนำทางไปยังหน้า login
         setTimeout(() => {
           setLoading(false);
-          toast.success("Email verified successfully!");
+          toast.success(t('emailVerifiedSuccess'));
           navigate("/login");
         }, 2000);
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || "Verification failed");
+      toast.error(error.response?.data?.message || t('verificationFailed'));
       setLoading(false);
     }
   };
@@ -144,19 +143,19 @@ const VerifyEmail = () => {
       );
 
       if (response.data.success) {
-        toast.success("New verification code sent successfully!");
+        toast.success(t('newVerificationCodeSent'));
         // Reset verification code fields
         setVerificationCode(["", "", "", "", "", ""]);
         
         // Reset timer
         const now = new Date().getTime();
-        const newEndTime = now + 600 * 1000; // 600 seconds from now
+        const newEndTime = now + 600 * 1000;
         localStorage.setItem("verificationEndTime", newEndTime.toString());
         setTimeLeft(600);
       }
     } catch (error) {
       toast.error(
-        error.response?.data?.message || "Failed to resend verification code"
+        error.response?.data?.message || t('failedToResendVerificationCode')
       );
     } finally {
       setResendLoading(false);

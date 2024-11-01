@@ -10,7 +10,7 @@ export const applyJob = async (req, res) => {
     const jobId = Number(req.params.id); // Convert to number
     if (!jobId) {
       return res.status(400).json({
-        message: "Job id is required.",
+        message: "JOB_ID_REQUIRED",
         success: false,
       });
     }
@@ -22,7 +22,7 @@ export const applyJob = async (req, res) => {
     });
     if (existingApplication) {
       return res.status(400).json({
-        message: "You have already applied for this job",
+        message: "ALREADY_APPLIED",
         success: false,
       });
     }
@@ -31,7 +31,7 @@ export const applyJob = async (req, res) => {
     const job = await Job.findOne({ job_id: jobId });
     if (!job) {
       return res.status(404).json({
-        message: "Job not found",
+        message: "JOB_NOT_FOUND",
         success: false,
       });
     }
@@ -86,15 +86,15 @@ export const applyJob = async (req, res) => {
     }
 
     return res.status(201).json({
-      message: "Job applied successfully.",
+      message: "JOB_APPLIED_SUCCESSFULLY",
       success: true,
       jobTitle: job.title,
-      notification: notificationForApplicant, // ส่งกลับข้อมูลการแจ้งเตือนสำหรับผู้สมัคร
+      notification: notificationForApplicant,
     });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
-      message: "An error occurred while applying for the job.",
+      message: "ERROR_APPLYING_JOB",
       success: false,
     });
   }
@@ -110,7 +110,7 @@ export const getAppliedJobs = async (req, res) => {
 
     if (!applications.length) {
       return res.status(404).json({
-        message: "No applications found.",
+        message: "NO_APPLICATIONS_FOUND",
         success: false,
       });
     }
@@ -143,7 +143,7 @@ export const getAppliedJobs = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json({
-      message: "Internal server error.",
+      message: "INTERNAL_SERVER_ERROR",
       success: false,
     });
   }
@@ -157,7 +157,7 @@ export const getApplicants = async (req, res) => {
     const job = await Job.findOne({ job_id: jobId });
     if (!job) {
       return res.status(404).json({
-        message: "Job not found.",
+        message: "JOB_NOT_FOUND",
         success: false,
       });
     }
@@ -168,7 +168,7 @@ export const getApplicants = async (req, res) => {
 
     if (!applications.length) {
       return res.status(404).json({
-        message: "No applications found for this job.",
+        message: "NO_APPLICATIONS_FOUND_FOR_JOB",
         success: false,
       });
     }
@@ -234,13 +234,13 @@ export const updateStatus = async (req, res) => {
     const applicationId = Number(req.params.id);
     if (isNaN(applicationId)) {
       return res.status(400).json({
-        message: "Invalid application ID.",
+        message: "INVALID_APPLICATION_ID",
         success: false,
       });
     }
     if (!status) {
       return res.status(400).json({
-        message: "Status is required.",
+        message: "STATUS_REQUIRED",
         success: false,
       });
     }
@@ -251,7 +251,7 @@ export const updateStatus = async (req, res) => {
     });
     if (!application) {
       return res.status(404).json({
-        message: "Application not found.",
+        message: "APPLICATION_NOT_FOUND",
         success: false,
       });
     }
@@ -280,6 +280,7 @@ export const updateStatus = async (req, res) => {
     return res.status(200).json({
       message: "STATUS_UPDATED_SUCCESSFULLY",
       success: true,
+      notification: notificationForApplicant,
     });
   } catch (error) {
     console.log(error);
@@ -301,7 +302,7 @@ export const updateApplicationStatus = async (req, res) => {
     });
     if (!application) {
       return res.status(404).json({
-        message: "Application not found.",
+        message: "APPLICATION_NOT_FOUND",
         success: false,
       });
     }
@@ -314,7 +315,7 @@ export const updateApplicationStatus = async (req, res) => {
     const job = await Job.findOne({ job_id: application.create_ByJobId });
     if (!job) {
       return res.status(404).json({
-        message: "Job not found.",
+        message: "JOB_NOT_FOUND",
         success: false,
       });
     }

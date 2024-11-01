@@ -64,26 +64,79 @@ const EnterOTP = () => {
 
   const handleChange = (index, value) => {
     if (value.length <= 1) {
+      const newValue = value.toUpperCase();
       const newOTP = [...otp];
-      newOTP[index] = value;
+      newOTP[index] = newValue;
       setOTP(newOTP);
+      
       if (value !== "" && index < 6) {
         inputRefs.current[index + 1].focus();
+      }
+      
+      if (newValue !== "") {
+        const isComplete = newOTP.every(char => char !== "");
+        if (isComplete) {
+          setTimeout(() => {
+            handleSubmit();
+          }, 300);
+        }
       }
     }
   };
 
   const handlePaste = (e) => {
     e.preventDefault();
-    const pastedData = e.clipboardData.getData("text").trim().slice(0, 7);
-    const newOTP = [...otp];
+    const pastedData = e.clipboardData
+      .getData("text")
+      .replace(/[^A-Za-z0-9]/g, '')
+      .toUpperCase()
+      .slice(0, 7);
 
     if (pastedData.length === 7) {
+      const newOTP = [...otp];
       for (let i = 0; i < pastedData.length; i++) {
         newOTP[i] = pastedData[i];
       }
       setOTP(newOTP);
-      inputRefs.current[pastedData.length - 1].focus();
+      inputRefs.current[6].focus();
+      
+      setLoading(true);
+      
+      setTimeout(async () => {
+        try {
+          const response = await axios.post(
+            `${USER_API_END_POINT}/verify-otp`,
+            {
+              email,
+              otp: pastedData
+            },
+            { withCredentials: true }
+          );
+
+          if (response.data.success) {
+            toast.success(t("emailSentSuccessfully"));
+            localStorage.setItem("otpVerified", "true");
+            localStorage.setItem(`verified_${email}`, "true");
+            navigate("/reset-password", { state: { email, otpVerified: true } });
+          }
+        } catch (error) {
+          console.error("OTP verification error:", error.response?.data || error);
+          toast.error(error.response?.data?.message || t("unexpectedError"));
+          setOTP(["", "", "", "", "", "", ""]);
+          inputRefs.current[0].focus();
+        } finally {
+          setLoading(false);
+        }
+      }, 2000);
+
+    } else if (pastedData.length > 0) {
+      const newOTP = Array(7).fill("");
+      for (let i = 0; i < Math.min(pastedData.length, 7); i++) {
+        newOTP[i] = pastedData[i];
+      }
+      setOTP(newOTP);
+      const nextIndex = Math.min(pastedData.length, 6);
+      inputRefs.current[nextIndex].focus();
     } else {
       setOTP(["", "", "", "", "", "", ""]);
       inputRefs.current[0].focus();
@@ -92,12 +145,19 @@ const EnterOTP = () => {
 
   const handleSubmit = async (e) => {
     if (e) e.preventDefault();
-    setLoading(true);
+    
+    if (!otp.every(char => char !== "")) {
+      return;
+    }
 
+    setLoading(true);
     try {
       const response = await axios.post(
         `${USER_API_END_POINT}/verify-otp`,
-        { email, otp: otp.join("") },
+        {
+          email,
+          otp: otp.join("")
+        },
         { withCredentials: true }
       );
 
@@ -106,13 +166,10 @@ const EnterOTP = () => {
         localStorage.setItem("otpVerified", "true");
         localStorage.setItem(`verified_${email}`, "true");
         navigate("/reset-password", { state: { email, otpVerified: true } });
-      } else {
-        toast.error(t("invalidOTP"));
-        setOTP(["", "", "", "", "", "", ""]);
-        inputRefs.current[0].focus();
       }
     } catch (error) {
-      toast.error(t("unexpectedError") + `: ${error.message}`);
+      console.error("OTP verification error:", error.response?.data || error);
+      toast.error(error.response?.data?.message || t("unexpectedError"));
       setOTP(["", "", "", "", "", "", ""]);
       inputRefs.current[0].focus();
     } finally {
@@ -201,26 +258,37 @@ const EnterOTP = () => {
             ))}
           </div>
           <div className="space-y-4">
-            <Button
-              type="submit"
-              className="w-full bg-[#723bcf] text-white py-2 sm:py-3 rounded-lg font-semibold text-base sm:text-lg hover:bg-[#5c2da6] transition-colors duration-200"
-              disabled={loading || otp.some((digit) => digit === "")}
-            >
-              {loading ? <Loader2 className="h-5 w-5 animate-spin mr-2" /> : null}
-              {t("verifyOTP")}
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              className="w-full border-[#723bcf] text-[#723bcf] py-2 sm:py-3 rounded-lg font-semibold text-base sm:text-lg hover:bg-[#f4f4f4] hover:text-black transition-colors duration-200"
-              onClick={handleResendOTP}
-              disabled={resendLoading}
-            >
-              {resendLoading ? (
-                <Loader2 className="h-4 w-4 sm:h-5 sm:w-5 animate-spin mr-2" />
-              ) : null}
-              {t("resendOTP")}
-            </Button>
+            {loading ? (
+              <div className="flex flex-col items-center">
+                <Loader2 className="h-8 w-8 sm:h-10 sm:w-10 animate-spin text-[#723bcf] mb-2" />
+                <p className="text-[#723bcf] font-semibold text-sm sm:text-base">
+                  {t('optloading')}
+                </p>
+              </div>
+            ) : (
+              <>
+                <Button
+                  type="submit"
+                  className="w-full bg-[#723bcf] text-white py-2 sm:py-3 rounded-lg font-semibold text-base sm:text-lg hover:bg-[#5c2da6] transition-colors duration-200"
+                  onClick={handleSubmit}
+                  disabled={loading || otp.some((digit) => digit === "")}
+                >
+                  {t("verifyOTP")}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full border-[#723bcf] text-[#723bcf] py-2 sm:py-3 rounded-lg font-semibold text-base sm:text-lg hover:bg-[#f4f4f4] hover:text-black transition-colors duration-200"
+                  onClick={handleResendOTP}
+                  disabled={resendLoading}
+                >
+                  {resendLoading ? (
+                    <Loader2 className="h-4 w-4 sm:h-5 sm:w-5 animate-spin mr-2" />
+                  ) : null}
+                  {t("resendOTP")}
+                </Button>
+              </>
+            )}
           </div>
         </form>
         <p className="text-xs sm:text-sm text-gray-500 mt-4 text-center">

@@ -28,7 +28,7 @@ export const register = async (req, res) => {
     const existingEmail = await User.findOne({ email });
     if (existingEmail) {
       return res.status(400).json({
-        message: "User already exists with this email.",
+        message: "EMAIL_ALREADY_EXISTS",
         success: false,
       });
     }
@@ -37,7 +37,7 @@ export const register = async (req, res) => {
     const existingPhone = await User.findOne({ phoneNumber });
     if (existingPhone) {
       return res.status(400).json({
-        message: "User already exists with this phone number.",
+        message: "PHONE_ALREADY_EXISTS",
         success: false,
       });
     }
@@ -73,7 +73,7 @@ export const register = async (req, res) => {
     await sendVerificationEmail(newUser.email, verificationToken);
 
     return res.status(201).json({
-      message: "Account created successfully. Please verify your email.",
+      message: "ACCOUNT_CREATED_SUCCESS",
       success: true,
     });
   } catch (error) {

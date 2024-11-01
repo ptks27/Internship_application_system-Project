@@ -63,7 +63,7 @@ const ResetPassword = () => {
     setErrors({});
 
     if (password !== confirmPassword) {
-      setErrors({ match: "Passwords do not match." });
+      setErrors({ match: t("passwordsDoNotMatch") });
       return;
     }
 
@@ -77,7 +77,7 @@ const ResetPassword = () => {
       );
 
       if (response.data.success) {
-        toast.success("Password reset successfully!");
+        toast.success(t("passwordResetSuccessfully"));
         navigate("/reset-password-success"); // Redirect to ResetPasswordSuccess
       }
     } catch (error) {

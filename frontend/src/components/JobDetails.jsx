@@ -51,7 +51,7 @@ const JobDetails = () => {
 
         if (res.data.success) {
           setIsApplied(true);
-          toast.success(res.data.message);
+          toast.success(t(res.data.message));
           
           // Add the new notification to the Redux store for the applicant
           if (res.data.notification) {
@@ -70,13 +70,11 @@ const JobDetails = () => {
             }));
           }
         } else {
-          toast.error(res.data.message);
+          toast.error(t(res.data.message));
         }
       } catch (error) {
-        const errorMessage =
-          error.response?.data?.message ||
-          t('applyError');
-        toast.error(errorMessage);
+        const errorMessage = error.response?.data?.message || 'ERROR_APPLYING_JOB';
+        toast.error(t(errorMessage));
       }
     }
   };
@@ -91,16 +89,13 @@ const JobDetails = () => {
         });
         if (res.data.success) {
           dispatch(setSingleJob(res.data.job));
-
-          // ใช้ค่า `userHasApplied` จาก API เพื่อตั้งสถานะของการสมัคร
           setIsApplied(res.data.job.userHasApplied);
         } else {
-          toast.error(res.data.message);
+          toast.error(t(res.data.message));
         }
       } catch (error) {
-        const errorMessage =
-          error.response?.data?.message || "Failed to fetch job details.";
-        toast.error(errorMessage);
+        const errorMessage = error.response?.data?.message || 'JOB_NOT_FOUND';
+        toast.error(t(errorMessage));
       }
     };
     fetchSingleJob();
@@ -119,12 +114,11 @@ const JobDetails = () => {
         if (res.data.success) {
           dispatch(setSingleCompany(res.data.company));
         } else {
-          console.log("Failed to fetch company:", res.data.message);
+          toast.error(t(res.data.message));
         }
       } catch (error) {
-        const errorMessage =
-          error.response?.data?.message || "Error fetching company details.";
-        toast.error(errorMessage);
+        const errorMessage = error.response?.data?.message || 'COMPANY_NOT_FOUND';
+        toast.error(t(errorMessage));
       }
     };
     fetchSingleCompany();
