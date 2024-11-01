@@ -1,5 +1,5 @@
 import { useParams, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { setSingleJob } from "@/redux/jobSlice";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -18,10 +18,31 @@ import { useTranslation } from 'react-i18next';
 import Swal from 'sweetalert2';
 import { addNotification, updateNotification } from '../redux/notificationSlice';
 
+const formatJobDescription = (description) => {
+  if (!description) return [];
+  return description.split('-').filter(item => item.trim() !== '').map(item => item.trim());
+};
+
+const formatDate = (dateString, language) => {
+  if (!dateString) return "N/A";
+  const date = new Date(dateString);
+  const day = date.getDate();
+  
+  const monthNames = {
+    en: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    th: ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."]
+  };
+
+  const month = monthNames[language][date.getMonth()];
+  const year = language === 'th' ? date.getFullYear() + 543 : date.getFullYear();
+
+  return `${day} ${month} ${year}`;
+};
+
 const JobDetails = () => {
-  const { t, i18n } = useTranslation(); // Get the i18n instance
+  const { t, i18n } = useTranslation();
   const { singleJob } = useSelector((store) => store.job);
-  const { user } = useSelector((store) => store.auth);
+  const { singleCompany } = useSelector((store) => store.company);
   const params = useParams();
   const jobId = params.id;
   const location = useLocation();
@@ -29,7 +50,52 @@ const JobDetails = () => {
   const queryParams = new URLSearchParams(location.search);
   const companyId = queryParams.get("companyId");
 
-  const [isApplied, setIsApplied] = useState(false); // สถานะการสมัคร
+  const [isApplied, setIsApplied] = useState(false);
+
+  const memoizedJobDescription = useMemo(() => {
+    return formatJobDescription(singleJob?.description);
+  }, [singleJob?.description]);
+
+  useEffect(() => {
+    const fetchSingleJob = async () => {
+      try {
+        const res = await axios.get(`${JOB_ALL_API}/getjob/${jobId}`, {
+          withCredentials: true,
+        });
+        if (res.data.success) {
+          dispatch(setSingleJob(res.data.job));
+          setIsApplied(res.data.job.userHasApplied);
+        } else {
+          toast.error(t(res.data.message));
+        }
+      } catch (error) {
+        const errorMessage = error.response?.data?.message || 'JOB_NOT_FOUND';
+        toast.error(t(errorMessage));
+      }
+    };
+    fetchSingleJob();
+  }, [jobId, dispatch, t]);
+
+  useEffect(() => {
+    const fetchSingleCompany = async () => {
+      if (!companyId) return;
+      
+      try {
+        const res = await axios.get(`${COMPANY_ALL_API}/get/${companyId}`, {
+          withCredentials: true,
+        });
+        if (res.data.success) {
+          dispatch(setSingleCompany(res.data.company));
+        } else {
+          toast.error(t(res.data.message));
+        }
+      } catch (error) {
+        const errorMessage = error.response?.data?.message || 'COMPANY_NOT_FOUND';
+        toast.error(t(errorMessage));
+      }
+    };
+    fetchSingleCompany();
+  }, [companyId, dispatch, t]);
 
   const applyJobHandler = async () => {
     const result = await Swal.fire({
@@ -53,7 +119,6 @@ const JobDetails = () => {
           setIsApplied(true);
           toast.success(t(res.data.message));
           
-          // Add the new notification to the Redux store for the applicant
           if (res.data.notification) {
             const newNotification = {
               ...res.data.notification,
@@ -62,7 +127,6 @@ const JobDetails = () => {
             };
             dispatch(addNotification(newNotification));
             
-            // Update the notification immediately with company name and job title
             dispatch(updateNotification({
               notification_id: newNotification.notification_id,
               companyName: singleCompany?.name,
@@ -79,81 +143,10 @@ const JobDetails = () => {
     }
   };
 
-  const { singleCompany } = useSelector((store) => store.company);
-
-  useEffect(() => {
-    const fetchSingleJob = async () => {
-      try {
-        const res = await axios.get(`${JOB_ALL_API}/getjob/${jobId}`, {
-          withCredentials: true,
-        });
-        if (res.data.success) {
-          dispatch(setSingleJob(res.data.job));
-          setIsApplied(res.data.job.userHasApplied);
-        } else {
-          toast.error(t(res.data.message));
-        }
-      } catch (error) {
-        const errorMessage = error.response?.data?.message || 'JOB_NOT_FOUND';
-        toast.error(t(errorMessage));
-      }
-    };
-    fetchSingleJob();
-  }, [jobId, dispatch, singleJob, user?.user_id]);
-
-  useEffect(() => {
-    const fetchSingleCompany = async () => {
-      if (!companyId) {
-        console.log("Company ID is not available");
-        return;
-      }
-      try {
-        const res = await axios.get(`${COMPANY_ALL_API}/get/${companyId}`, {
-          withCredentials: true,
-        });
-        if (res.data.success) {
-          dispatch(setSingleCompany(res.data.company));
-        } else {
-          toast.error(t(res.data.message));
-        }
-      } catch (error) {
-        const errorMessage = error.response?.data?.message || 'COMPANY_NOT_FOUND';
-        toast.error(t(errorMessage));
-      }
-    };
-    fetchSingleCompany();
-  }, [companyId, dispatch]);
-
-  const formatDate = (dateString, language) => {
-    if (!dateString) return "N/A";
-    const date = new Date(dateString);
-    const day = date.getDate();
-    
-    // Define month names for both English and Thai
-    const monthNames = {
-      en: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-      th: ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."]
-    };
-
-    // Select the appropriate month name based on the provided language
-    const month = monthNames[language][date.getMonth()];
-
-    // Adjust the year based on the language
-    const year = language === 'th' ? date.getFullYear() + 543 : date.getFullYear();
-
-    return `${day} ${month} ${year}`;
-  };
-
-  const formatJobDescription = (description) => {
-    if (!description) return [];
-    return description.split('-').filter(item => item.trim() !== '').map(item => item.trim());
-  };
-
   return (
     <div className="min-h-screen bg-gray-100">
       <Navbar />
       <div className="container mx-auto px-4 py-8">
-        {/* Back Button */}
         <div className="flex items-center mb-4">
           <button
             onClick={() => window.history.back()}
@@ -164,7 +157,6 @@ const JobDetails = () => {
           </button>
         </div>
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Left Section - Job Information */}
           <div className="w-full lg:w-2/3 bg-[#ffffff] border border-gray-300 p-4 md:p-6 rounded-lg shadow-md mt-6 lg:mt-0">
             <div className="mb-6">
               <h1 className="text-2xl font-bold text-[#723bcf] mb-2">{singleJob?.title}</h1>
@@ -197,7 +189,7 @@ const JobDetails = () => {
             <div className="my-4">
               <h1 className="font-semibold text-lg">{t('jobInformation')}</h1>
               <div className="text-gray-800 my-4">
-                {formatJobDescription(singleJob?.description).map((item, index) => (
+                {memoizedJobDescription.map((item, index) => (
                   <p key={index} className="mb-2">- {item}</p>
                 ))}
               </div>
@@ -240,7 +232,6 @@ const JobDetails = () => {
             </div>
           </div>
 
-          {/* Right Section - Company Information */}
           <div className="w-full lg:w-1/3 bg-[#ffffff] border border-gray-300 p-4 md:p-6 rounded-lg shadow-md mt-6 lg:mt-0">
             <div className="flex flex-col items-center mb-6">
               <img
