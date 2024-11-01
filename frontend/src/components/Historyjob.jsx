@@ -22,13 +22,13 @@ const Historyjob = () => {
   const getStatusBadgeClass = (status) => {
     switch (status) {
       case "pending":
-        return "bg-gray-500 text-white hover:bg-gray-600";
+        return "bg-gray-500 text-white hover:bg-gray-600 whitespace-nowrap min-w-[50px] text-center";
       case "accepted":
-        return "bg-green-500 text-white hover:bg-green-600";
+        return "bg-green-500 text-white hover:bg-green-600 whitespace-nowrap  text-center";
       case "rejected":
-        return "bg-red-500 text-white hover:bg-red-600";
+        return "bg-red-500 text-white hover:bg-red-600 whitespace-nowrap  text-center";
       default:
-        return "bg-gray-500 text-white hover:bg-gray-600";
+        return "bg-gray-500 text-white hover:bg-gray-600 whitespace-nowrap  text-center";
     }
   };
 
@@ -154,7 +154,7 @@ const Historyjob = () => {
                 <TableCell className="px-4 py-3">
                   <div className="flex justify-center">
                     <Badge
-                      className={`text-xs px-2 py-1 rounded-full ${getStatusBadgeClass(
+                      className={`text-xs px-3 py-1.5 rounded-full ${getStatusBadgeClass(
                         appliedJob.status
                       )}`}
                     >
