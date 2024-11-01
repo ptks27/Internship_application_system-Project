@@ -338,6 +338,7 @@ i18n.use(initReactI18next).init({
         pleaseCorrectErrors: "Please correct the errors below",
         fileTypeError: "Please select only PNG, JPG, or JPEG files",
         companyRegisteredSuccess: "Company registered successfully",
+        sendResetLink: "Send reset link",
         notFound: {
           title: "404",
           heading: "Page Not Found",
@@ -399,6 +400,7 @@ i18n.use(initReactI18next).init({
         INVALID_APPLICATION_ID: "Invalid application ID.",
         STATUS_REQUIRED: "Status is required.",
         APPLICATION_NOT_FOUND: "Application not found.",
+        enterEmailForReset: "Enter your email to reset your password",
 
         // Toast messages for VerifyEmail
         pleaseLoginToVerify: "Please log in to verify your email.",
@@ -633,7 +635,8 @@ i18n.use(initReactI18next).init({
         failedToResendOTP: "ไม่สามารถส่งรหัส OTP ใหม่ได้",
         pleaseWaitForOTP: "กรุณาอใ้รหัส OTP ปัจจุบันหมดอายุก่อนขอรัสใหม่",
         passwordResetSuccessful: "รีเซ็ตรหัสผ่านสำเร็จ!",
-        passwordResetSuccessMessage: "รหัสผ่านของคุณได้รับการรีเซ็ตเรียบร้อยแล้ว",
+        passwordResetSuccessMessage:
+          "รหัสผ่านของคุณได้รับการรีเซ็ตเรียบร้อยแล้ว",
         redirectingToLoginPage: "กำลังนำทางไปยังหน้าเข้าสู่ระบบใน",
         resetPassword: "รีเซ็ตรัสผ่าน",
         enterNewPasswordBelow:
