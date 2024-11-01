@@ -262,7 +262,7 @@ const EnterOTP = () => {
               <div className="flex flex-col items-center">
                 <Loader2 className="h-8 w-8 sm:h-10 sm:w-10 animate-spin text-[#723bcf] mb-2" />
                 <p className="text-[#723bcf] font-semibold text-sm sm:text-base">
-                  {t('optloading')}
+                  {t('optLoading')}
                 </p>
               </div>
             ) : (

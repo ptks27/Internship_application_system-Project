@@ -427,7 +427,7 @@ i18n.use(initReactI18next).init({
         login: "เข้าสู่ระบบ",
         signup: "สมัครสมาชิก",
         english: "อังกฤษ",
-        optloading: "กำลังตรวจสอบรหัส OTP...",
+        optLoading: "กำลังตรวจสอบรหัส OTP...",
         thai: "ไทย",
         chooseJobInterest: "เลือกงานที่คุณสนใจ",
         latestAndTop: "ล่าสุดและยอดนิยม",
