@@ -490,7 +490,7 @@ i18n.use(initReactI18next).init({
         viewProfile: "ดูโปรไฟล์",
         logout: "ออกจากระบบ",
         traineeApply: "ผู้สมัครฝึกงาน",
-        recentAppliedUsers: "รายื่อผู้สมัครล่าสุด",
+        recentAppliedUsers: "รายชื่อผู้สมัครล่าสุด",
         action: "การดำเนินการ",
         viewResume: "ดูประวัติย่อ",
         selectProvince: "เลือกจังหวัด",
@@ -653,7 +653,7 @@ i18n.use(initReactI18next).init({
         passwordSpecialCharCriterion:
           "รหัสผ่านต้งมีอักขระพิเศษอ่างน้อย 1 ตัว (!@#$%^&*)",
         passwordsDoNotMatch: "รหัสผ่านไม่ตรงกัน",
-        passwordResetSuccessfully: "รหัสผ่านถูกรีเซ็ตสำเร็จ",
+        passwordResetSuccessfully: "รีเซ็ตรหัสผ่านสำเร็จ",
         verifyYourEmail: "ตรวจสอบอีเมลของคุณ",
         verificationCodeSentTo: "เราได้ส่งรหัสยืนยันไปยัง",
         pleaseEnterCodeBelow: "กรุณากรอกรหัสด้านล่าง",
