@@ -13,28 +13,67 @@ import { toast } from "sonner";
 import Navbar from "./shared/Navbar";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
-import { CircleUserRound, Mail, MapPinned, Phone, ArrowLeft } from "lucide-react";
-import { useTranslation } from 'react-i18next';
-import Swal from 'sweetalert2';
-import { addNotification, updateNotification } from '../redux/notificationSlice';
+import {
+  CircleUserRound,
+  Mail,
+  MapPinned,
+  Phone,
+  ArrowLeft,
+} from "lucide-react";
+import { useTranslation } from "react-i18next";
+import Swal from "sweetalert2";
+import {
+  addNotification,
+  updateNotification,
+} from "../redux/notificationSlice";
 
 const formatJobDescription = (description) => {
   if (!description) return [];
-  return description.split('-').filter(item => item.trim() !== '').map(item => item.trim());
+  return description
+    .split("-")
+    .filter((item) => item.trim() !== "")
+    .map((item) => item.trim());
 };
 
 const formatDate = (dateString, language) => {
   if (!dateString) return "N/A";
   const date = new Date(dateString);
   const day = date.getDate();
-  
+
   const monthNames = {
-    en: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    th: ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."]
+    en: [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ],
+    th: [
+      "ม.ค.",
+      "ก.พ.",
+      "มี.ค.",
+      "เม.ย.",
+      "พ.ค.",
+      "มิ.ย.",
+      "ก.ค.",
+      "ส.ค.",
+      "ก.ย.",
+      "ต.ค.",
+      "พ.ย.",
+      "ธ.ค.",
+    ],
   };
 
   const month = monthNames[language][date.getMonth()];
-  const year = language === 'th' ? date.getFullYear() + 543 : date.getFullYear();
+  const year =
+    language === "th" ? date.getFullYear() + 543 : date.getFullYear();
 
   return `${day} ${month} ${year}`;
 };
@@ -69,7 +108,7 @@ const JobDetails = () => {
           toast.error(t(res.data.message));
         }
       } catch (error) {
-        const errorMessage = error.response?.data?.message || 'JOB_NOT_FOUND';
+        const errorMessage = error.response?.data?.message || "JOB_NOT_FOUND";
         toast.error(t(errorMessage));
       }
     };
@@ -79,7 +118,7 @@ const JobDetails = () => {
   useEffect(() => {
     const fetchSingleCompany = async () => {
       if (!companyId) return;
-      
+
       try {
         const res = await axios.get(`${COMPANY_ALL_API}/get/${companyId}`, {
           withCredentials: true,
@@ -90,7 +129,8 @@ const JobDetails = () => {
           toast.error(t(res.data.message));
         }
       } catch (error) {
-        const errorMessage = error.response?.data?.message || 'COMPANY_NOT_FOUND';
+        const errorMessage =
+          error.response?.data?.message || "COMPANY_NOT_FOUND";
         toast.error(t(errorMessage));
       }
     };
@@ -99,14 +139,14 @@ const JobDetails = () => {
 
   const applyJobHandler = async () => {
     const result = await Swal.fire({
-      title: t('applyConfirmation'),
-      text: t('applyWarning'),
-      icon: 'warning',
+      title: t("applyConfirmation"),
+      text: t("applyWarning"),
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#7209b7',
-      cancelButtonColor: '#d33',
-      confirmButtonText: t('yesApply'),
-      cancelButtonText: t('cancel')
+      confirmButtonColor: "#7209b7",
+      cancelButtonColor: "#d33",
+      confirmButtonText: t("yesApply"),
+      cancelButtonText: t("cancel"),
     });
 
     if (result.isConfirmed) {
@@ -118,26 +158,29 @@ const JobDetails = () => {
         if (res.data.success) {
           setIsApplied(true);
           toast.success(t(res.data.message));
-          
+
           if (res.data.notification) {
             const newNotification = {
               ...res.data.notification,
-              companyName: singleCompany?.name || t('unknownCompany'),
-              jobTitle: singleJob?.title || t('unknownJob')
+              companyName: singleCompany?.name || t("unknownCompany"),
+              jobTitle: singleJob?.title || t("unknownJob"),
             };
             dispatch(addNotification(newNotification));
-            
-            dispatch(updateNotification({
-              notification_id: newNotification.notification_id,
-              companyName: singleCompany?.name,
-              jobTitle: singleJob?.title
-            }));
+
+            dispatch(
+              updateNotification({
+                notification_id: newNotification.notification_id,
+                companyName: singleCompany?.name,
+                jobTitle: singleJob?.title,
+              })
+            );
           }
         } else {
           toast.error(t(res.data.message));
         }
       } catch (error) {
-        const errorMessage = error.response?.data?.message || 'ERROR_APPLYING_JOB';
+        const errorMessage =
+          error.response?.data?.message || "ERROR_APPLYING_JOB";
         toast.error(t(errorMessage));
       }
     }
@@ -153,21 +196,23 @@ const JobDetails = () => {
             className="flex items-center text-[#723bcf] bg-transparent  transition-colors duration-200 my-2"
           >
             <ArrowLeft size={20} className="mr-2" />
-            {t('back')}
+            {t("back")}
           </button>
         </div>
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="w-full lg:w-2/3 bg-[#ffffff] border border-gray-300 p-4 md:p-6 rounded-lg shadow-md mt-6 lg:mt-0">
             <div className="mb-6">
-              <h1 className="text-2xl font-bold text-[#723bcf] mb-2">{singleJob?.title}</h1>
-              
+              <h1 className="text-2xl font-bold text-[#723bcf] mb-2">
+                {singleJob?.title}
+              </h1>
+
               <p className="text-gray-600 font-medium">{singleJob?.location}</p>
               <div className="flex flex-wrap gap-2 mt-4">
                 <Badge
                   className="bg-[#ffffff] text-black font-bold"
                   variant="outline"
                 >
-                  {singleJob?.position} {t('positions')}
+                  {singleJob?.position} {t("positions")}
                 </Badge>
                 <Badge
                   className="bg-[#FFEEEB] text-[#ff914d] font-bold"
@@ -179,7 +224,7 @@ const JobDetails = () => {
                   className="bg-[#E6F4EA] text-[#00bf63] font-bold"
                   variant="outline"
                 >
-                  {singleJob?.salary} {t('currency')}
+                  {singleJob?.salary} {t("currency")}
                 </Badge>
               </div>
             </div>
@@ -187,29 +232,34 @@ const JobDetails = () => {
             <hr className="mt-6 md:mt-10 border-t-2 border-gray-300" />
 
             <div className="my-4">
-              <h1 className="font-semibold text-lg">{t('jobInformation')}</h1>
+              <h1 className="font-semibold text-lg">{t("jobInformation")}</h1>
               <div className="text-gray-800 my-4">
                 {memoizedJobDescription.map((item, index) => (
-                  <p key={index} className="mb-2">- {item}</p>
+                  <p key={index} className="mb-2">
+                    - {item}
+                  </p>
                 ))}
               </div>
 
               <div className="space-y-3 md:space-y-5">
                 <h1 className="font-bold">
-                  {t('experience')}:{" "}
+                  {t("experience")}:{" "}
                   <span className="pl-2 md:pl-4 font-normal text-gray-800">
-                    {singleJob?.experienceLevel >= 0 ? singleJob.experienceLevel : 0} {t('year')}
+                    {singleJob?.experienceLevel >= 0
+                      ? singleJob.experienceLevel
+                      : 0}{" "}
+                    {t("year")}
                   </span>
                 </h1>
                 <h1 className="font-bold">
-                  {t('salary')}:{" "}
+                  {t("salary")}:{" "}
                   <span className="pl-2 md:pl-4 font-normal text-gray-800">
-                    {singleJob?.salary} {t('currency')}
+                    {singleJob?.salary} {t("currency")}
                   </span>
                 </h1>
 
                 <h1 className="font-bold">
-                  {t('postedDate')}:{" "}
+                  {t("postedDate")}:{" "}
                   <span className="pl-2 md:pl-4 font-normal text-gray-800">
                     {formatDate(singleJob?.createdAt, i18n.language)}
                   </span>
@@ -227,7 +277,7 @@ const JobDetails = () => {
                     : "bg-[#7209b7] hover:bg-[#5f32ad]"
                 }`}
               >
-                {isApplied ? t('alreadyApplied') : t('applyNow')}
+                {isApplied ? t("alreadyApplied") : t("applyNow")}
               </Button>
             </div>
           </div>
@@ -272,7 +322,7 @@ const JobDetails = () => {
                 </span>
               </h1>
               <h1 className="font-bold ">
-                {t('Description')} : <br className="my-10" />
+                {t("Description")} : <br className="my-10" />
                 <span className="font-normal text-gray-800">
                   {singleCompany?.description}
                 </span>
