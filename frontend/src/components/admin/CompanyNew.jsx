@@ -10,6 +10,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { useTranslation } from "react-i18next";
+import { FaSpinner } from "react-icons/fa";
 
 const CompanyNew = () => {
   const { t } = useTranslation();
@@ -17,6 +18,7 @@ const CompanyNew = () => {
   const dispatch = useDispatch();
   const [companyName, setCompanyName] = useState("");
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const validateForm = () => {
     let isValid = true;
@@ -42,6 +44,7 @@ const CompanyNew = () => {
       return;
     }
 
+    setIsLoading(true);
     try {
       const res = await axios.post(
         `${COMPANY_ALL_API}/register`,
@@ -63,6 +66,8 @@ const CompanyNew = () => {
     } catch (error) {
       console.error(error);
       toast.error(t("failedToRegisterCompany"));
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -114,8 +119,11 @@ const CompanyNew = () => {
           <Button
             onClick={registerNewCompany}
             className="w-full sm:w-auto bg-[#723bcf] text-white px-4 md:px-6 hover:bg-[#5f2db8]"
-            disabled={!companyName.trim()}
+            disabled={!companyName.trim() || isLoading}
           >
+            {isLoading ? (
+              <FaSpinner className="animate-spin mr-2 inline" />
+            ) : null}
             {t("continue")}
           </Button>
         </div>

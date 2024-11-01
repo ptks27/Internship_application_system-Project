@@ -96,6 +96,7 @@ i18n.use(initReactI18next).init({
         chooseFile: "Choose file",
         updating: "Updating...",
         loadingCompanyData: "Loading company data...",
+        loadingJobData: "Loading job data...",
         pleaseWait: "Please wait while we fetch the company information.",
         pleaseWaitLogin: "Please wait",
         createYourCompany: "Create Your Company",
@@ -114,6 +115,7 @@ i18n.use(initReactI18next).init({
         somethingWentWrong: "Something went wrong!",
         back: "Back",
         update: "Update",
+        create: "Create",
         companySetup: "Company Setup",
         companyNameRequired: "Please specify the company name.",
         agentNameRequired: "Please specify the agent name.",
@@ -140,7 +142,7 @@ i18n.use(initReactI18next).init({
         wantToDeleteJob: "You want to delete this job?",
         role: "Role",
         position1: "Position",
-        
+
         applicants: "Applicants",
         // Add new translations for PostJobs
         jobSetup: "Job Setup",
@@ -243,6 +245,7 @@ i18n.use(initReactI18next).init({
         currency: "THB",
         jobTypeNotSpecified: "Job type not specified",
         pending: "Pending",
+        creating: "Creating...",
         // Add new translations for Signup
         createAccount: "Create your",
         newsAccount: "new account",
@@ -291,6 +294,7 @@ i18n.use(initReactI18next).init({
         confirmPasswordError: "Passwords do not match",
         noNotifications: "No notifications",
         deleteNotification: "Delete",
+
         youHaveAppliedForTheJob: "You have applied for the job : ",
         newApplicationReceived:
           "A new application has been received for the job : ",
@@ -516,6 +520,7 @@ i18n.use(initReactI18next).init({
         chooseFile: "เลือกไฟล์",
         updating: "กำลังอัปเดต...",
         loadingCompanyData: "กำลังโหลดข้อมูลบริษัท...",
+        loadingJobData: "กำลังโหลดข้อมูลงาน...",
         pleaseWait: "กรุณารอสักครู่ขณะที่เรากำลังดึงข้อมูลบริษัท",
         createYourCompany: "สร้างบริษัทของคุณ",
         letsGetStarted: "มาเริ่มต้นด้วยการตั้งค่าโปรไฟล์บริษัทของคุณ",
@@ -555,6 +560,8 @@ i18n.use(initReactI18next).init({
         failedToRegisterCompany: "ลงทะเบียนบริษัทไม่สำเร็จ",
         enterCompanyDescription: "กรอกคำอธิบายบริษัท",
         enterEmail: "กรอกที่อยู่อีเมล",
+        create: "สร้าง",
+        creating: "กำลังสร้าง...",
         jobPositions: "ตำแหน่งงาน",
         filterByCompanyAndRole: "กรองตาบริษัทและตำแหน่ง",
         newJob: "งานใหม่",

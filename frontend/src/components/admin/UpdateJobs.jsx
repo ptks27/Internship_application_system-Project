@@ -21,6 +21,7 @@ import {
   SelectValue,
 } from "../ui/select";
 import i18n from "i18next"; // Add this import
+import { FaSpinner } from "react-icons/fa";
 
 const jobTypeOptions = [
   { value: "Full-time", label: "fullTime" },
@@ -133,7 +134,7 @@ const provinces = [
     districts: [
       { en: "Mueang Chiang Rai", th: "เมืองเชียงราย" },
       { en: "Mae Sai", th: "แม่สาย" },
-      { en: "Chiang Saen", th: "เชียงแส���" },
+      { en: "Chiang Saen", th: "เชียงแส" },
       { en: "Phan", th: "พาน" },
       { en: "Wiang Pa Pao", th: "เวียงป่าเป้า" },
       // เพิ่มอำเภออื่นๆที่เชียงราย
@@ -162,7 +163,7 @@ const provinces = [
       // เพิ่มอำเภออื่นๆที่นนทบุร
     ],
   },
-  // เพ�����มจังหวัดและอำเภออื่นๆที่เหลือ
+  // เพิ่มจังหวัดและอำเภออื่นๆที่เหลือ
 ];
 
 const UpdateJobs = () => {
@@ -310,6 +311,19 @@ const UpdateJobs = () => {
       toast.error(t("VALIDATION.FILL_ALL_FIELDS"));
     }
   };
+
+  if (!singleJob) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+            {t("loadingJobData")}
+          </h2>
+          <p className="text-gray-600">{t("pleaseWait")}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#f4f4f4]">
@@ -553,7 +567,14 @@ const UpdateJobs = () => {
               className="px-6 py-2 bg-[#7e22ce] text-white rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-[#5e1195] focus:ring-offset-2 transition-colors duration-300"
               disabled={loading}
             >
-              {loading ? t("updating") : t("updateJob")}
+              {loading ? (
+                <div className="flex items-center gap-2">
+                  <FaSpinner className="animate-spin" />
+                  {t("updating")}
+                </div>
+              ) : (
+                t("updateJob")
+              )}
             </Button>
           </div>
         </form>
