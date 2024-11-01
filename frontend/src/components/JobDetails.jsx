@@ -26,6 +26,7 @@ import {
   addNotification,
   updateNotification,
 } from "../redux/notificationSlice";
+import { FaSpinner } from "react-icons/fa";
 
 const formatJobDescription = (description) => {
   if (!description) return [];
@@ -90,6 +91,7 @@ const JobDetails = () => {
   const companyId = queryParams.get("companyId");
 
   const [isApplied, setIsApplied] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const memoizedJobDescription = useMemo(() => {
     return formatJobDescription(singleJob?.description);
@@ -150,6 +152,7 @@ const JobDetails = () => {
     });
 
     if (result.isConfirmed) {
+      setIsLoading(true);
       try {
         const res = await axios.get(`${Application_API}/apply/${jobId}`, {
           withCredentials: true,
@@ -182,6 +185,8 @@ const JobDetails = () => {
         const errorMessage =
           error.response?.data?.message || "ERROR_APPLYING_JOB";
         toast.error(t(errorMessage));
+      } finally {
+        setIsLoading(false);
       }
     }
   };
@@ -270,14 +275,20 @@ const JobDetails = () => {
             <div className="flex justify-end mt-4">
               <Button
                 onClick={isApplied ? null : applyJobHandler}
-                disabled={isApplied}
+                disabled={isApplied || isLoading}
                 className={`w-full md:w-auto rounded-lg px-6 py-2 font-bold text-white ${
                   isApplied
                     ? "bg-gray-600 cursor-not-allowed"
                     : "bg-[#7209b7] hover:bg-[#5f32ad]"
                 }`}
               >
-                {isApplied ? t("alreadyApplied") : t("applyNow")}
+                {isLoading ? (
+                  <FaSpinner className="animate-spin mr-2 inline" />
+                ) : isApplied ? (
+                  t("alreadyApplied")
+                ) : (
+                  t("applyNow")
+                )}
               </Button>
             </div>
           </div>
