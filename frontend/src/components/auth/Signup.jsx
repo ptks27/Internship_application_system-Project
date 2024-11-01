@@ -428,8 +428,8 @@ const Signup = () => {
               <Label className="block text-white font-semibold mb-2">
                 {t("role")}
               </Label>
-              <div className="flex space-x-4">
-                <div className="flex items-center space-x-2">
+              <div className="flex space-x-4 mt-5">
+                <div className="flex items-center space-x-2 ">
                   <Input
                     type="radio"
                     name="role"

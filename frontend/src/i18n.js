@@ -561,7 +561,7 @@ i18n.use(initReactI18next).init({
         recentlyPostedJobs: "รายการงานที่โพสต์่าสุด",
         noJobsPostedYet: "ไม่พบงานที่โพสต์",
         wantToDeleteJob: "คุณต้องการลบงานนี้หรือไม่?",
-        role: "ตำแหน่ง",
+        role: "บทบาท",
         applicants: "ผู้สมัคร",
         jobUpdate: "อัปเดตงาน",
         // Add new translations for PostJobs
@@ -602,7 +602,7 @@ i18n.use(initReactI18next).init({
         welcomeSubtitle: "ยินดีต้อนรับสู่เว็บไซต์ของเรา",
         password: "รหัสผ่าน",
         enterPassword: "กรอกรหัสผ่าน",
-        student: "นักเรียน",
+        student: "นักเรียน/นักศึกษา",
         agent: "ตัวแทน",
         forgotPassword: "ลืมรหัสผ่าน?",
         forgotPassword1: "ลืมรหัสผ่าน",
