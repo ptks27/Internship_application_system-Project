@@ -306,7 +306,7 @@ const PostJobs = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100">
+    <div className="min-h-screen bg-[#f4f4f4]">
       <Navbar />
       <div className="max-w-4xl mx-auto mt-10 p-8 bg-white rounded-lg shadow-lg">
         <form onSubmit={submitHandler}>
@@ -395,7 +395,9 @@ const PostJobs = () => {
                     setErrors((prev) => ({ ...prev, location: "" }));
                   }}
                   className={`px-4 py-2 w-full border ${
-                    errors.location && !selectedProvince ? "border-red-500" : "border-gray-400"
+                    errors.location && !selectedProvince
+                      ? "border-red-500"
+                      : "border-gray-400"
                   } rounded-md focus:outline-none focus:ring-2 focus:ring-[#7e22ce] focus:border-[#7e22ce] text-left`}
                   disabled={loading}
                 >
@@ -426,7 +428,9 @@ const PostJobs = () => {
                     setErrors((prev) => ({ ...prev, location: "" }));
                   }}
                   className={`px-4 py-2 w-full border ${
-                    errors.location && selectedProvince && !selectedDistrict ? "border-red-500" : "border-gray-400"
+                    errors.location && selectedProvince && !selectedDistrict
+                      ? "border-red-500"
+                      : "border-gray-400"
                   } rounded-md focus:outline-none focus:ring-2 focus:ring-[#7e22ce] focus:border-[#7e22ce] text-left`}
                   disabled={loading || !selectedProvince}
                 >
@@ -450,9 +454,7 @@ const PostJobs = () => {
                 </select>
               </div>
               {errors.location && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.location}
-                </p>
+                <p className="text-red-500 text-xs mt-1">{errors.location}</p>
               )}
             </div>
 
@@ -534,7 +536,7 @@ const PostJobs = () => {
               </Label>
               <div className="relative">
                 <Select onValueChange={changeSelectHandler}>
-                  <SelectTrigger 
+                  <SelectTrigger
                     className={`px-4 py-2 w-full border ${
                       errors.jobType ? "border-red-500" : "border-gray-400"
                     } rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent`}
@@ -563,7 +565,7 @@ const PostJobs = () => {
               </Label>
               <div className="relative">
                 <Select onValueChange={selectChangeHandler}>
-                  <SelectTrigger 
+                  <SelectTrigger
                     className={`px-4 py-2 w-full border ${
                       errors.companyId ? "border-red-500" : "border-gray-400"
                     } rounded-md focus:ring-2 focus:ring-[#7e22ce] focus:border-transparent`}

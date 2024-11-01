@@ -410,8 +410,8 @@ const UpdateProfile = ({ open, setOpen }) => {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                    <Image className="h-10 w-10 text-gray-400" />
+                  <div className="w-full h-full bg-[#d4d4d4] flex items-center justify-center">
+                    <Image className="h-10 w-10 text-[#a6a6a6]" />
                   </div>
                 )}
                 <label

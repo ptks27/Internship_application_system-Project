@@ -322,34 +322,32 @@ const Signup = () => {
           <div className="mb-8">
             <div className="flex flex-col items-center gap-4">
               <div className="relative">
-                {previewUrl ? (
-                  <img
-                    src={previewUrl}
-                    alt="Profile Preview"
-                    className="w-32 h-32 object-cover rounded-full border-4 border-white transition-all duration-300 hover:scale-105"
-                  />
-                ) : (
-                  <div className="w-32 h-32 bg-white/10 rounded-full flex items-center justify-center border-4 border-white/30 transition-all duration-300 hover:border-white">
-                    <ImageIcon className="text-white/70 w-12 h-12" />
-                  </div>
-                )}
-              </div>
-              <div className="w-full max-w-md">
+                <label htmlFor="fileInput" className="cursor-pointer">
+                  {previewUrl ? (
+                    <img
+                      src={previewUrl}
+                      alt="Profile Preview"
+                      className="w-32 h-32 object-cover rounded-full border-4 border-white transition-all duration-300 hover:scale-105"
+                    />
+                  ) : (
+                    <div className="w-32 h-32 bg-[#d4d4d4] rounded-full flex items-center justify-center border-4 border-white/30 transition-all duration-300 hover:border-white">
+                      <ImageIcon className="text-[#a6a6a6] w-12 h-12" />
+                    </div>
+                  )}
+                </label>
                 <Input
+                  id="fileInput"
                   type="file"
                   accept="image/*"
-                  
                   onChange={changeFileHandler}
-                  className={`file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-white/10 file:text-white hover:file:bg-white/20 text-white cursor-pointer w-full ${
-                    errors.file ? "border-red-400" : "border-white/30"
-                  } rounded-lg transition-all duration-300`}
+                  className="hidden" // Hide the default file input
                 />
-                {errors.file && (
-                  <p className="mt-2 text-red-400 text-sm">
-                    {t("fileValidationMessage")}
-                  </p>
-                )}
               </div>
+              {errors.file && (
+                <p className="mt-2 text-red-400 text-sm">
+                  {t("fileValidationMessage")}
+                </p>
+              )}
             </div>
           </div>
 
@@ -572,7 +570,7 @@ const Signup = () => {
               {t("alreadyHaveAccount")}{" "}
               <Link
                 to="/login"
-                className="text-orange-400 font-bold hover:text-orange-300 transition-colors duration-300"
+                className="text-orange-400 font-bold hover:text-orange-300 transition-colors duration-300 underline"
               >
                 {t("loginHere")}
               </Link>

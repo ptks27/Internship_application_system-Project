@@ -179,6 +179,16 @@ const UpdateCompany = () => {
     }
   }, [singleCompany]);
 
+  // Add this function to handle logo display
+  const getLogoUrl = () => {
+    if (input.file instanceof File) {
+      return URL.createObjectURL(input.file);
+    } else if (singleCompany?.logo) {
+      return singleCompany.logo;
+    }
+    return null;
+  };
+
   if (!singleCompany) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 flex items-center justify-center">
@@ -363,16 +373,16 @@ const UpdateCompany = () => {
                 {t("companyLogo")}
               </Label>
               <div className="flex items-center space-x-4">
-                <div className="flex-shrink-0 w-20 h-20 bg-gray-100 rounded-full overflow-hidden">
-                  {input.file ? (
+                <div className="flex-shrink-0 w-20 h-20 bg-[#d4d4d4] rounded-full overflow-hidden border-2 border-[#7e22ce]">
+                  {getLogoUrl() ? (
                     <img
-                      src={URL.createObjectURL(input.file)}
+                      src={getLogoUrl()}
                       alt="Company logo preview"
                       className="w-full h-full object-cover"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
-                      <FileImage className="text-gray-400" size={32} />
+                      <FileImage className="text-[#a6a6a6]" size={32} />
                     </div>
                   )}
                 </div>

@@ -114,11 +114,17 @@ const Login = () => {
       if (error.response && error.response.status === 403) {
         navigate("/verify-email", { state: { email: input.email } });
         toast.error(t("verifyEmailBeforeLogin"));
-      } else if (error.response?.data?.message === "ACCOUNT_NOT_EXIST_WITH_ROLE") {
+      } else if (
+        error.response?.data?.message === "ACCOUNT_NOT_EXIST_WITH_ROLE"
+      ) {
         toast.error(t("accountNotExistWithRole"));
-      } else if (error.response?.data?.message === "FILL_INFORMATION_COMPLETELY") {
+      } else if (
+        error.response?.data?.message === "FILL_INFORMATION_COMPLETELY"
+      ) {
         toast.error(t("fillInformationCompletely"));
-      } else if (error.response?.data?.message === "INCORRECT_EMAIL_OR_PASSWORD") {
+      } else if (
+        error.response?.data?.message === "INCORRECT_EMAIL_OR_PASSWORD"
+      ) {
         toast.error(t("incorrectEmailOrPassword"));
       } else {
         const errorMessage =
@@ -293,10 +299,10 @@ const Login = () => {
               </Button>
             )}
 
-            <div className="text-center mt-4">
+            <div className="text-left mt-4">
               <span className="font-bold text-white">
                 {t("dontHaveAccount")}{" "}
-                <Link to="/signup" className="text-yellow-500">
+                <Link to="/signup" className="text-yellow-500 underline">
                   {t("signup")}
                 </Link>
               </span>

@@ -182,7 +182,7 @@ const CompanySetup = () => {
 
   if (!singleCompany) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 flex items-center justify-center">
+      <div className="min-h-screen bg-[#f4f4f4] flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-semibold text-gray-800 mb-2">
             Loading company data...
@@ -356,7 +356,7 @@ const CompanySetup = () => {
                 {t("companyLogo")} <span className="text-red-500">*</span>
               </Label>
               <div className="flex items-center space-x-4">
-                <div className="flex-shrink-0 w-20 h-20 bg-gray-100 rounded-full overflow-hidden">
+                <div className="flex-shrink-0 w-20 h-20 bg-[#d4d4d4] rounded-full overflow-hidden border-2 border-[#7e22ce]">
                   {input.file ? (
                     <img
                       src={URL.createObjectURL(input.file)}
@@ -371,7 +371,7 @@ const CompanySetup = () => {
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
-                      <FileImage className="text-gray-400" size={32} />
+                      <FileImage className="text-[#a6a6a6]" size={32} />
                     </div>
                   )}
                 </div>

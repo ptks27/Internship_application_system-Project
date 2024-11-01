@@ -21,7 +21,7 @@ function Navbar2() {
     <div className="bg-[#f4f4f4] my-3">
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16 px-4 md:px-8">
         {/* Logo */}
-        <div className="-ml-4">
+        <div className="ml-0">
           <Link to="/login">
             <img
               src={logo}
@@ -31,17 +31,10 @@ function Navbar2() {
           </Link>
         </div>
 
-        {/* Mobile Menu Button */}
-        <div className="md:hidden">
-          <button onClick={toggleMobileMenu} className="text-black text-2xl">
-            ☰
-          </button>
-        </div>
-
-        {/* Language Select Dropdown */}
-        <div>
+        {/* Language Select Dropdown - แสดงเฉพาะบน Desktop */}
+        <div className="hidden md:block">
           <Select onValueChange={handleLanguageChange} defaultValue={i18n.language}>
-            <SelectTrigger className="w-[70px] border-none bg-transparent focus:ring-0 focus:ring-offset-0">
+            <SelectTrigger className="w-[80px] border-none bg-transparent focus:ring-0 focus:ring-offset-0">
               <SelectValue placeholder={i18n.language.toUpperCase()} />
             </SelectTrigger>
             <SelectContent>
@@ -50,13 +43,20 @@ function Navbar2() {
             </SelectContent>
           </Select>
         </div>
+
+        {/* Mobile Menu Button */}
+        <div className="md:hidden">
+          <button onClick={toggleMobileMenu} className="text-black text-2xl p-2">
+            ☰
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu Content */}
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-16 left-0 w-full bg-[#f4f4f4] z-50">
+        <div className="md:hidden fixed top-[76px] left-0 w-full bg-[#f4f4f4] shadow-lg z-50">
           <ul className="flex flex-col font-medium items-center gap-4 p-4">
-            <li className="w-full max-w-[250px]">
+            <li className="w-full max-w-[200px]">
               <Select onValueChange={handleLanguageChange} defaultValue={i18n.language}>
                 <SelectTrigger className="w-full border-none bg-transparent focus:ring-0 focus:ring-offset-0">
                   <SelectValue placeholder={i18n.language.toUpperCase()} />

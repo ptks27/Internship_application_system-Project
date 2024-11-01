@@ -67,7 +67,7 @@ const CompanyNew = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-[#f4f4f4]">
       <Navbar />
       <div className="max-w-4xl mx-auto my-8 md:my-20 p-4 md:p-8 bg-white rounded-lg shadow-lg">
         <div className="mb-6 md:mb-10 text-center">
