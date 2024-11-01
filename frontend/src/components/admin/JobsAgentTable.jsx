@@ -78,7 +78,9 @@ const JobsAgentTable = () => {
         }
       } catch (error) {
         console.log(error);
-        toast.error(t(error.response?.data?.message) || t("somethingWentWrong"));
+        toast.error(
+          t(error.response?.data?.message) || t("somethingWentWrong")
+        );
       }
     }
   };
@@ -143,7 +145,7 @@ const JobsAgentTable = () => {
               {t("companyName")}
             </TableHead>
             <TableHead className="bg-purple-700 text-white">
-              {t("role")}
+              {t("position1")}
             </TableHead>
             <TableHead className="bg-purple-700 text-white hidden sm:table-cell">
               {t("date")}

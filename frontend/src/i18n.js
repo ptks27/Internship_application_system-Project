@@ -139,6 +139,8 @@ i18n.use(initReactI18next).init({
         noJobsPostedYet: "You haven't posted any jobs yet",
         wantToDeleteJob: "You want to delete this job?",
         role: "Role",
+        position1: "Position",
+        
         applicants: "Applicants",
         // Add new translations for PostJobs
         jobSetup: "Job Setup",
@@ -580,6 +582,7 @@ i18n.use(initReactI18next).init({
         fillAllFields: "กรุณากรอกข้อมูลให้ครบถ้วนและถูกต้อง",
         // Add new translations for UpdateJobs
         updateJob: "อัปเดตงาน",
+        position1: "ตำแหน่งงาน",
         enterFullname: "กรอกชื่อเต็มของคุณ",
 
         confirmPasswordError: "รหัสผ่านไม่ตรงกัน",
