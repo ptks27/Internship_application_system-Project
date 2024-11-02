@@ -80,7 +80,7 @@ const PostJobs = () => {
         { en: "Phasi Charoen", th: "ภาษีเจริญ" },
         { en: "Nong Khaem", th: "หนองแขม" },
         { en: "Rat Burana", th: "ราษฎร์บูรณะ" },
-        { en: "Bang Phlat", th: "บางพล��ด" },
+        { en: "Bang Phlat", th: "บางพลัด" },
         { en: "Din Daeng", th: "ดินแดง" },
         { en: "Bueng Kum", th: "บึงกุ่ม" },
         { en: "Sathon", th: "สาทร" },

@@ -16,6 +16,7 @@ i18n.use(initReactI18next).init({
         latestAndTop: "Latest and Top",
         jobOpenings: "Job Openings",
         noJobAvailable: "No Job Available",
+        locationNotSpecified: "Location not specified",
 
         search: "Search",
         apply: "Apply",
@@ -442,6 +443,7 @@ i18n.use(initReactI18next).init({
         search: "ค้นหา",
         apply: "สมัคร",
         get: "รับ",
+        locationNotSpecified: "สถานที่ไม่ระบุ",
         getDreamJobs: "งานในฝันของคุณ",
         findDreamJobs: "ค้นหางานในฝันของคุณ",
         platformDescription:
