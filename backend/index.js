@@ -19,16 +19,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 const corsOptions = {
-  origin: process.env.NODE_ENV === 'production'
-    ? "https://thetraineepj.in.th"
-    : "http://localhost:5173",
+  origin:
+   'development' === "production"
+      ? "https://thetraineepj.in.th"
+      : "http://localhost:5173",
   credentials: true,
-  secure: process.env.NODE_ENV === 'production'
+  secure:'development' === "production",
 };
 
 app.use(cors(corsOptions));
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 9000;
 
 // api
 app.use("/api/v1/user", userRoute);

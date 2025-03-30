@@ -48,7 +48,9 @@ const Job = ({ job }) => {
 
   const getDayAgeDisplay = (daysAgo) => {
     if (daysAgo === 0) return t("today");
-    if (daysAgo >= 30) return null; // Return null for jobs older than 30 days
+    if (daysAgo >= 30) {
+      return <span className="text-red-600 font-bold">{t("expired")}</span>;
+    }
     if (daysAgo >= 25) {
       return (
         <span className="text-red-600 font-medium">
@@ -61,8 +63,7 @@ const Job = ({ job }) => {
 
   const daysAgo = dayAgeFunction(job?.createdAt);
   const dayAgeDisplay = getDayAgeDisplay(daysAgo);
-
-  if (daysAgo >= 30) return null; // Don't render jobs older than 30 days
+  const isExpired = daysAgo >= 30;
 
   const formatJobDescription = (description) => {
     if (!description) return [];
@@ -79,8 +80,18 @@ const Job = ({ job }) => {
       : description;
   };
 
+  const handleDetailsClick = () => {
+    if (!isExpired) {
+      navigate(`/details/${job?.job_id}?companyId=${job?.company?.company_id}`);
+    }
+  };
+
   return (
-    <div className="p-4 rounded-lg shadow-2xl bg-[#ffffff] border border-gray-300 flex flex-col justify-between hover:shadow-2xl transition-shadow duration-300 ">
+    <div
+      className={`p-4 rounded-lg shadow-2xl bg-[#ffffff] border border-gray-300 flex flex-col justify-between hover:shadow-2xl transition-shadow duration-300 ${
+        isExpired ? "opacity-75" : ""
+      }`}
+    >
       <div>
         <div className="flex items-center justify-between mb-3">
           <p className="text-sm text-gray-500">{dayAgeDisplay}</p>
@@ -136,17 +147,18 @@ const Job = ({ job }) => {
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-2 my-4">
+      <div className="flex flex-col sm:flex-row gap-2 my-4 ">
         <Button
-          onClick={() =>
-            navigate(
-              `/details/${job?.job_id}?companyId=${job?.company?.company_id}`
-            )
-          }
+          onClick={handleDetailsClick}
           variant="outline"
-          className="w-full  sm:w-1/3 bg-[#ffffff] text-black border border-black hover:bg-slate-100 font-bold  rounded-2xl"
+          disabled={isExpired}
+          className={`w-full min-w-[140px] sm:w-1/3 ${
+            isExpired
+              ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+              : "bg-[#ffffff] text-black hover:bg-slate-100"
+          } border border-black font-bold rounded-2xl`}
         >
-          {t("details")}
+          {isExpired ? t("unavailable") : t("details")}
         </Button>
         <Button
           className="w-full sm:w-1/2 bg-[#723bcf] hover:bg-[#5f31ad] text-white font-bold rounded-2xl"
@@ -163,18 +175,18 @@ Job.propTypes = {
   job: PropTypes.shape({
     company: PropTypes.shape({
       name: PropTypes.string,
-      company_id: PropTypes.number, // Add this line
+      company_id: PropTypes.number,
       logo: PropTypes.string,
     }),
-    job_id: PropTypes.number.isRequired, // Make sure job_id is also required
+    job_id: PropTypes.number.isRequired,
     location: PropTypes.string,
-    title: PropTypes.string.isRequired, // Assuming title is required
+    title: PropTypes.string.isRequired,
     description: PropTypes.string,
     position: PropTypes.number,
     jobType: PropTypes.string,
     salary: PropTypes.number,
     createdAt: PropTypes.string,
-    isBookmarked: PropTypes.bool, // Add this line
+    isBookmarked: PropTypes.bool,
   }).isRequired,
 };
 

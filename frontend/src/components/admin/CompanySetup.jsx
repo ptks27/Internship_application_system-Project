@@ -107,16 +107,16 @@ const CompanySetup = () => {
 
   const changeFileHandler = (e) => {
     const file = e.target.files?.[0];
-    
+
     if (file) {
       // ตรวจสอบประเภทไฟล์
-      const validTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+      const validTypes = ["image/png", "image/jpeg", "image/jpg"];
       if (!validTypes.includes(file.type)) {
-        toast.error(t('fileTypeError'));
-        e.target.value = ''; // รีเซ็ตค่า input file
+        toast.error(t("fileTypeError"));
+        e.target.value = ""; // รีเซ็ตค่า input file
         return;
       }
-      
+
       setInput({
         ...input,
         file,
@@ -127,7 +127,7 @@ const CompanySetup = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     if (!validateForm()) {
-      toast.error(t('pleaseCorrectFormErrors'));
+      toast.error(t("pleaseCorrectFormErrors"));
       return;
     }
     setLoading(true);
@@ -198,7 +198,7 @@ const CompanySetup = () => {
 
   return (
     <div className="min-h-screen bg-[#f4f4f4]">
-      <Navbar />
+      <Navbar className="bg-white" />
       <div className="max-w-4xl mx-auto mt-10 p-8 bg-white rounded-lg shadow-lg">
         <form onSubmit={submitHandler}>
           <div className="flex items-center gap-5 mb-6">

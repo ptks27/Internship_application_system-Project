@@ -34,7 +34,7 @@ const BouncingIcon = styled(FaSearch)`
 
 const SearchResult = () => {
   const { error } = useGetAllJobs();
-  const { allJobs, isLoading, searchQuery } = useSelector((store) => store.job);
+  const { allJobs, isLoading, searchQuery } = useSelector((state) => state.job);
 
   const [showNoJobsMessage, setShowNoJobsMessage] = useState(false);
   // เพิ่มการใช้งาน useTranslation

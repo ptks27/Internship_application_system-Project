@@ -1,12 +1,12 @@
-import { v2 as cloudinary } from 'cloudinary';
-import dotenv from 'dotenv';
+import { v2 as cloudinary } from "cloudinary";
 
-dotenv.config();
+// ตั้งค่าตัวแปรตรง ๆ แทนการใช้ dotenv
+const cloudinaryConfig = {
+  cloud_name: "dj0edatgb", // กรอกค่า cloud_name
+  api_key: "222133532625922", // กรอกค่า api_key
+  api_secret: "fF_s_bkVVw7xrkjO_c8gz3a_fQ8", // กรอกค่า api_secret
+};
 
-cloudinary.config({
-    cloud_name: process.env.CLOUD_NAME,
-    api_key: process.env.API_KEY,
-    api_secret: process.env.API_SECRET,
-});
+cloudinary.config(cloudinaryConfig);
 
 export default cloudinary;

@@ -284,7 +284,7 @@ export const login = async (req, res) => {
     const tokenData = {
       userId: user.user_id,
     };
-    const token = await jwt.sign(tokenData, process.env.SECRET_KEY, {
+    const token = await jwt.sign(tokenData, "basptksohotsolovelyisgood", {
       expiresIn: "1d",
     });
 
@@ -471,7 +471,7 @@ export const resendResetCode = async (req, res) => {
 
     await sendResetPasswordEmail(
       user.email,
-      `${process.env.CLIENT_URL}/reset-password?token=${newResetToken}`
+      `${"http://localhost:5173"}/reset-password?token=${newResetToken}`
     );
 
     return res.status(200).json({

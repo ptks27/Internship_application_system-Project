@@ -269,7 +269,7 @@ function Navbar() {
   };
 
   return (
-    <div className="bg-[#f4f4f4] my-3">
+    <div className="bg-[#f4f4f4] ">
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16 px-4 md:px-8">
         {/* Logo - Updated classes */}
         <div className="ml-3 md:-ml-4">

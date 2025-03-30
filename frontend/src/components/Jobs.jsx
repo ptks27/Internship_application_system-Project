@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 const Jobs = () => {
   const { t } = useTranslation();
   const { allJobs, searchQuery, salaryRange } = useSelector(
-    (store) => store.job
+    (state) => state.job
   );
   const { user } = useSelector((store) => store.auth);
   const [filterJobs, setFilterJobs] = useState([]);
@@ -45,8 +45,12 @@ const Jobs = () => {
       filteredJobs = filteredJobs.filter((job) => {
         const jobSalary = parseFloat(job.salary);
         return salaryRange.some(
-          (range) => range && range.min !== null && range.max !== null && 
-                     jobSalary >= range.min && jobSalary <= range.max
+          (range) =>
+            range &&
+            range.min !== null &&
+            range.max !== null &&
+            jobSalary >= range.min &&
+            jobSalary <= range.max
         );
       });
     }

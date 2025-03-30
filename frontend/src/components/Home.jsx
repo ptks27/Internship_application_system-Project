@@ -14,7 +14,8 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user) { // ตรวจสอบว่าผู้ใช้ล็อกอินหรือไม่
+    if (!user) {
+      // ตรวจสอบว่าผู้ใช้ล็อกอินหรือไม่
       navigate("/login"); // นำทางไปยังหน้าเข้าสู่ระบบ
     } else if (user.role === "agent") {
       navigate("/admin/companies");
@@ -23,7 +24,7 @@ const Home = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#f4f4f4]">
-      <Navbar />
+      <Navbar className="bg-[#f4f4f4]" />
       <main className="flex-grow">
         <MainSection />
         <CategoryJobs />

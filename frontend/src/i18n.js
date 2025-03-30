@@ -326,6 +326,8 @@ i18n.use(initReactI18next).init({
         removeResume: "Remove Resume",
         bioPlaceholder: "Select your bio (max 3)",
         skillsPlaceholder: "Select your skills",
+        unavailable: "Unavailable",
+        expired: "Expired",
         // Validation messages
         fullnameTooShort: "Please enter at least 5 characters",
         passwordLengthError: "Password must be at least 8 characters long",
@@ -757,6 +759,8 @@ i18n.use(initReactI18next).init({
         pleaseCorrectErrors: "กรุณากรอกข้อมูลให้ถูกต้อง",
         logoRequired: "กรุณาอัปเดตโลโก้",
         phoneNumberLengthError: "หมายเลขโทรศัพท์ต้องมีระหว่าง 8 ถึง 13 หลัก",
+        unavailable: "ไม่สามารถสมัครได้",
+        expired: "หมดอายุ",
 
         fileTypeError: "กรุณาเลือกไฟล์ PNG, JPG, หรือ JPEG เท่านั้น",
         notFound: {
