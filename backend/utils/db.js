@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const MONGO_URL = "mongodb+srv://basjob:basjob@cluster0.sjygt.mongodb.net/";
+const MONGO_URL = "";
 
 const connectDB = async () => {
   try {
