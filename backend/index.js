@@ -21,7 +21,7 @@ app.use(cookieParser());
 const corsOptions = {
   origin:
    'development' === "production"
-      ? "https://thetraineepj.in.th"
+      ? ""
       : "http://localhost:5173",
   credentials: true,
   secure:'development' === "production",
